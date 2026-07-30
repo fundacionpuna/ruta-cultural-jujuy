@@ -66,16 +66,18 @@ Abrí `datos.js` con cualquier editor de texto, copiá un bloque de `window.LUGA
 - Las coordenadas salen de Google Maps: clic derecho sobre el punto y copiar las dos cifras.
   En Jujuy la latitud va de −22 a −24 y la longitud de −64 a −67, las dos negativas.
 
-Cada región también tiene, en `window.REGIONES`, sus `pueblos` y su `hilo`, que se muestran
-bajo el nombre en el panel.
+En `window.REGIONES` cada región guarda además sus `pueblos`, su `hilo` (el tinte del que
+sale el color) y su `resumen`. Hoy no se muestran en pantalla — se sacaron para simplificar —
+pero quedan disponibles si más adelante se quiere una página por región.
 
 ## Qué falta antes de publicar
 
 1. **Los datos de los emprendimientos son de muestra.** Los puntos turísticos son reales;
    hospedajes, cocinas y ofertas están inventados para mostrar la estructura. Hay que
    reemplazarlos por emprendimientos reales, cargados junto con las comunidades.
-2. **Faltan las fotos.** Cada ficha muestra un recuadro tejido que dice «Foto por sumar».
+2. **Faltan las fotos.** Cada ficha muestra un recuadro que dice «Todavía sin foto».
    Falta decidir dónde se alojan las imágenes y agregar un campo `foto` a cada lugar.
+   Es lo que más le falta al mapa: un visitante elige por la foto.
 3. **Faltan los datos de contacto**: teléfono, WhatsApp, Instagram, web. Se agregan como
    campos nuevos y se muestran en la ficha, junto a «Cómo llegar».
 4. **Los límites de las regiones son esquemáticos**, dibujados a mano. Si se quiere
