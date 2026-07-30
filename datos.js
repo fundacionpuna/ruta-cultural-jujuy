@@ -16,8 +16,8 @@
 window.REGIONES = {
   puna: {
     nombre: 'Puna',
-    color: '#E0B23C',              // ocre de la tola y del sol de altura
-    hilo: 'Ocre q\'olle',
+    color: '#ff5a4a',   // coral, el rojo de Puna
+    hilo: 'Coral',
     altura: '3.400 – 4.500 m',
     cota: 4500,
     pueblos: 'Kolla · Atacama',
@@ -30,8 +30,8 @@ window.REGIONES = {
   },
   quebrada: {
     nombre: 'Quebrada',
-    color: '#C4462F',              // rojo cochinilla, el rojo de los estratos
-    hilo: 'Rojo cochinilla',
+    color: '#ff914d',   // naranja
+    hilo: 'Naranja',
     altura: '2.000 – 3.000 m',
     cota: 2000,
     pueblos: 'Omaguaca · Tilcara · Kolla',
@@ -43,8 +43,8 @@ window.REGIONES = {
   },
   valles: {
     nombre: 'Valles',
-    color: '#8A9A44',              // verde oliva del nogal y la hoja de tabaco
-    hilo: 'Verde nogal',
+    color: '#7ba551',   // verde
+    hilo: 'Verde',
     altura: '1.200 – 1.800 m',
     cota: 1200,
     pueblos: 'Kolla · Ocloya',
@@ -56,8 +56,8 @@ window.REGIONES = {
   },
   yungas: {
     nombre: 'Yungas',
-    color: '#2F8C7B',              // verde índigo de la selva de montaña
-    hilo: 'Verde índigo',
+    color: '#6492d8',   // azul
+    hilo: 'Azul',
     altura: '400 – 1.500 m',
     cota: 400,
     pueblos: 'Ocloya · Guaraní · Kolla',

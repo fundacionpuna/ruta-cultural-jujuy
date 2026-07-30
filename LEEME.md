@@ -1,5 +1,7 @@
 # Ruta Cultural de Jujuy — prototipo
 
+**Un proyecto de Fundación Puna.**
+
 Mapa interactivo de la provincia en **cuatro regiones** — Puna, Quebrada, Valles, Yungas —
 con emprendimientos culturales en cuatro categorías: hospedajes, cocinas, ofertas y talleres,
 y puntos turísticos o paradores.
@@ -19,24 +21,32 @@ Doble clic en `index.html`. No necesita servidor ni instalación.
 
 ## El diseño, en criollo
 
-La regla es una sola: **tiene que poder usarlo alguien de ochenta años, al sol, en el
-teléfono, sin que nadie le explique nada.** De ahí sale todo lo demás.
+Marca Puna: tipografía **Outfit** para los títulos y **Open Sans** para el cuerpo,
+la paleta de Amor, y todo redondeado — botones tipo píldora, sin esquinas.
+El logo de la fundación va arriba, con la línea «Un proyecto de Fundación Puna».
 
-- **Letra grande y fondo claro.** Texto base de 18 px, nombres de 21 px, descripciones
-  de 19 px. Nada de mayúsculas chicas ni letra espaciada.
-- **Dos pasos numerados**: primero la zona, después qué se busca. Los botones dicen lo
-  que uno se pregunta — «Dónde dormir», «Dónde comer», «Qué hacer», «Qué ver» — y no
-  categorías de sistema.
-- **Un solo botón pintado por fila, siempre.** El pintado es el que se está viendo.
-  No es un sistema de tildes que se prenden y apagan: se elige uno, como en un
-  formulario de papel.
+La regla de uso es una sola: **tiene que poder usarlo alguien de ochenta años, al sol,
+en el teléfono, sin que nadie le explique nada.**
+
+- **Un solo botón pintado por fila, siempre.** El pintado es el que se está viendo, en
+  el coral de Puna. No es un sistema de tildes: se elige uno, como en un formulario
+  de papel.
+- **Las cinco regiones en una línea**, sin alturas encima (la altura de la región
+  aparece arriba de la lista cuando se elige una). La fila de abajo, la de qué se
+  busca, va más chica.
 - **Un dibujo por tipo de lugar** (cama, cubiertos, cerro, brújula), el mismo en el
   botón, en la lista y en el mapa. No hay leyenda que aprender.
-- **Todos los botones miden 48 px de alto como mínimo**, para el dedo.
-- **Colores**: los cuatro tintes andinos del prototipo anterior, oscurecidos para que el
-  texto blanco encima llegue a 4.5:1 de contraste (Puna 4.9, Quebrada 6.0, Valles 5.4,
-  Yungas 6.1 — medidos, no estimados).
-- Del diseño «awayo» quedó sólo la franja tejida de arriba, como firma.
+- **La chakana**, la cruz escalonada andina, va en el botón de «Todas las regiones»
+  —sus cuatro brazos son las cuatro partes del mundo andino, igual que las cuatro
+  regiones— y en el recuadro de la foto que falta.
+- **Un color de marca por región**, en el punto del botón y en el pin del mapa:
+  Puna coral, Quebrada naranja, Valles verde, Yungas azul.
+- **Todos los botones miden 44 px de alto como mínimo**, para el dedo.
+- **Contrastes medidos, no estimados.** El texto de las píldoras elegidas va en tinta
+  y no en blanco, porque blanco sobre coral da 3.1:1 y no llega al mínimo; en tinta da
+  5.1:1. El dibujo de los pines también va en tinta por lo mismo (sobre el naranja da
+  7.0:1, sobre el verde 5.5, sobre el azul 5.0). El gris malva de la marca se oscureció
+  un punto porque sobre la crema quedaba en 4.44:1.
 
 
 ## Cómo se usa
