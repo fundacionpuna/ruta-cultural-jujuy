@@ -59,6 +59,7 @@ body {
 header {
   flex-shrink: 0;
   padding: 13px 24px 0;
+  text-align: center;
 }
 h1 {
   font-family: 'Alegreya', Georgia, serif;
@@ -69,7 +70,7 @@ h1 {
 .aviso {
   font-size: 15px;
   color: var(--tinta-2);
-  margin-top: 5px;
+  margin: 5px auto 0;
   max-width: 70ch;
   line-height: 1.5;
 }
@@ -80,11 +81,15 @@ h1 {
   font-size: 15px;
   color: var(--tinta-2);
   margin: 12px 24px 6px;
+  text-align: center;
 }
 #regiones {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
   padding: 0 24px;
   flex-shrink: 0;
 }
@@ -97,7 +102,7 @@ h1 {
   padding: 12px 14px;
   min-height: 56px;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   transition: background .15s, color .15s;
 }
 /* en bloque, para que la altura nunca se corte a mitad del número */
@@ -115,6 +120,7 @@ h1 {
 /* ── Paso 2: qué busca ───────────────────────────────────── */
 #tipos {
   display: flex;
+  justify-content: center;
   gap: 10px;
   padding: 0 24px;
   flex-shrink: 0;
@@ -146,6 +152,7 @@ h1 {
 
 #barra-buscar {
   display: flex;
+  justify-content: center;
   gap: 10px;
   padding: 11px 24px 12px;
   flex-shrink: 0;
@@ -446,7 +453,12 @@ function svg(nombre, trazo) {
 }
 
 /* ── Mapa ────────────────────────────────────────────────── */
-const map = L.map('mapa', { zoomControl: true, minZoom: 6, maxZoom: 16 }).fitBounds(LIMITES);
+/* zoomSnap: 0 — sin esto Leaflet redondea el zoom a un entero y la
+   zona elegida entra a la mitad de tamaño, con la mitad del mapa
+   vacío. Con zoom fraccionario el contorno llena la pantalla. */
+const map = L.map('mapa', {
+  zoomControl: true, minZoom: 6, maxZoom: 16, zoomSnap: 0, zoomDelta: 0.6
+}).fitBounds(LIMITES);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd'
 }).addTo(map);
@@ -454,11 +466,30 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 const capaZonas = L.layerGroup().addTo(map);
 const capaPins  = L.layerGroup().addTo(map);
 
+/* Leaflet guarda el tamaño del contenedor y sólo lo recalcula cuando
+   cambia el tamaño de la ventana. Acá el mapa se encoge sin que la
+   ventana se mueva: al cargar las tipografías la cabecera crece, y en
+   el teléfono los botones se acomodan en más filas. Si no le avisamos,
+   sigue calculando con la altura vieja y la zona elegida entra chica y
+   descentrada. */
+let reajuste;
+const observador = new ResizeObserver(() => {
+  clearTimeout(reajuste);
+  reajuste = setTimeout(() => map.invalidateSize({ animate: false }), 120);
+});
+observador.observe(document.getElementById('mapa'));
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => map.invalidateSize({ animate: false }));
+}
+
 const poligonos = {};
 ORDEN.forEach(k => {
+  /* Sin relleno: sólo el contorno, y punteado, porque el límite
+     es aproximado. Los cuatro rellenos encimados ensuciaban el
+     mapa y no aportaban nada. */
   poligonos[k] = L.polygon(REG[k].poligono, {
-    color: TINTE[k], weight: 2, opacity: .5,
-    fillColor: TINTE[k], fillOpacity: .10, interactive: false
+    color: TINTE[k], weight: 2.5, opacity: .9,
+    dashArray: '7 6', fill: false, interactive: false
   });
 });
 
@@ -542,9 +573,13 @@ function alternar(conjunto, clave, todas) {
 function encuadrar() {
   const activas = ORDEN.filter(k => estado.regiones.has(k));
   if (activas.length === ORDEN.length) { map.flyToBounds(LIMITES, { duration: .6 }); return; }
-  let b = poligonos[activas[0]].getBounds();
-  activas.slice(1).forEach(k => { b = b.extend(poligonos[k].getBounds()); });
-  map.flyToBounds(b, { padding: [40, 40], duration: .6 });
+  /* Ojo: getBounds() de un polígono devuelve su objeto interno, no una
+     copia. Si se le hace extend() encima, se agranda para siempre el
+     límite del polígono. Hay que acumular sobre un bounds nuevo. */
+  const b = L.latLngBounds([]);
+  activas.forEach(k => b.extend(poligonos[k].getBounds()));
+  /* poco margen: que la zona elegida llene el mapa */
+  map.flyToBounds(b, { padding: [26, 26], duration: .6 });
 }
 
 /* ── Franja de hilos ─────────────────────────────────────── */
@@ -623,12 +658,16 @@ function pintar() {
     capaPins.addLayer(m);
   });
 
+  /* El contorno aparece sólo cuando se eligió una zona. Con las
+     cuatro puestas el mapa va limpio, nada más que los lugares. */
   capaZonas.clearLayers();
-  ORDEN.forEach(k => {
-    if (!estado.regiones.has(k)) return;
-    poligonos[k].addTo(capaZonas);
-    rotulo(k).addTo(capaZonas);
-  });
+  if (estado.regiones.size < ORDEN.length) {
+    ORDEN.forEach(k => {
+      if (!estado.regiones.has(k)) return;
+      poligonos[k].addTo(capaZonas);
+      rotulo(k).addTo(capaZonas);
+    });
+  }
 
   pintarLista(visibles);
 

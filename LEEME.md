@@ -40,7 +40,9 @@ teléfono, sin que nadie le explique nada.** De ahí sale todo lo demás.
 
 ## Cómo se usa
 
-1. **Elegí una zona** — Puna, Quebrada, Valles o Yungas. El mapa vuela a esa zona.
+1. **Elegí una zona** — Puna, Quebrada, Valles o Yungas. El mapa se acomoda para que
+   esa zona llene la pantalla y aparece su contorno punteado (punteado porque el límite
+   es aproximado). Con las cuatro puestas no se dibuja ningún contorno: el mapa va limpio.
    Se pueden elegir varias, o volver a tocar para sacarla.
 2. **Elegí qué buscás** — dónde dormir, dónde comer, qué hacer, qué ver.
 3. **Tocá un lugar** en la lista o en el mapa y se abre su ficha, con el botón
