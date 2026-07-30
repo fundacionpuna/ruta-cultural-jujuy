@@ -85,10 +85,10 @@ h1 {
 }
 #regiones {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   width: 100%;
-  max-width: 1080px;
+  max-width: 1220px;
   margin: 0 auto;
   padding: 0 24px;
   flex-shrink: 0;
@@ -108,6 +108,8 @@ h1 {
 /* en bloque, para que la altura nunca se corte a mitad del número */
 .region .nom { display: block; font-size: 21px; font-weight: 700; line-height: 1.1; }
 .region .alt { display: block; font-size: 14px; opacity: .92; margin-top: 3px; }
+/* "Toda la provincia" no es una región, así que va en gris tinta */
+.region.todas { --c: var(--tinta); }
 .region[aria-pressed="false"] {
   background: #fff;
   color: var(--tinta-2);
@@ -360,6 +362,8 @@ a.llegar:hover { background: #000; }
     grid-template-columns: repeat(2, 1fr);
     padding: 0 15px;
   }
+  /* el botón de toda la provincia ocupa el ancho, como encabezado */
+  .region.todas { grid-column: 1 / -1; }
   .region { min-height: 56px; padding: 10px 12px; }
   .region .nom { font-size: 18px; }
   .region .alt { font-size: 13px; }
@@ -367,7 +371,6 @@ a.llegar:hover { background: #000; }
   .tipo { font-size: 16px; padding: 9px 13px; }
   #barra-buscar { padding: 12px 15px 13px; }
   #buscar { width: 100%; }
-  #todo { width: 100%; }
 
   /* En el teléfono la página entera scrollea como un documento
      normal. Si se intenta meter todo en la pantalla, la lista
@@ -407,7 +410,6 @@ a.llegar:hover { background: #000; }
 
 <div id="barra-buscar">
   <input id="buscar" type="search" placeholder="O buscá un lugar por nombre" aria-label="Buscar un lugar por nombre">
-  <button id="todo">Ver todo de nuevo</button>
 </div>
 
 <div id="cuerpo">
@@ -432,9 +434,13 @@ const TINTE = {
 
 const LIMITES = L.latLngBounds([[-24.75, -67.35], [-21.70, -63.85]]);
 
+/* Una zona y un tipo a la vez. Antes eran conjuntos con todo
+   prendido, y tocar "Puna" la APAGABA: quedaban las otras tres a la
+   vista y justo la que se había tocado desaparecía — al revés de lo
+   que espera cualquiera. Ahora tocar una zona muestra esa zona. */
 const estado = {
-  regiones: new Set(ORDEN),
-  tipos: new Set(Object.keys(CAT)),
+  zona: 'todas',       // 'todas' | 'puna' | 'quebrada' | 'valles' | 'yungas'
+  tipo: 'todos',       // 'todos' | 'punto' | 'hostal' | 'restaurante' | 'oferta'
   busqueda: '',
   elegido: null
 };
@@ -519,8 +525,8 @@ function pin(l, elegido) {
 
 /* ── Filtro ──────────────────────────────────────────────── */
 function pasa(l) {
-  if (!estado.regiones.has(l.region)) return false;
-  if (!estado.tipos.has(l.categoria)) return false;
+  if (estado.zona !== 'todas' && l.region !== estado.zona) return false;
+  if (estado.tipo !== 'todos' && l.categoria !== estado.tipo) return false;
   if (estado.busqueda) {
     const h = `${l.nombre} ${l.localidad} ${l.descripcion}`.toLowerCase();
     if (!h.includes(estado.busqueda)) return false;
@@ -531,16 +537,16 @@ const porId = id => LUGARES.find(l => l.id === id);
 
 /* ── Paso 1: botones de región ───────────────────────────── */
 const elReg = document.getElementById('regiones');
-ORDEN.forEach(k => {
+[['todas', 'Toda la provincia', 'las cuatro zonas'],
+ ...ORDEN.map(k => [k, REG[k].nombre, REG[k].altura])
+].forEach(([k, nombre, pie]) => {
   const b = document.createElement('button');
-  b.className = 'region c-' + k;
+  b.className = 'region ' + (k === 'todas' ? 'todas' : 'c-' + k);
   b.dataset.region = k;
-  b.setAttribute('aria-pressed', 'true');
-  b.innerHTML = `<span class="nom">${REG[k].nombre}</span>
-                 <span class="alt">${REG[k].altura}</span>`;
+  b.innerHTML = `<span class="nom">${nombre}</span><span class="alt">${pie}</span>`;
   b.addEventListener('click', () => {
-    alternar(estado.regiones, k, ORDEN);
-    if (estado.elegido && !estado.regiones.has(porId(estado.elegido).region)) estado.elegido = null;
+    estado.zona = k;
+    if (estado.elegido && !pasa(porId(estado.elegido))) estado.elegido = null;
     pintar();
     encuadrar();
   });
@@ -549,37 +555,26 @@ ORDEN.forEach(k => {
 
 /* ── Paso 2: botones de tipo ─────────────────────────────── */
 const elTipos = document.getElementById('tipos');
-Object.entries(CAT).forEach(([k, c]) => {
+[['todos', 'Todo', null], ...Object.entries(CAT).map(([k, c]) => [k, c.boton, c.icono])]
+.forEach(([k, texto, icono]) => {
   const b = document.createElement('button');
   b.className = 'tipo';
   b.dataset.tipo = k;
-  b.setAttribute('aria-pressed', 'true');
-  b.innerHTML = `${svg(c.icono, 'currentColor')}<span>${c.boton}</span>`;
+  b.innerHTML = (icono ? svg(icono, 'currentColor') : '') + `<span>${texto}</span>`;
   b.addEventListener('click', () => {
-    alternar(estado.tipos, k, Object.keys(CAT));
-    if (estado.elegido && !estado.tipos.has(porId(estado.elegido).categoria)) estado.elegido = null;
+    estado.tipo = k;
+    if (estado.elegido && !pasa(porId(estado.elegido))) estado.elegido = null;
     pintar();
   });
   elTipos.appendChild(b);
 });
 
-/* Un clic apaga; si se apagan todos, se vuelven a encender
-   todos, así nunca queda el mapa vacío sin explicación. */
-function alternar(conjunto, clave, todas) {
-  conjunto.has(clave) ? conjunto.delete(clave) : conjunto.add(clave);
-  if (!conjunto.size) todas.forEach(t => conjunto.add(t));
-}
-
 function encuadrar() {
-  const activas = ORDEN.filter(k => estado.regiones.has(k));
-  if (activas.length === ORDEN.length) { map.flyToBounds(LIMITES, { duration: .6 }); return; }
+  if (estado.zona === 'todas') { map.flyToBounds(LIMITES, { duration: .6 }); return; }
   /* Ojo: getBounds() de un polígono devuelve su objeto interno, no una
-     copia. Si se le hace extend() encima, se agranda para siempre el
-     límite del polígono. Hay que acumular sobre un bounds nuevo. */
-  const b = L.latLngBounds([]);
-  activas.forEach(k => b.extend(poligonos[k].getBounds()));
-  /* poco margen: que la zona elegida llene el mapa */
-  map.flyToBounds(b, { padding: [26, 26], duration: .6 });
+     copia; no hay que hacerle extend() encima. Acá se lee y nada más. */
+  map.flyToBounds(poligonos[estado.zona].getBounds(),
+                  { padding: [26, 26], duration: .6 });   // que llene el mapa
 }
 
 /* ── Franja de hilos ─────────────────────────────────────── */
@@ -628,7 +623,7 @@ function pintarLista(visibles) {
 
   if (!visibles.length) {
     elLista.innerHTML = `<p class="vacio">No encontramos nada así.
-      Probá con otro nombre, o tocá <b>Ver todo de nuevo</b>.</p>`;
+      Probá con otro nombre, o tocá <b>Toda la provincia</b> y <b>Todo</b>.</p>`;
     return;
   }
 
@@ -658,27 +653,23 @@ function pintar() {
     capaPins.addLayer(m);
   });
 
-  /* El contorno aparece sólo cuando se eligió una zona. Con las
-     cuatro puestas el mapa va limpio, nada más que los lugares. */
+  /* El contorno aparece sólo cuando se eligió una zona. Con toda la
+     provincia el mapa va limpio, nada más que los lugares. */
   capaZonas.clearLayers();
-  if (estado.regiones.size < ORDEN.length) {
-    ORDEN.forEach(k => {
-      if (!estado.regiones.has(k)) return;
-      poligonos[k].addTo(capaZonas);
-      rotulo(k).addTo(capaZonas);
-    });
+  if (estado.zona !== 'todas') {
+    poligonos[estado.zona].addTo(capaZonas);
+    rotulo(estado.zona).addTo(capaZonas);
   }
 
   pintarLista(visibles);
 
+  elReg.querySelectorAll('[data-region]').forEach(el =>
+    el.setAttribute('aria-pressed', String(el.dataset.region === estado.zona)));
+  elTipos.querySelectorAll('[data-tipo]').forEach(el =>
+    el.setAttribute('aria-pressed', String(el.dataset.tipo === estado.tipo)));
   ORDEN.forEach(k => {
-    const on = estado.regiones.has(k);
-    elReg.querySelector(`[data-region="${k}"]`).setAttribute('aria-pressed', String(on));
-    elHilos.querySelector(`[data-region="${k}"]`).style.opacity = on ? '1' : '.18';
-  });
-  Object.keys(CAT).forEach(k => {
-    elTipos.querySelector(`[data-tipo="${k}"]`)
-           .setAttribute('aria-pressed', String(estado.tipos.has(k)));
+    const encendido = estado.zona === 'todas' || estado.zona === k;
+    elHilos.querySelector(`[data-region="${k}"]`).style.opacity = encendido ? '1' : '.18';
   });
 }
 
@@ -689,15 +680,7 @@ elBuscar.addEventListener('input', e => {
   estado.elegido = null;
   pintar();
 });
-document.getElementById('todo').addEventListener('click', () => {
-  estado.regiones = new Set(ORDEN);
-  estado.tipos = new Set(Object.keys(CAT));
-  estado.busqueda = '';
-  estado.elegido = null;
-  elBuscar.value = '';
-  map.flyToBounds(LIMITES, { duration: .6 });
-  pintar();
-});
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && estado.elegido) { estado.elegido = null; pintar(); }
 });

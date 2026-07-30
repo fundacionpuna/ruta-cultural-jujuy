@@ -27,8 +27,9 @@ teléfono, sin que nadie le explique nada.** De ahí sale todo lo demás.
 - **Dos pasos numerados**: primero la zona, después qué se busca. Los botones dicen lo
   que uno se pregunta — «Dónde dormir», «Dónde comer», «Qué hacer», «Qué ver» — y no
   categorías de sistema.
-- **Prendido o apagado se ve de lejos**: el botón elegido va pintado, el no elegido va
-  en blanco con borde gris. No hay estados intermedios que haya que interpretar.
+- **Un solo botón pintado por fila, siempre.** El pintado es el que se está viendo.
+  No es un sistema de tildes que se prenden y apagan: se elige uno, como en un
+  formulario de papel.
 - **Un dibujo por tipo de lugar** (cama, cubiertos, cerro, brújula), el mismo en el
   botón, en la lista y en el mapa. No hay leyenda que aprender.
 - **Todos los botones miden 48 px de alto como mínimo**, para el dedo.
@@ -40,14 +41,16 @@ teléfono, sin que nadie le explique nada.** De ahí sale todo lo demás.
 
 ## Cómo se usa
 
-1. **Elegí una zona** — Puna, Quebrada, Valles o Yungas. El mapa se acomoda para que
-   esa zona llene la pantalla y aparece su contorno punteado (punteado porque el límite
-   es aproximado). Con las cuatro puestas no se dibuja ningún contorno: el mapa va limpio.
-   Se pueden elegir varias, o volver a tocar para sacarla.
-2. **Elegí qué buscás** — dónde dormir, dónde comer, qué hacer, qué ver.
+1. **Elegí una zona** — Puna, Quebrada, Valles o Yungas, o **Toda la provincia**.
+   Se elige una sola, como en un formulario de papel: siempre hay exactamente un botón
+   pintado, y es el que se está viendo. El mapa se acomoda para que esa zona llene la
+   pantalla y aparece su contorno punteado (punteado porque el límite es aproximado).
+   Con **Toda la provincia** no se dibuja ningún contorno: el mapa va limpio.
+2. **Elegí qué buscás** — dónde dormir, dónde comer, qué hacer, qué ver, o **Todo**.
+   Igual que las zonas: uno solo a la vez.
 3. **Tocá un lugar** en la lista o en el mapa y se abre su ficha, con el botón
    **Cómo llegar** que lo abre en Google Maps.
-4. **Ver todo de nuevo** vuelve al principio. `Esc` cierra la ficha.
+4. Para volver al principio: **Toda la provincia** y **Todo**. `Esc` cierra la ficha.
 
 
 ## Cómo cargar un lugar
