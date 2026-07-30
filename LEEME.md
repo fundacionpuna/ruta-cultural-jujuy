@@ -19,29 +19,34 @@ Doble clic en `index.html`. No necesita servidor ni instalación.
 
 ## El diseño, en criollo
 
-La idea que ordena todo es el **awayo**: la tela se teje en bandas horizontales, campos lisos
-(*pampa*) alternados con franjas de motivo. Las cuatro regiones son las cuatro bandas de la
-franja de abajo, y están ordenadas por altura, que es el dato que realmente las separa:
-Puna 4.500 m, Quebrada 2.000 m, Valles 1.200 m, Yungas 400 m. La franja no es decoración:
-es a la vez tejido y corte transversal de la provincia.
+La regla es una sola: **tiene que poder usarlo alguien de ochenta años, al sol, en el
+teléfono, sin que nadie le explique nada.** De ahí sale todo lo demás.
 
-- **Fondo**: lana sin teñir, marrón oscuro (`#1B1510`).
-- **Colores de región**: tintes andinos reales, no la wiphala — ocre q'olle, rojo cochinilla,
-  verde nogal, verde índigo. Cada uno figura en `datos.js` como `hilo`.
-- **Marcadores**: rombos, el motivo central del tejido andino. Lleno = punto turístico;
-  con ojo = hospedaje; con barra de hilo crudo = cocina; hueco = oferta o taller.
-- **Tipografías**: Alegreya y Alegreya Sans, de Juan Pablo del Peral (Huerta Tipográfica,
-  Buenos Aires).
+- **Letra grande y fondo claro.** Texto base de 18 px, nombres de 21 px, descripciones
+  de 19 px. Nada de mayúsculas chicas ni letra espaciada.
+- **Dos pasos numerados**: primero la zona, después qué se busca. Los botones dicen lo
+  que uno se pregunta — «Dónde dormir», «Dónde comer», «Qué hacer», «Qué ver» — y no
+  categorías de sistema.
+- **Prendido o apagado se ve de lejos**: el botón elegido va pintado, el no elegido va
+  en blanco con borde gris. No hay estados intermedios que haya que interpretar.
+- **Un dibujo por tipo de lugar** (cama, cubiertos, cerro, brújula), el mismo en el
+  botón, en la lista y en el mapa. No hay leyenda que aprender.
+- **Todos los botones miden 48 px de alto como mínimo**, para el dedo.
+- **Colores**: los cuatro tintes andinos del prototipo anterior, oscurecidos para que el
+  texto blanco encima llegue a 4.5:1 de contraste (Puna 4.9, Quebrada 6.0, Valles 5.4,
+  Yungas 6.1 — medidos, no estimados).
+- Del diseño «awayo» quedó sólo la franja tejida de arriba, como firma.
+
 
 ## Cómo se usa
 
-- **Bandas de abajo**: un clic sobre una banda la aísla y el mapa vuela a esa región.
-  Otro clic la vuelve a soltar. El orillo de arriba se re-enhebra con los colores activos.
-- **Filtros de categoría** (arriba): muestran u ocultan cada tipo de emprendimiento.
-- **Panel izquierdo**: índice por región. Un clic en un lugar abre su ficha; `Esc` la cierra.
-- **Mostrar las rutas**: dibuja la ruta sugerida de cada región con las paradas numeradas.
-- **Buscar**: filtra por nombre, localidad o descripción.
-- **Toda la provincia**: vuelve al estado inicial.
+1. **Elegí una zona** — Puna, Quebrada, Valles o Yungas. El mapa vuela a esa zona.
+   Se pueden elegir varias, o volver a tocar para sacarla.
+2. **Elegí qué buscás** — dónde dormir, dónde comer, qué hacer, qué ver.
+3. **Tocá un lugar** en la lista o en el mapa y se abre su ficha, con el botón
+   **Cómo llegar** que lo abre en Google Maps.
+4. **Ver todo de nuevo** vuelve al principio. `Esc` cierra la ficha.
+
 
 ## Cómo cargar un lugar
 

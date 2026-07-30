@@ -73,11 +73,13 @@ window.REGIONES = {
 /* Orden de las bandas del awayo: de mayor a menor altura. */
 window.ORDEN_REGIONES = ['puna', 'quebrada', 'valles', 'yungas'];
 
+/* `boton` es la pregunta que se hace el visitante; `nombre` es el
+   sustantivo que va en la ficha. */
 window.CATEGORIAS = {
-  punto:       { nombre: 'Punto turístico', plural: 'Puntos y paradores', motivo: 'lleno' },
-  hostal:      { nombre: 'Hostal / Hospedaje', plural: 'Hospedajes', motivo: 'ojo' },
-  restaurante: { nombre: 'Cocina', plural: 'Cocinas', motivo: 'barra' },
-  oferta:      { nombre: 'Oferta turística', plural: 'Ofertas y talleres', motivo: 'hueco' }
+  punto:       { boton: 'Qué ver',       nombre: 'Lugar para visitar', icono: 'cerro' },
+  hostal:      { boton: 'Dónde dormir',  nombre: 'Hospedaje',          icono: 'cama' },
+  restaurante: { boton: 'Dónde comer',   nombre: 'Comida',             icono: 'cubiertos' },
+  oferta:      { boton: 'Qué hacer',     nombre: 'Paseo o taller',     icono: 'brujula' }
 };
 
 window.LUGARES = [

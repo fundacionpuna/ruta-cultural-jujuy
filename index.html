@@ -6,546 +6,373 @@
 <title>Ruta Cultural de Jujuy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;0,800;1,400&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Alegreya+Sans+SC:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700&family=Alegreya+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 /* ══════════════════════════════════════════════════════════
    RUTA CULTURAL DE JUJUY
-   Paleta: lana sin teñir + tintes naturales andinos
-   Tipografía: Alegreya / Alegreya Sans — Juan Pablo del Peral,
-   Huerta Tipográfica, Buenos Aires
+   Versión simple: letra grande, botones grandes, pocas
+   decisiones. Todo tiene que poder usarse al sol, en el
+   teléfono, sin explicaciones.
    ══════════════════════════════════════════════════════════ */
 
 :root {
-  /* lana */
-  --lana-900: #1B1510;
-  --lana-800: #241C16;
-  --lana-700: #2F251D;
-  --lana-600: #3D3025;
-  --lana-500: #55442F;
+  --papel:   #FDFBF6;
+  --papel-2: #F4EFE5;
+  --tinta:   #23201C;
+  --tinta-2: #5D564D;
+  --linea:   #DCD4C6;
 
-  /* hilo sin teñir */
-  --hilo:     #F0E4CE;
-  --hilo-med: #C4B49A;
-  --hilo-dim: #8C7C66;
-
-  /* tintes por región */
-  --puna:     #E0B23C;
-  --quebrada: #C4462F;
-  --valles:   #8A9A44;
-  --yungas:   #2F8C7B;
-
-  --activa: var(--hilo);
+  /* Tintes andinos, oscurecidos respecto del prototipo sobre
+     fondo negro: acá llevan texto blanco encima y tienen que
+     dar 4.5:1 incluso en la línea chica de la altura. */
+  --puna:     #96681A;
+  --quebrada: #B23A26;
+  --valles:   #5F7226;
+  --yungas:   #1F6E60;
 }
+.c-puna     { --c: #96681A; }
+.c-quebrada { --c: #B23A26; }
+.c-valles   { --c: #5F7226; }
+.c-yungas   { --c: #1F6E60; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
+html, body { height: 100%; }
 body {
   font-family: 'Alegreya Sans', system-ui, sans-serif;
-  background: var(--lana-900);
-  color: var(--hilo);
+  font-size: 18px;
+  background: var(--papel);
+  color: var(--tinta);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── El tejido: trama base y motivo de rombos ────────────── */
-.trama {
-  background-image:
-    repeating-linear-gradient(45deg,  rgba(240,228,206,.07) 0 2px, transparent 2px 5px),
-    repeating-linear-gradient(-45deg, rgba(0,0,0,.20)       0 2px, transparent 2px 5px);
-}
-.motivo {
-  /* dos juegos de rayas a 45° en el mismo paso = celosía de rombos */
-  background-image:
-    repeating-linear-gradient(45deg,  var(--c) 0 2px, transparent 2px 9px),
-    repeating-linear-gradient(-45deg, var(--c) 0 2px, transparent 2px 9px);
-}
+/* el único resto del awayo: una franja tejida, arriba */
+#hilos { height: 7px; display: flex; flex-shrink: 0; }
+#hilos div { flex: 1; }
 
-/* ── Orillo superior: los cuatro hilos de la provincia ───── */
-#orillo {
-  height: 9px;
-  flex-shrink: 0;
-  display: flex;
-}
-#orillo .hebra {
-  flex: 1;
-  background: var(--c);
-  transition: opacity .35s ease, flex-grow .35s ease;
-}
-#orillo .hebra.apagada { opacity: .16; }
-
-/* ── Cabecera ────────────────────────────────────────────── */
+/* ── Título ──────────────────────────────────────────────── */
 header {
   flex-shrink: 0;
-  padding: 15px 26px 13px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 22px;
-  background: var(--lana-800);
-  border-bottom: 1px solid var(--lana-600);
+  padding: 13px 24px 0;
 }
 h1 {
   font-family: 'Alegreya', Georgia, serif;
-  font-weight: 800;
-  font-size: 30px;
-  line-height: 1;
-  letter-spacing: -0.015em;
-  color: var(--hilo);
-}
-h1 em {
-  font-style: italic;
-  font-weight: 400;
-  color: var(--hilo-med);
-}
-.bajada {
-  font-size: 13px;
-  color: var(--hilo-dim);
-  margin-top: 6px;
-  letter-spacing: 0.01em;
-  max-width: 62ch;
-  line-height: 1.55;
-}
-.bajada b { color: var(--hilo-med); font-weight: 700; }
-.sello {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-size: 12px;
+  font-size: 32px;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  color: var(--lana-900);
-  background: var(--hilo-med);
-  padding: 3px 9px;
-  vertical-align: 5px;
-  margin-left: 5px;
+  line-height: 1.1;
 }
+.aviso {
+  font-size: 15px;
+  color: var(--tinta-2);
+  margin-top: 5px;
+  max-width: 70ch;
+  line-height: 1.5;
+}
+.aviso b { color: var(--tinta); }
 
-/* ── Filtros de categoría + búsqueda ─────────────────────── */
-.herramientas {
-  display: flex;
-  align-items: center;
-  gap: 7px;
+/* ── Paso 1: la región ───────────────────────────────────── */
+.paso {
+  font-size: 15px;
+  color: var(--tinta-2);
+  margin: 12px 24px 6px;
+}
+#regiones {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 0 24px;
   flex-shrink: 0;
 }
-.filtro {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-weight: 500;
-  font-size: 13px;
-  letter-spacing: 0.05em;
-  background: transparent;
-  color: var(--hilo-med);
-  border: 1px solid var(--lana-500);
-  padding: 6px 12px;
+.region {
+  font-family: 'Alegreya Sans', sans-serif;
+  border: 2px solid var(--c);
+  background: var(--c);
+  color: #fff;
+  border-radius: 4px;
+  padding: 12px 14px;
+  min-height: 56px;
   cursor: pointer;
+  text-align: left;
+  transition: background .15s, color .15s;
+}
+/* en bloque, para que la altura nunca se corte a mitad del número */
+.region .nom { display: block; font-size: 21px; font-weight: 700; line-height: 1.1; }
+.region .alt { display: block; font-size: 14px; opacity: .92; margin-top: 3px; }
+.region[aria-pressed="false"] {
+  background: #fff;
+  color: var(--tinta-2);
+  border-color: var(--linea);
+}
+.region[aria-pressed="false"] .alt { opacity: 1; }
+.region:hover { filter: brightness(1.06); }
+.region[aria-pressed="false"]:hover { border-color: var(--c); color: var(--c); }
+
+/* ── Paso 2: qué busca ───────────────────────────────────── */
+#tipos {
+  display: flex;
+  gap: 10px;
+  padding: 0 24px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.tipo {
+  font-family: 'Alegreya Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-  transition: color .18s, border-color .18s, background .18s;
+  gap: 9px;
+  background: var(--tinta);
+  color: #fff;
+  border: 2px solid var(--tinta);
+  border-radius: 4px;
+  padding: 10px 16px;
+  min-height: 48px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
 }
-.filtro:hover { color: var(--hilo); border-color: var(--hilo-dim); }
-.filtro.puesto {
-  color: var(--lana-900);
-  background: var(--hilo);
-  border-color: var(--hilo);
+.tipo svg { width: 21px; height: 21px; flex-shrink: 0; }
+.tipo[aria-pressed="false"] {
+  background: #fff;
+  color: var(--tinta-2);
+  border-color: var(--linea);
 }
-.filtro:focus-visible,
-#buscar:focus-visible,
-.banda:focus-visible,
-.ficha-lista:focus-visible,
-.volver:focus-visible {
-  outline: 2px solid var(--hilo);
-  outline-offset: 2px;
+.tipo[aria-pressed="false"]:hover { border-color: var(--tinta-2); color: var(--tinta); }
+
+#barra-buscar {
+  display: flex;
+  gap: 10px;
+  padding: 11px 24px 12px;
+  flex-shrink: 0;
+  align-items: center;
+  flex-wrap: wrap;
 }
 #buscar {
   font-family: 'Alegreya Sans', sans-serif;
-  font-size: 14px;
-  background: var(--lana-900);
-  border: 1px solid var(--lana-500);
-  color: var(--hilo);
-  padding: 7px 12px;
-  width: 190px;
+  font-size: 17px;
+  padding: 11px 14px;
+  min-height: 48px;
+  width: 290px;
+  max-width: 100%;
+  border: 2px solid var(--linea);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--tinta);
 }
-#buscar::placeholder { color: var(--hilo-dim); }
-#buscar:focus { border-color: var(--hilo-dim); outline: none; }
+#buscar::placeholder { color: #9A9182; }
+#buscar:focus { border-color: var(--tinta-2); outline: none; }
+#todo {
+  font-family: 'Alegreya Sans', sans-serif;
+  font-size: 17px;
+  background: none;
+  border: 2px solid var(--linea);
+  border-radius: 4px;
+  padding: 11px 18px;
+  min-height: 48px;
+  color: var(--tinta-2);
+  cursor: pointer;
+}
+#todo:hover { border-color: var(--tinta-2); color: var(--tinta); }
 
-/* ── Cuerpo: relato + mapa ───────────────────────────────── */
+:focus-visible { outline: 3px solid #1F6E60; outline-offset: 2px; }
+
+/* ── Cuerpo: lista + mapa ────────────────────────────────── */
 #cuerpo {
   flex: 1;
   display: flex;
   min-height: 0;
-  position: relative;
+  border-top: 1px solid var(--linea);
 }
-
-/* ── Panel de relato (izquierda) ─────────────────────────── */
-#relato {
-  width: 372px;
+#lista {
+  width: 400px;
   flex-shrink: 0;
-  background: var(--lana-800);
-  border-right: 1px solid var(--lana-600);
   overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--lana-500) var(--lana-800);
+  background: var(--papel);
+  border-right: 1px solid var(--linea);
 }
-#relato::-webkit-scrollbar { width: 9px; }
-#relato::-webkit-scrollbar-track { background: var(--lana-800); }
-#relato::-webkit-scrollbar-thumb { background: var(--lana-500); }
+#mapa { flex: 1; min-width: 0; }
 
-.region-intro { padding: 22px 24px 6px; }
-.region-intro + .region-intro { border-top: 1px solid var(--lana-700); }
-.intro-hilo {
-  height: 4px;
-  width: 46px;
-  background: var(--c);
-  margin-bottom: 13px;
-}
-.intro-nombre {
-  font-family: 'Alegreya', serif;
-  font-weight: 700;
-  font-size: 25px;
-  line-height: 1.05;
-  color: var(--c);
-}
-.intro-datos {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.07em;
-  color: var(--hilo-dim);
-  margin: 7px 0 11px;
-}
-.intro-resumen {
-  font-size: 14px;
-  line-height: 1.68;
-  color: var(--hilo-med);
-  margin-bottom: 16px;
+.cuenta {
+  padding: 15px 24px 9px;
+  font-size: 16px;
+  color: var(--tinta-2);
 }
 
-.lista { padding: 0 24px 22px; }
-.ficha-lista {
-  display: flex;
-  align-items: baseline;
-  gap: 11px;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  border-top: 1px solid var(--lana-700);
-  padding: 11px 0;
-  cursor: pointer;
-  font-family: inherit;
-}
-.ficha-lista:hover .fl-nombre { color: var(--hilo); }
-.ficha-lista:hover .fl-rombo { transform: rotate(45deg) scale(1.25); }
-.fl-rombo {
-  width: 9px; height: 9px;
-  flex-shrink: 0;
-  transform: rotate(45deg);
-  background: var(--c);
-  margin-top: 5px;
-  transition: transform .18s ease;
-}
-.fl-rombo.hueco { background: transparent; box-shadow: inset 0 0 0 1.5px var(--c); }
-.fl-texto { min-width: 0; display: block; }
-.fl-nombre {
-  display: block;
-  font-family: 'Alegreya', serif;
-  font-size: 17px;
-  font-weight: 500;
-  line-height: 1.25;
-  color: var(--hilo-med);
-  transition: color .18s;
-}
-.fl-donde {
-  display: block;
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-size: 11.5px;
-  letter-spacing: 0.06em;
-  color: var(--hilo-dim);
-  margin-top: 3px;
-}
-.lista-vacia {
-  padding: 26px 24px;
-  font-family: 'Alegreya', serif;
-  font-style: italic;
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--hilo-dim);
-}
-
-/* ── Ficha abierta ───────────────────────────────────────── */
-.volver {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.09em;
-  background: none;
-  border: none;
-  color: var(--hilo-dim);
-  cursor: pointer;
-  padding: 16px 24px 0;
+/* ── Fila de la lista ────────────────────────────────────── */
+.fila {
   display: flex;
   align-items: center;
-  gap: 7px;
-}
-.volver:hover { color: var(--hilo); }
-
-.ficha-foto {
-  height: 176px;
-  margin: 14px 0 0;
-  --c: rgba(240,228,206,.13);
-  background-color: var(--lana-700);
-  display: flex;
-  align-items: flex-end;
-  padding: 12px 14px;
-}
-.ficha-foto span {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--hilo-dim);
-  background: var(--lana-800);
-  padding: 3px 8px;
-}
-.ficha-cuerpo { padding: 20px 24px 30px; }
-.ficha-donde {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--c);
-  margin-bottom: 8px;
-}
-.ficha-nombre {
-  font-family: 'Alegreya', serif;
-  font-weight: 700;
-  font-size: 27px;
-  line-height: 1.12;
-  margin-bottom: 12px;
-}
-.ficha-que {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.07em;
-  color: var(--hilo-dim);
-  padding-bottom: 15px;
-  border-bottom: 1px solid var(--lana-700);
-  margin-bottom: 15px;
-}
-.ficha-texto {
-  font-family: 'Alegreya', serif;
-  font-size: 16.5px;
-  line-height: 1.72;
-  color: var(--hilo);
-  margin-bottom: 20px;
-}
-.ficha-acciones { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-a.llegar {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-size: 12.5px;
-  letter-spacing: 0.09em;
-  color: var(--lana-900);
-  background: var(--c);
-  text-decoration: none;
-  padding: 8px 15px;
-}
-a.llegar:hover { filter: brightness(1.14); }
-.muestra-nota {
-  font-family: 'Alegreya', serif;
-  font-style: italic;
-  font-size: 13px;
-  color: var(--hilo-dim);
-}
-
-/* ── Mapa ────────────────────────────────────────────────── */
-#mapa { flex: 1; min-width: 0; background: var(--lana-900); }
-/* del gris frío de las teselas al marrón de la lana */
-#mapa .leaflet-tile-pane {
-  filter: saturate(.45) sepia(.42) hue-rotate(-12deg) brightness(.72) contrast(1.12);
-}
-.leaflet-container { background: var(--lana-900); font-family: 'Alegreya Sans', sans-serif; }
-.leaflet-control-zoom a {
-  background: var(--lana-800) !important;
-  color: var(--hilo) !important;
-  border-color: var(--lana-600) !important;
-}
-.leaflet-control-zoom a:hover { background: var(--lana-700) !important; }
-.leaflet-control-attribution {
-  background: rgba(27,21,16,.82) !important;
-  color: var(--hilo-dim) !important;
-  font-size: 10px !important;
-}
-.leaflet-control-attribution a { color: var(--hilo-med) !important; }
-
-/* ── Marcadores: rombos, el motivo del awayo ─────────────── */
-.rombo {
-  width: 15px; height: 15px;
-  transform: rotate(45deg);
-  background: var(--c);
-  box-shadow: 0 0 0 1.5px rgba(27,21,16,.9);
-  position: relative;
-  cursor: pointer;
-  transition: transform .16s ease;
-}
-.rombo:hover { transform: rotate(45deg) scale(1.3); }
-/* hospedaje: rombo con ojo */
-.rombo.hostal::after {
-  content: ''; position: absolute; inset: 4px;
-  background: var(--lana-900);
-}
-/* cocina: rombo con barra de hilo crudo */
-.rombo.restaurante::after {
-  content: ''; position: absolute;
-  left: -1px; right: -1px; top: 6px; height: 3px;
-  background: var(--hilo);
-}
-/* oferta: rombo hueco */
-.rombo.oferta {
-  background: rgba(27,21,16,.62);
-  box-shadow: inset 0 0 0 2px var(--c), 0 0 0 1.5px rgba(27,21,16,.9);
-}
-.rombo.elegido {
-  transform: rotate(45deg) scale(1.5);
-  box-shadow: 0 0 0 2px var(--hilo), 0 0 0 5px rgba(27,21,16,.85);
-}
-
-.etiqueta-region {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transform: translate(-50%, -50%);
-  text-shadow: 0 0 7px var(--lana-900), 0 0 14px var(--lana-900), 0 1px 2px var(--lana-900);
-}
-.parada {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  color: var(--hilo);
-  transform: translate(11px, -17px);
-  text-shadow: 0 0 4px var(--lana-900), 0 0 8px var(--lana-900);
-}
-
-/* ── El awayo: bandas de región ──────────────────────────── */
-#awayo {
-  flex-shrink: 0;
-  display: flex;
-  background: var(--lana-900);
-  border-top: 1px solid var(--lana-600);
-}
-.banda {
-  flex: 1;
-  border: none;
-  border-right: 1px solid var(--lana-900);
-  background: var(--lana-800);
-  cursor: pointer;
-  padding: 0;
+  gap: 14px;
+  width: 100%;
   text-align: left;
-  font-family: inherit;
-  position: relative;
-  overflow: hidden;
-  transition: background .2s ease;
-}
-.banda:last-child { border-right: none; }
-.banda:hover { background: var(--lana-700); }
-
-.banda .listas {          /* la franja de motivo tejido */
-  height: 15px;
-  --c: var(--tinte);
-  opacity: .95;
-  transition: opacity .25s ease, height .25s ease;
-}
-.banda .pampa {           /* el campo liso donde va el texto */
-  padding: 10px 15px 12px;
-}
-.banda .b-nombre {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.15em;
-  color: var(--tinte);
-  transition: color .2s;
-}
-.banda .b-cota {
   font-family: 'Alegreya Sans', sans-serif;
-  font-size: 11.5px;
-  color: var(--hilo-dim);
-  margin-top: 3px;
-}
-.banda .b-cuenta {
-  position: absolute;
-  right: 15px;
-  bottom: 11px;
-  font-family: 'Alegreya', serif;
-  font-weight: 700;
-  font-size: 21px;
-  color: var(--tinte);
-  line-height: 1;
-  transition: color .2s, opacity .2s;
-}
-.banda.suelta .listas { opacity: .13; height: 6px; }
-.banda.suelta .b-nombre,
-.banda.suelta .b-cuenta { color: var(--hilo-dim); }
-.banda.suelta { background: var(--lana-900); }
-
-/* ── Pie ─────────────────────────────────────────────────── */
-#pie {
-  flex-shrink: 0;
-  padding: 7px 26px;
-  background: var(--lana-900);
-  border-top: 1px solid var(--lana-700);
-  font-size: 11.5px;
-  color: var(--hilo-dim);
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-}
-#pie button {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-size: 11.5px;
-  letter-spacing: 0.08em;
   background: none;
   border: none;
-  color: var(--hilo-dim);
+  border-top: 1px solid var(--linea);
+  padding: 15px 24px;
+  min-height: 74px;
   cursor: pointer;
-  padding: 0;
 }
-#pie button:hover { color: var(--hilo); }
-#pie button.puesto { color: var(--hilo); }
-#pie .grupo { display: flex; gap: 18px; }
+.fila:hover { background: var(--papel-2); }
+.pastilla {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--c);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.pastilla svg { width: 21px; height: 21px; }
+.fila .t { min-width: 0; }
+.fila .n {
+  display: block;
+  font-family: 'Alegreya', Georgia, serif;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.fila .d {
+  display: block;
+  font-size: 16px;
+  color: var(--tinta-2);
+  margin-top: 3px;
+}
+.vacio {
+  padding: 30px 24px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--tinta-2);
+}
 
-/* ── Móvil ───────────────────────────────────────────────── */
+/* ── Ficha ───────────────────────────────────────────────── */
+#volver {
+  font-family: 'Alegreya Sans', sans-serif;
+  font-size: 17px;
+  background: none;
+  border: none;
+  color: var(--tinta-2);
+  cursor: pointer;
+  padding: 15px 24px;
+  display: flex; align-items: center; gap: 8px;
+  min-height: 50px;
+}
+#volver:hover { color: var(--tinta); }
+.f-foto {
+  height: 148px;
+  background: var(--papel-2);
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+  display: flex; align-items: center; justify-content: center;
+  color: #A69C8C;
+  font-size: 16px;
+}
+.f-cuerpo { padding: 17px 24px 34px; }
+.f-tipo {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--c);
+  color: #fff;
+  border-radius: 3px;
+  padding: 5px 11px;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.f-tipo svg { width: 18px; height: 18px; }
+.f-nombre {
+  font-family: 'Alegreya', Georgia, serif;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 5px;
+}
+.f-donde { font-size: 17px; color: var(--tinta-2); margin-bottom: 16px; }
+.f-texto { font-size: 19px; line-height: 1.65; margin-bottom: 18px; }
+a.llegar {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  background: var(--tinta);
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 24px;
+  border-radius: 4px;
+  min-height: 52px;
+}
+a.llegar:hover { background: #000; }
+.f-muestra { font-size: 16px; color: var(--tinta-2); margin-top: 14px; }
+
+/* ── Mapa ────────────────────────────────────────────────── */
+.leaflet-container { background: var(--papel-2); font-family: 'Alegreya Sans', sans-serif; font-size: 14px; }
+#mapa .leaflet-tile-pane { filter: saturate(.62) sepia(.10) brightness(1.02); }
+.leaflet-control-zoom a {
+  width: 40px !important; height: 40px !important;
+  line-height: 38px !important; font-size: 24px !important;
+  color: var(--tinta) !important;
+}
+.leaflet-control-attribution { font-size: 11px !important; }
+
+.pin {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--c);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,.35);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.pin svg { width: 18px; height: 18px; }
+.pin.elegido {
+  width: 46px; height: 46px;
+  border-width: 4px;
+  box-shadow: 0 0 0 4px rgba(35,32,28,.28), 0 3px 8px rgba(0,0,0,.4);
+  z-index: 1000;
+}
+.pin.elegido svg { width: 24px; height: 24px; }
+
+.rotulo {
+  font-family: 'Alegreya Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--c);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 4px #fff, 0 0 8px #fff, 0 0 12px #fff, 0 0 16px #fff;
+}
+
+/* ── Teléfono ────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  header { padding: 12px 15px 11px; flex-wrap: wrap; align-items: flex-start; }
-  h1 { font-size: 22px; }
-  .bajada { font-size: 12px; }
-  .herramientas { width: 100%; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
-  .herramientas::-webkit-scrollbar { display: none; }
-  #buscar { width: 140px; }
-
-  #cuerpo { flex-direction: column; }
-  #relato {
-    width: 100%;
-    height: 46%;
-    order: 2;
-    border-right: none;
-    border-top: 1px solid var(--lana-600);
+  header { padding: 13px 15px 0; }
+  h1 { font-size: 25px; }
+  .aviso { font-size: 14px; }
+  .paso { margin: 13px 15px 6px; }
+  #regiones {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 15px;
   }
-  #mapa { order: 1; min-height: 200px; }
+  .region { min-height: 56px; padding: 10px 12px; }
+  .region .nom { font-size: 18px; }
+  .region .alt { font-size: 13px; }
+  #tipos { padding: 0 15px; gap: 8px; }
+  .tipo { font-size: 16px; padding: 9px 13px; }
+  #barra-buscar { padding: 12px 15px 13px; }
+  #buscar { width: 100%; }
+  #todo { width: 100%; }
 
-  .banda .pampa { padding: 8px 10px 10px; }
-  .banda .b-nombre { font-size: 12px; letter-spacing: 0.09em; }
-  .banda .b-cota { font-size: 10px; }
-  /* la cuenta baja a su propia línea: en pantalla angosta no
-     cabe al lado de la cota */
-  .banda .b-cuenta { position: static; margin-top: 3px; font-size: 18px; }
-  #pie { font-size: 10.5px; padding: 6px 15px; flex-wrap: wrap; }
-  .ficha-foto { height: 140px; }
+  /* En el teléfono la página entera scrollea como un documento
+     normal. Si se intenta meter todo en la pantalla, la lista
+     queda con altura cero y no se llega a ella. */
+  html, body { height: auto; overflow: visible; }
+  #cuerpo { flex-direction: column; min-height: 0; }
+  #mapa { order: 1; height: 320px; flex: none; }
+  #lista {
+    order: 2; width: 100%; flex: none; overflow: visible;
+    border-right: none; border-top: 1px solid var(--linea);
+  }
+  .cuenta, .fila, #volver, .f-cuerpo { padding-left: 15px; padding-right: 15px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -555,399 +382,281 @@ a.llegar:hover { filter: brightness(1.14); }
 </head>
 <body>
 
-<div id="orillo"></div>
+<div id="hilos"></div>
 
 <header>
-  <div>
-    <h1>Ruta Cultural <em>de</em> Jujuy <span class="sello">Prototipo</span></h1>
-    <div class="bajada">Cuatro regiones, de la puna a la selva. Hospedajes, cocinas, talleres y paradores.<br>
-      <b>Los hospedajes, cocinas y ofertas son ejemplos inventados</b>, para mostrar cómo
-      se vería el mapa. Todavía no son emprendimientos reales.</div>
-  </div>
-  <div class="herramientas" id="herramientas">
-    <input id="buscar" type="search" placeholder="Buscar…" autocomplete="off" aria-label="Buscar lugar o localidad">
-  </div>
+  <h1>Ruta Cultural de Jujuy</h1>
+  <p class="aviso">
+    Lugares para visitar, dormir, comer y pasear en las cuatro regiones de la provincia.
+    <b>Es una muestra:</b> los hospedajes, comidas y paseos son ejemplos inventados.
+  </p>
 </header>
 
-<div id="cuerpo">
-  <aside id="relato" aria-live="polite"></aside>
-  <div id="mapa"></div>
+<p class="paso">1 · Elegí una zona de la provincia</p>
+<div id="regiones"></div>
+
+<p class="paso">2 · Elegí qué estás buscando</p>
+<div id="tipos"></div>
+
+<div id="barra-buscar">
+  <input id="buscar" type="search" placeholder="O buscá un lugar por nombre" aria-label="Buscar un lugar por nombre">
+  <button id="todo">Ver todo de nuevo</button>
 </div>
 
-<div id="awayo"></div>
-
-<div id="pie">
-  <span id="pie-cuenta"></span>
-  <span class="grupo">
-    <button id="ver-rutas">Mostrar las rutas</button>
-    <button id="ver-zonas" class="puesto">Ocultar las regiones</button>
-    <button id="ver-todo">Toda la provincia</button>
-  </span>
+<div id="cuerpo">
+  <div id="lista" aria-live="polite"></div>
+  <div id="mapa"></div>
 </div>
 
 <script src="datos.js"></script>
 <script>
 'use strict';
 
-const REG    = window.REGIONES;
-const ORDEN  = window.ORDEN_REGIONES;
-const CAT    = window.CATEGORIAS;
+const REG = window.REGIONES;
+const ORDEN = window.ORDEN_REGIONES;
+const CAT = window.CATEGORIAS;
 const LUGARES = window.LUGARES;
+
+/* colores oscurecidos: sobre papel claro necesitan más peso que
+   los del prototipo oscuro, para que el blanco encima se lea */
+const TINTE = {
+  puna: '#96681A', quebrada: '#B23A26', valles: '#5F7226', yungas: '#1F6E60'
+};
 
 const LIMITES = L.latLngBounds([[-24.75, -67.35], [-21.70, -63.85]]);
 
 const estado = {
   regiones: new Set(ORDEN),
-  categorias: new Set(Object.keys(CAT)),
-  rutas: false,
-  zonas: true,
+  tipos: new Set(Object.keys(CAT)),
   busqueda: '',
-  elegido: null       // id del lugar abierto en el panel
+  elegido: null
 };
 
-/* ═══════════════════════════════════════════════════════════
-   Mapa
-   ═══════════════════════════════════════════════════════════ */
-const map = L.map('mapa', { zoomControl: true, minZoom: 6, maxZoom: 16 })
-             .fitBounds(LIMITES);
+/* ── Iconos: dibujos simples, sin leyenda que aprender ───── */
+const ICONOS = {
+  cama:      '<path d="M3 18v-6h11a4 4 0 0 1 4 4v2M3 18h18M3 12V7M7.5 9.5h3"/>',
+  cubiertos: '<path d="M8 3v7a2 2 0 0 1-4 0V3M6 12v9M16 3c1.8 0 2.8 2 2.8 4.6S17.6 12 17.6 12v9"/>',
+  cerro:     '<path d="M2 19l6.5-10L13 16l2.5-3.5L22 19z"/>',
+  brujula:   '<circle cx="12" cy="12" r="9"/><path d="M12 7.5l2.2 4.5L12 16.5 9.8 12z"/>'
+};
+function svg(nombre, trazo) {
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="${trazo}" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            ${ICONOS[nombre]}</svg>`;
+}
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  attribution: '&copy; OpenStreetMap &copy; CARTO',
-  subdomains: 'abcd'
+/* ── Mapa ────────────────────────────────────────────────── */
+const map = L.map('mapa', { zoomControl: true, minZoom: 6, maxZoom: 16 }).fitBounds(LIMITES);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd'
 }).addTo(map);
 
 const capaZonas = L.layerGroup().addTo(map);
-const capaRutas = L.layerGroup();
-const capaPuntos = L.layerGroup().addTo(map);
+const capaPins  = L.layerGroup().addTo(map);
 
 const poligonos = {};
-ORDEN.forEach(key => {
-  poligonos[key] = L.polygon(REG[key].poligono, {
-    color: REG[key].color,
-    weight: 1.5,
-    opacity: 0.55,
-    fillColor: REG[key].color,
-    fillOpacity: 0.09,
-    interactive: false
+ORDEN.forEach(k => {
+  poligonos[k] = L.polygon(REG[k].poligono, {
+    color: TINTE[k], weight: 2, opacity: .5,
+    fillColor: TINTE[k], fillOpacity: .10, interactive: false
   });
 });
 
-function etiquetaRegion(key) {
-  const r = REG[key];
-  /* la etiqueta va en el tercio norte de la región, para no
-     caer encima de los rombos ni de los nombres de pueblo */
-  const b = poligonos[key].getBounds();
-  const c = b.getCenter();
-  const donde = L.latLng(c.lat + (b.getNorth() - c.lat) * 0.62, c.lng);
-  return L.marker(donde, {
+function rotulo(k) {
+  const b = poligonos[k].getBounds(), c = b.getCenter();
+  return L.marker([c.lat + (b.getNorth() - c.lat) * 0.62, c.lng], {
     interactive: false,
-    icon: L.divIcon({
-      className: '',
-      html: `<div class="etiqueta-region" style="color:${r.color}">${r.nombre}</div>`,
-      iconSize: [0, 0]
-    })
-  });
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Marcadores
-   ═══════════════════════════════════════════════════════════ */
-function icono(l, elegido) {
-  return L.divIcon({
-    className: '',
-    html: `<div class="rombo ${l.categoria}${elegido ? ' elegido' : ''}"
-                style="--c:${REG[l.region].color}"></div>`,
-    iconSize: [15, 15],
-    iconAnchor: [7.5, 7.5]
+    icon: L.divIcon({ className: '', iconSize: [0, 0],
+      html: `<div class="rotulo" style="--c:${TINTE[k]}">${REG[k].nombre}</div>` })
   });
 }
 
 const marcadores = {};
 LUGARES.forEach(l => {
-  const m = L.marker([l.lat, l.lng], { icon: icono(l, false), title: l.nombre,
-                                        keyboard: true, alt: l.nombre });
+  const m = L.marker([l.lat, l.lng], { title: l.nombre, alt: l.nombre, icon: pin(l, false) });
   m.on('click', () => abrir(l.id));
   marcadores[l.id] = m;
 });
+function pin(l, elegido) {
+  return L.divIcon({
+    className: '', iconSize: elegido ? [46, 46] : [34, 34],
+    iconAnchor: elegido ? [23, 23] : [17, 17],
+    html: `<div class="pin${elegido ? ' elegido' : ''}" style="--c:${TINTE[l.region]}">
+             ${svg(CAT[l.categoria].icono, '#fff')}</div>`
+  });
+}
 
-/* ═══════════════════════════════════════════════════════════
-   Filtro
-   ═══════════════════════════════════════════════════════════ */
+/* ── Filtro ──────────────────────────────────────────────── */
 function pasa(l) {
   if (!estado.regiones.has(l.region)) return false;
-  if (!estado.categorias.has(l.categoria)) return false;
+  if (!estado.tipos.has(l.categoria)) return false;
   if (estado.busqueda) {
-    const heno = `${l.nombre} ${l.localidad} ${l.descripcion}`.toLowerCase();
-    if (!heno.includes(estado.busqueda)) return false;
+    const h = `${l.nombre} ${l.localidad} ${l.descripcion}`.toLowerCase();
+    if (!h.includes(estado.busqueda)) return false;
   }
   return true;
 }
+const porId = id => LUGARES.find(l => l.id === id);
 
-/* ═══════════════════════════════════════════════════════════
-   El awayo — bandas de región, ordenadas por altura
-   ═══════════════════════════════════════════════════════════ */
-const elAwayo = document.getElementById('awayo');
-ORDEN.forEach(key => {
-  const r = REG[key];
+/* ── Paso 1: botones de región ───────────────────────────── */
+const elReg = document.getElementById('regiones');
+ORDEN.forEach(k => {
   const b = document.createElement('button');
-  b.className = 'banda';
-  b.dataset.region = key;
-  b.style.setProperty('--tinte', r.color);
+  b.className = 'region c-' + k;
+  b.dataset.region = k;
   b.setAttribute('aria-pressed', 'true');
-  b.title = `${r.nombre} — ${r.resumen}`;
-  b.innerHTML = `
-    <div class="listas motivo trama" style="--c:${r.color}"></div>
-    <div class="pampa">
-      <div class="b-nombre">${r.nombre}</div>
-      <div class="b-cota">${r.altura}</div>
-      <div class="b-cuenta" data-cuenta="${key}">0</div>
-    </div>`;
+  b.innerHTML = `<span class="nom">${REG[k].nombre}</span>
+                 <span class="alt">${REG[k].altura}</span>`;
   b.addEventListener('click', () => {
-    if (estado.regiones.has(key) && estado.regiones.size === ORDEN.length) {
-      estado.regiones = new Set([key]);              // aislar la banda
-    } else if (estado.regiones.has(key)) {
-      estado.regiones.delete(key);
-      if (!estado.regiones.size) estado.regiones = new Set(ORDEN);
-    } else {
-      estado.regiones.add(key);
-    }
-    if (estado.elegido && !estado.regiones.has(porId(estado.elegido).region)) {
-      estado.elegido = null;
-    }
+    alternar(estado.regiones, k, ORDEN);
+    if (estado.elegido && !estado.regiones.has(porId(estado.elegido).region)) estado.elegido = null;
     pintar();
-    if (estado.regiones.size === 1) {
-      map.flyToBounds(poligonos[key].getBounds(), { padding: [40, 40], duration: 0.7 });
-    }
+    encuadrar();
   });
-  elAwayo.appendChild(b);
+  elReg.appendChild(b);
 });
 
-/* orillo superior — los mismos cuatro hilos */
-const elOrillo = document.getElementById('orillo');
-ORDEN.forEach(key => {
-  const h = document.createElement('div');
-  h.className = 'hebra';
-  h.dataset.region = key;
-  h.style.setProperty('--c', REG[key].color);
-  elOrillo.appendChild(h);
-});
-
-/* ═══════════════════════════════════════════════════════════
-   Filtros de categoría
-   ═══════════════════════════════════════════════════════════ */
-const elHerr = document.getElementById('herramientas');
-const elBuscar = document.getElementById('buscar');
-Object.entries(CAT).forEach(([key, c]) => {
+/* ── Paso 2: botones de tipo ─────────────────────────────── */
+const elTipos = document.getElementById('tipos');
+Object.entries(CAT).forEach(([k, c]) => {
   const b = document.createElement('button');
-  b.className = 'filtro puesto';
-  b.dataset.cat = key;
+  b.className = 'tipo';
+  b.dataset.tipo = k;
   b.setAttribute('aria-pressed', 'true');
-  b.innerHTML = `<span aria-hidden="true">${glifo(key)}</span>${c.plural}`;
+  b.innerHTML = `${svg(c.icono, 'currentColor')}<span>${c.boton}</span>`;
   b.addEventListener('click', () => {
-    estado.categorias.has(key) ? estado.categorias.delete(key) : estado.categorias.add(key);
-    if (!estado.categorias.size) estado.categorias = new Set(Object.keys(CAT));
-    if (estado.elegido && !estado.categorias.has(porId(estado.elegido).categoria)) {
-      estado.elegido = null;
-    }
+    alternar(estado.tipos, k, Object.keys(CAT));
+    if (estado.elegido && !estado.tipos.has(porId(estado.elegido).categoria)) estado.elegido = null;
     pintar();
   });
-  elHerr.insertBefore(b, elBuscar);
+  elTipos.appendChild(b);
 });
 
-/* pequeños rombos que explican el motivo de cada categoría */
-function glifo(cat) {
-  const base = 'display:inline-block;width:8px;height:8px;transform:rotate(45deg);vertical-align:middle;';
-  if (cat === 'oferta')      return `<span style="${base}box-shadow:inset 0 0 0 1.5px currentColor"></span>`;
-  if (cat === 'hostal')      return `<span style="${base}background:currentColor;position:relative">
-                                       <span style="position:absolute;inset:2.5px;background:var(--lana-800)"></span></span>`;
-  if (cat === 'restaurante') return `<span style="${base}background:currentColor;position:relative">
-                                       <span style="position:absolute;left:-1px;right:-1px;top:3px;height:2px;background:var(--lana-800)"></span></span>`;
-  return `<span style="${base}background:currentColor"></span>`;
+/* Un clic apaga; si se apagan todos, se vuelven a encender
+   todos, así nunca queda el mapa vacío sin explicación. */
+function alternar(conjunto, clave, todas) {
+  conjunto.has(clave) ? conjunto.delete(clave) : conjunto.add(clave);
+  if (!conjunto.size) todas.forEach(t => conjunto.add(t));
 }
 
-/* ═══════════════════════════════════════════════════════════
-   Panel de relato
-   ═══════════════════════════════════════════════════════════ */
-const elRelato = document.getElementById('relato');
+function encuadrar() {
+  const activas = ORDEN.filter(k => estado.regiones.has(k));
+  if (activas.length === ORDEN.length) { map.flyToBounds(LIMITES, { duration: .6 }); return; }
+  let b = poligonos[activas[0]].getBounds();
+  activas.slice(1).forEach(k => { b = b.extend(poligonos[k].getBounds()); });
+  map.flyToBounds(b, { padding: [40, 40], duration: .6 });
+}
 
-function porId(id) { return LUGARES.find(l => l.id === id); }
+/* ── Franja de hilos ─────────────────────────────────────── */
+const elHilos = document.getElementById('hilos');
+ORDEN.forEach(k => {
+  const d = document.createElement('div');
+  d.dataset.region = k;
+  d.style.background = TINTE[k];
+  elHilos.appendChild(d);
+});
+
+/* ── Lista y ficha ───────────────────────────────────────── */
+const elLista = document.getElementById('lista');
 
 function abrir(id) {
   estado.elegido = id;
   pintar();
   const l = porId(id);
-  map.panTo([l.lat, l.lng], { animate: true, duration: 0.5 });
-  elRelato.scrollTop = 0;
+  map.panTo([l.lat, l.lng], { animate: true, duration: .5 });
+  elLista.scrollTop = 0;
+  const v = document.getElementById('volver');
+  if (v) v.focus({ preventScroll: true });
 }
 
-function pintarRelato(visibles) {
-  /* ── una ficha abierta ── */
+function pintarLista(visibles) {
   if (estado.elegido) {
-    const l = porId(estado.elegido);
-    const r = REG[l.region];
+    const l = porId(estado.elegido), c = TINTE[l.region];
     const gm = `https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}`;
-    elRelato.innerHTML = `
-      <button class="volver" id="volver">← Volver a ${r.nombre}</button>
-      <div class="ficha-foto motivo trama"><span>Foto por sumar</span></div>
-      <div class="ficha-cuerpo">
-        <div class="ficha-donde" style="--c:${r.color}">${l.localidad} · ${r.nombre}</div>
-        <div class="ficha-nombre">${l.nombre}</div>
-        <div class="ficha-que">${CAT[l.categoria].nombre}${l.ruta_orden ? ` · Parada ${l.ruta_orden} de la ruta` : ''}</div>
-        <div class="ficha-texto">${l.descripcion}</div>
-        <div class="ficha-acciones">
-          <a class="llegar" style="--c:${r.color}" href="${gm}" target="_blank" rel="noopener">Cómo llegar</a>
-          ${l.muestra ? '<span class="muestra-nota">Dato de muestra</span>' : ''}
-        </div>
+    elLista.innerHTML = `
+      <button id="volver">← Volver a la lista</button>
+      <div class="f-foto">Todavía sin foto</div>
+      <div class="f-cuerpo">
+        <span class="f-tipo" style="--c:${c}">${svg(CAT[l.categoria].icono, '#fff')}
+          ${CAT[l.categoria].nombre}</span>
+        <div class="f-nombre">${l.nombre}</div>
+        <div class="f-donde">${l.localidad} · ${REG[l.region].nombre}</div>
+        <p class="f-texto">${l.descripcion}</p>
+        <a class="llegar" href="${gm}" target="_blank" rel="noopener">Cómo llegar →</a>
+        ${l.muestra ? '<p class="f-muestra">Este lugar es un ejemplo inventado.</p>' : ''}
       </div>`;
     document.getElementById('volver').addEventListener('click', () => {
-      estado.elegido = null;
-      pintar();
+      estado.elegido = null; pintar();
     });
     return;
   }
 
-  /* ── índice por región ── */
   if (!visibles.length) {
-    elRelato.innerHTML = `<div class="lista-vacia">
-      No hay nada con esa búsqueda todavía. Probá con otro nombre,
-      o volvé a abrir las bandas de abajo.</div>`;
+    elLista.innerHTML = `<p class="vacio">No encontramos nada así.
+      Probá con otro nombre, o tocá <b>Ver todo de nuevo</b>.</p>`;
     return;
   }
 
-  elRelato.innerHTML = ORDEN.filter(k => estado.regiones.has(k)).map(key => {
-    const r = REG[key];
-    const suyos = visibles.filter(l => l.region === key);
-    if (!suyos.length) return '';
-    return `
-      <section class="region-intro" style="--c:${r.color}">
-        <div class="intro-hilo"></div>
-        <div class="intro-nombre">${r.nombre}</div>
-        <div class="intro-datos">${r.altura} · ${r.pueblos} · ${r.hilo}</div>
-        <div class="intro-resumen">${r.resumen}</div>
-      </section>
-      <div class="lista">
-        ${suyos.map(l => `
-          <button class="ficha-lista" data-abre="${l.id}" style="--c:${r.color}">
-            <span class="fl-rombo ${l.categoria === 'oferta' ? 'hueco' : ''}"></span>
-            <span class="fl-texto">
-              <span class="fl-nombre">${l.nombre}</span>
-              <span class="fl-donde">${l.localidad} · ${CAT[l.categoria].nombre}</span>
-            </span>
-          </button>`).join('')}
-      </div>`;
-  }).join('');
+  elLista.innerHTML =
+    `<p class="cuenta">${visibles.length === 1 ? '1 lugar' : visibles.length + ' lugares'}</p>` +
+    visibles.map(l => `
+      <button class="fila" data-abre="${l.id}">
+        <span class="pastilla" style="--c:${TINTE[l.region]}">${svg(CAT[l.categoria].icono, '#fff')}</span>
+        <span class="t">
+          <span class="n">${l.nombre}</span>
+          <span class="d">${l.localidad} · ${REG[l.region].nombre}</span>
+        </span>
+      </button>`).join('');
 
-  elRelato.querySelectorAll('[data-abre]').forEach(b =>
+  elLista.querySelectorAll('[data-abre]').forEach(b =>
     b.addEventListener('click', () => abrir(b.dataset.abre)));
 }
 
-/* ═══════════════════════════════════════════════════════════
-   Rutas — se rearman con las paradas visibles
-   ═══════════════════════════════════════════════════════════ */
-function pintarRutas() {
-  capaRutas.clearLayers();
-  ORDEN.forEach(key => {
-    const paradas = LUGARES
-      .filter(l => l.region === key && l.ruta_orden && pasa(l))
-      .sort((a, b) => a.ruta_orden - b.ruta_orden);
-    if (paradas.length < 2) return;
-
-    L.polyline(paradas.map(p => [p.lat, p.lng]), {
-      color: REG[key].color, weight: 2, opacity: 0.9,
-      dashArray: '3 6', lineCap: 'round', interactive: false
-    }).addTo(capaRutas);
-
-    paradas.forEach(p => L.marker([p.lat, p.lng], {
-      interactive: false,
-      icon: L.divIcon({ className: '',
-        html: `<div class="parada">${p.ruta_orden}</div>`, iconSize: [0, 0] })
-    }).addTo(capaRutas));
-  });
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Pintar todo
-   ═══════════════════════════════════════════════════════════ */
+/* ── Pintar ──────────────────────────────────────────────── */
 function pintar() {
   const visibles = LUGARES.filter(pasa);
 
-  /* marcadores */
-  capaPuntos.clearLayers();
+  capaPins.clearLayers();
   visibles.forEach(l => {
     const m = marcadores[l.id];
-    m.setIcon(icono(l, l.id === estado.elegido));
-    capaPuntos.addLayer(m);
+    m.setIcon(pin(l, l.id === estado.elegido));
+    capaPins.addLayer(m);
   });
 
-  /* zonas */
   capaZonas.clearLayers();
-  if (estado.zonas) {
-    ORDEN.forEach(key => {
-      if (!estado.regiones.has(key)) return;
-      poligonos[key].addTo(capaZonas);
-      etiquetaRegion(key).addTo(capaZonas);
-    });
-  }
-
-  /* rutas */
-  if (estado.rutas) { pintarRutas(); capaRutas.addTo(map); }
-  else { capaRutas.clearLayers(); if (map.hasLayer(capaRutas)) map.removeLayer(capaRutas); }
-
-  /* panel */
-  pintarRelato(visibles);
-
-  /* bandas + orillo + cuentas */
-  ORDEN.forEach(key => {
-    const n = visibles.filter(l => l.region === key).length;
-    const banda = elAwayo.querySelector(`.banda[data-region="${key}"]`);
-    const puesta = estado.regiones.has(key);
-    banda.classList.toggle('suelta', !puesta);
-    banda.setAttribute('aria-pressed', String(puesta));
-    banda.querySelector(`[data-cuenta="${key}"]`).textContent = n;
-    elOrillo.querySelector(`.hebra[data-region="${key}"]`).classList.toggle('apagada', !puesta);
+  ORDEN.forEach(k => {
+    if (!estado.regiones.has(k)) return;
+    poligonos[k].addTo(capaZonas);
+    rotulo(k).addTo(capaZonas);
   });
 
-  /* filtros */
-  document.querySelectorAll('.filtro[data-cat]').forEach(el => {
-    const puesto = estado.categorias.has(el.dataset.cat);
-    el.classList.toggle('puesto', puesto);
-    el.setAttribute('aria-pressed', String(puesto));
-  });
+  pintarLista(visibles);
 
-  /* pie */
-  const total = visibles.length;
-  document.getElementById('pie-cuenta').textContent =
-    total === 1 ? '1 lugar en el mapa · datos de muestra, a completar con las comunidades'
-                : `${total} lugares en el mapa · datos de muestra, a completar con las comunidades`;
-  document.getElementById('ver-rutas').textContent =
-    estado.rutas ? 'Ocultar las rutas' : 'Mostrar las rutas';
-  document.getElementById('ver-rutas').classList.toggle('puesto', estado.rutas);
-  document.getElementById('ver-zonas').textContent =
-    estado.zonas ? 'Ocultar las regiones' : 'Mostrar las regiones';
-  document.getElementById('ver-zonas').classList.toggle('puesto', estado.zonas);
+  ORDEN.forEach(k => {
+    const on = estado.regiones.has(k);
+    elReg.querySelector(`[data-region="${k}"]`).setAttribute('aria-pressed', String(on));
+    elHilos.querySelector(`[data-region="${k}"]`).style.opacity = on ? '1' : '.18';
+  });
+  Object.keys(CAT).forEach(k => {
+    elTipos.querySelector(`[data-tipo="${k}"]`)
+           .setAttribute('aria-pressed', String(estado.tipos.has(k)));
+  });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   Controles del pie y búsqueda
-   ═══════════════════════════════════════════════════════════ */
-document.getElementById('ver-rutas').addEventListener('click', () => {
-  estado.rutas = !estado.rutas; pintar();
-});
-document.getElementById('ver-zonas').addEventListener('click', () => {
-  estado.zonas = !estado.zonas; pintar();
-});
-document.getElementById('ver-todo').addEventListener('click', () => {
-  estado.regiones = new Set(ORDEN);
-  estado.categorias = new Set(Object.keys(CAT));
-  estado.busqueda = '';
-  estado.elegido = null;
-  elBuscar.value = '';
-  map.flyToBounds(LIMITES, { duration: 0.7 });
-  pintar();
-});
+/* ── Controles ───────────────────────────────────────────── */
+const elBuscar = document.getElementById('buscar');
 elBuscar.addEventListener('input', e => {
   estado.busqueda = e.target.value.trim().toLowerCase();
   estado.elegido = null;
+  pintar();
+});
+document.getElementById('todo').addEventListener('click', () => {
+  estado.regiones = new Set(ORDEN);
+  estado.tipos = new Set(Object.keys(CAT));
+  estado.busqueda = '';
+  estado.elegido = null;
+  elBuscar.value = '';
+  map.flyToBounds(LIMITES, { duration: .6 });
   pintar();
 });
 document.addEventListener('keydown', e => {
