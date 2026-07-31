@@ -39,16 +39,23 @@ en el teléfono, sin que nadie le explique nada.**
 - **Un solo botón pintado por fila, siempre.** El pintado es el que se está viendo, en
   el coral de Puna. No es un sistema de tildes: se elige uno, como en un formulario
   de papel.
-- **Las cinco regiones en una línea**, sin alturas encima (la altura de la región
-  aparece arriba de la lista cuando se elige una). La fila de abajo, la de qué se
-  busca, va más chica.
+- **El mapa ocupa toda la pantalla.** Arriba queda una sola barra con el logo, los
+  idiomas y un botón grande que abre el **cajón** con los filtros. En pantalla ancha
+  el mapa se lleva el 92% del alto.
+- **Las dos filas van en una sola línea horizontal**, nunca se parten en dos. Si no
+  entran, se arrastran de costado y el borde se degrada para avisar que hay más.
+- **Se puede ocultar la lista** con el botón de abajo a la izquierda, y ahí el mapa
+  ocupa también todo el ancho.
+- Sin alturas en los botones: la altura de la región aparece arriba de la lista
+  cuando se elige una. La fila de qué se busca va más chica.
 - **Un dibujo por tipo de lugar** (cama, cubiertos, cerro, brújula), el mismo en el
   botón, en la lista y en el mapa. No hay leyenda que aprender.
 - **La chakana**, la cruz escalonada andina, va en el botón de «Todas las regiones»
   —sus cuatro brazos son las cuatro partes del mundo andino, igual que las cuatro
   regiones— y en el recuadro de la foto que falta.
 - **Un color de marca por región**, en el punto del botón y en el pin del mapa:
-  Puna coral, Quebrada naranja, Valles verde, Yungas azul.
+  Puna coral, Quebrada naranja, **Valles azul** (por los diques y lagos) y
+  **Yungas verde** (es la región más verde).
 - **Todos los botones miden 44 px de alto como mínimo**, para el dedo.
 - **Contrastes medidos, no estimados.** El texto de las píldoras elegidas va en tinta
   y no en blanco, porque blanco sobre coral da 3.1:1 y no llega al mínimo; en tinta da

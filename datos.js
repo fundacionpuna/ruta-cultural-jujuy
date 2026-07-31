@@ -45,7 +45,11 @@ window.TEXTOS = {
     nLugares: n => n + ' lugares',
     vacio: `No encontramos nada así. Probá con otro nombre, o tocá
                  <b>Todas las regiones</b> y <b>Todo</b>.`,
-    cambiarIdioma: 'Cambiar idioma'
+    cambiarIdioma: 'Cambiar idioma',
+    abrirCajon: 'Buscar lugares',
+    cerrarCajon: 'Ver el mapa',
+    verLista: 'Ver la lista',
+    ocultarLista: 'Ocultar la lista'
   },
   en: {
     titulo: 'Jujuy Cultural Route',
@@ -67,7 +71,11 @@ window.TEXTOS = {
     nLugares: n => n + ' places',
     vacio: `We didn't find anything like that. Try another name, or tap
                  <b>All regions</b> and <b>Everything</b>.`,
-    cambiarIdioma: 'Change language'
+    cambiarIdioma: 'Change language',
+    abrirCajon: 'Find places',
+    cerrarCajon: 'See the map',
+    verLista: 'Show the list',
+    ocultarLista: 'Hide the list'
   },
   pt: {
     titulo: 'Rota Cultural de Jujuy',
@@ -89,7 +97,11 @@ window.TEXTOS = {
     nLugares: n => n + ' lugares',
     vacio: `Não encontramos nada assim. Tente outro nome, ou toque em
                  <b>Todas as regiões</b> e <b>Tudo</b>.`,
-    cambiarIdioma: 'Mudar idioma'
+    cambiarIdioma: 'Mudar idioma',
+    abrirCajon: 'Buscar lugares',
+    cerrarCajon: 'Ver o mapa',
+    verLista: 'Ver a lista',
+    ocultarLista: 'Ocultar a lista'
   }
 };
 
@@ -117,7 +129,7 @@ window.REGIONES = {
   },
   valles: {
     nombre: 'Valles',
-    color: '#7ba551',   // verde
+    color: '#6492d8',   // azul — por los diques y lagos (Luis, 31/7)
     altura: { es: '1.200 – 1.800 m', en: '1,200 – 1,800 m', pt: '1.200 – 1.800 m' },
     pueblos: 'Kolla · Ocloya',
     poligono: [
@@ -127,7 +139,7 @@ window.REGIONES = {
   },
   yungas: {
     nombre: 'Yungas',
-    color: '#6492d8',   // azul
+    color: '#7ba551',   // verde — es la región más verde (Luis, 31/7)
     altura: { es: '400 – 1.500 m', en: '400 – 1,500 m', pt: '400 – 1.500 m' },
     pueblos: 'Ocloya · Guaraní · Kolla',
     poligono: [

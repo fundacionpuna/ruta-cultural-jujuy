@@ -42,8 +42,8 @@
 }
 .c-puna     { --c: var(--coral); }
 .c-quebrada { --c: var(--naranja); }
-.c-valles   { --c: var(--verde); }
-.c-yungas   { --c: var(--azul); }
+.c-valles   { --c: var(--azul); }    /* diques y lagos */
+.c-yungas   { --c: var(--verde); }   /* la región más verde */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -63,20 +63,68 @@ body {
 #hilos { height: 6px; display: flex; flex-shrink: 0; }
 #hilos div { flex: 1; transition: opacity .25s; }
 
-/* ── Cabecera ────────────────────────────────────────────── */
+/* ── Barra de arriba: una sola línea, para que el mapa se
+      lleve todo el resto de la pantalla ──────────────────── */
 header {
   flex-shrink: 0;
-  padding: 15px 24px 0;
-  text-align: center;
-  position: relative;
-}
-#idiomas {
-  position: absolute;
-  top: 14px;
-  right: 20px;
+  padding: 9px 18px;
   display: flex;
-  gap: 5px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid var(--borde);
+  position: relative;
+  z-index: 1200;
+  background: var(--papel);
 }
+.izq { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.der { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+
+/* botón grande que abre el cajón de filtros */
+#abrir-cajon {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--coral);
+  color: var(--tinta);
+  border: 2px solid var(--coral);
+  border-radius: var(--curva);
+  padding: 10px 20px;
+  min-height: 46px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+#abrir-cajon:hover { filter: brightness(1.05); }
+#abrir-cajon svg { width: 19px; height: 19px; flex-shrink: 0; }
+
+/* el cajón: baja por encima del mapa */
+#cajon {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--papel);
+  border-bottom: 1px solid var(--borde);
+  box-shadow: 0 8px 20px rgba(42,31,46,.13);
+  padding: 4px 0 16px;
+  z-index: 1200;
+  display: none;
+}
+#cajon.abierto { display: block; }
+.cajon-aviso {
+  font-size: 13.5px;
+  color: var(--suave);
+  text-align: center;
+  max-width: 76ch;
+  margin: 9px auto 0;
+  padding: 0 18px;
+  line-height: 1.5;
+}
+.cajon-aviso b { color: var(--tinta); }
+#idiomas { display: flex; gap: 5px; }
 .idioma {
   font-family: 'Outfit', system-ui, sans-serif;
   font-size: 14px;
@@ -104,48 +152,65 @@ header {
   justify-content: center;
   gap: 13px;
 }
-.marca img { height: 40px; width: auto; display: block; }
-.marca .textos { text-align: left; }
+.marca img { height: 34px; width: auto; display: block; }
+.marca .textos { text-align: left; min-width: 0; }
 h1 {
   font-family: 'Outfit', system-ui, sans-serif;
-  font-size: 31px;
+  font-size: 22px;
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.1;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .proyecto {
-  font-size: 14px;
+  font-size: 12.5px;
   color: var(--suave);
-  margin-top: 3px;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.aviso {
-  font-size: 14px;
-  color: var(--suave);
-  margin: 9px auto 0;
-  max-width: 74ch;
-  line-height: 1.55;
-}
-.aviso b { color: var(--tinta); }
 
 /* ── Pasos ───────────────────────────────────────────────── */
 .paso {
   font-family: 'Outfit', system-ui, sans-serif;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 500;
   color: var(--suave);
-  margin: 13px 24px 7px;
+  margin: 13px 18px 7px;
   text-align: center;
 }
 
 /* ── Filas de píldoras ───────────────────────────────────── */
+/* Luis: "Región todo en 1 línea horizontal y lo mismo que buscas,
+   1 sola línea horizontal". Así que no envuelven nunca; si no entran,
+   se arrastran de costado. `safe center` centra cuando entran y no
+   recorta el primero cuando no. */
 .fila-botones {
   display: flex;
-  justify-content: center;
+  justify-content: safe center;
   align-items: center;
   gap: 9px;
-  padding: 0 24px;
+  padding: 0 18px;
   flex-shrink: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.fila-botones::-webkit-scrollbar { display: none; }
+/* En pantalla angosta la fila no entra y se arrastra de costado. El
+   degradado del borde avisa que hay más botones para ese lado. */
+.fila-botones.mas-der {
+  mask-image: linear-gradient(to right, #000 84%, transparent 100%);
+}
+.fila-botones.mas-izq {
+  mask-image: linear-gradient(to left, #000 84%, transparent 100%);
+}
+.fila-botones.mas-izq.mas-der {
+  mask-image: linear-gradient(to right, transparent 0, #000 16%,
+                              #000 84%, transparent 100%);
 }
 
 /* base común de las dos filas */
@@ -218,14 +283,34 @@ h1 {
   flex: 1;
   display: flex;
   min-height: 0;
-  border-top: 1px solid var(--borde);
+  position: relative;
 }
 #lista {
-  width: 396px;
+  width: 380px;
   flex-shrink: 0;
   overflow-y: auto;
   border-right: 1px solid var(--borde);
 }
+body.sin-lista #lista { display: none; }
+#alternar-lista {
+  position: absolute;
+  bottom: 16px;
+  left: 396px;          /* al costado de la lista */
+  z-index: 900;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--blanco);
+  color: var(--tinta);
+  border: 2px solid var(--borde);
+  border-radius: var(--curva);
+  padding: 9px 16px;
+  min-height: 42px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(42,31,46,.14);
+}
+#alternar-lista:hover { border-color: var(--morado-medio); }
+body.sin-lista #alternar-lista { left: 16px; }
 #mapa { flex: 1; min-width: 0; }
 
 .cuenta {
@@ -394,23 +479,27 @@ a.llegar:hover { background: #8c4ba3; }
 /* ── Teléfono ────────────────────────────────────────────── */
 @media (max-width: 900px) {
   html, body { height: auto; overflow: visible; }
-  header { padding: 12px 14px 0; }
-  #idiomas { position: static; justify-content: center; margin-bottom: 11px; }
-  .marca { flex-direction: column; gap: 8px; }
-  .marca .textos { text-align: center; }
-  .marca img { height: 36px; }
-  h1 { font-size: 24px; }
-  .proyecto { font-size: 13px; }
-  .aviso { font-size: 13.5px; }
-  .paso { margin: 12px 14px 6px; }
-  .fila-botones { padding: 0 14px; gap: 8px; }
+  /* la barra se parte en dos filas: marca arriba, controles abajo */
+  header { padding: 9px 13px; flex-wrap: wrap; gap: 9px; }
+  .izq { width: 100%; }
+  .der { width: 100%; justify-content: space-between; }
+  .marca img { height: 30px; }
+  h1 { font-size: 18px; }
+  .proyecto { font-size: 11.5px; }
+  #abrir-cajon { font-size: 15px; padding: 9px 16px; }
+  .paso { margin: 12px 13px 6px; }
+  .fila-botones { padding: 0 13px; gap: 8px; }
+  .cajon-aviso { font-size: 12.5px; padding: 0 13px; }
   .region { font-size: 15.5px; padding: 9px 16px; }
   .tipo { font-size: 14px; padding: 7px 13px; }
   #barra-buscar { padding: 11px 14px 12px; }
   #buscar { width: 100%; }
 
   #cuerpo { flex-direction: column; min-height: 0; }
-  #mapa { order: 1; height: 320px; flex: none; }
+  #mapa { order: 1; height: 62vh; flex: none; }   /* el mapa, grande */
+  /* en el teléfono la lista va debajo del mapa, no le quita ancho:
+     no hace falta el botón de esconderla */
+  #alternar-lista { display: none; }
   #lista {
     order: 2; width: 100%; flex: none; overflow: visible;
     border-right: none; border-top: 1px solid var(--borde);
@@ -428,30 +517,41 @@ a.llegar:hover { background: #8c4ba3; }
 <div id="hilos"></div>
 
 <header>
-  <div id="idiomas"></div>
-  <div class="marca">
-    <img src="logo-puna.png" alt="Fundación Puna">
-    <div class="textos">
-      <h1 id="titulo">Ruta Cultural de Jujuy</h1>
-      <p class="proyecto" id="proyecto">Un proyecto de Fundación Puna</p>
+  <div class="izq">
+    <div class="marca">
+      <img src="logo-puna.png" alt="Fundación Puna">
+      <div class="textos">
+        <h1 id="titulo">Ruta Cultural de Jujuy</h1>
+        <p class="proyecto" id="proyecto">Un proyecto de Fundación Puna</p>
+      </div>
     </div>
   </div>
-  <p class="aviso" id="aviso"></p>
+  <div class="der">
+    <div id="idiomas"></div>
+    <button id="abrir-cajon" aria-expanded="false" aria-controls="cajon"></button>
+  </div>
+
+  <!-- El cajón: los filtros salen de la pantalla y bajan de acá, así el
+       mapa se lleva todo el alto. -->
+  <div id="cajon">
+    <p class="paso" id="paso1"></p>
+    <div class="fila-botones" id="regiones"></div>
+
+    <p class="paso" id="paso2"></p>
+    <div class="fila-botones" id="tipos"></div>
+
+    <div id="barra-buscar">
+      <input id="buscar" type="search">
+    </div>
+
+    <p class="cajon-aviso" id="aviso"></p>
+  </div>
 </header>
-
-<p class="paso" id="paso1"></p>
-<div class="fila-botones" id="regiones"></div>
-
-<p class="paso" id="paso2"></p>
-<div class="fila-botones" id="tipos"></div>
-
-<div id="barra-buscar">
-  <input id="buscar" type="search">
-</div>
 
 <div id="cuerpo">
   <div id="lista" aria-live="polite"></div>
   <div id="mapa"></div>
+  <button id="alternar-lista"></button>
 </div>
 
 <script src="datos.js"></script>
@@ -616,6 +716,53 @@ const elTipos = document.getElementById('tipos');
   elTipos.appendChild(b);
 });
 
+/* ── Aviso de que la fila sigue para el costado ───────────── */
+function marcarBordes(fila) {
+  const mas = fila.scrollWidth - fila.clientWidth;
+  fila.classList.toggle('mas-izq', fila.scrollLeft > 2);
+  fila.classList.toggle('mas-der', mas > 2 && fila.scrollLeft < mas - 2);
+}
+const filasBotones = [...document.querySelectorAll('.fila-botones')];
+filasBotones.forEach(f => {
+  f.addEventListener('scroll', () => marcarBordes(f), { passive: true });
+  new ResizeObserver(() => marcarBordes(f)).observe(f);
+});
+const revisarBordes = () => filasBotones.forEach(marcarBordes);
+
+/* ── El cajón de filtros ─────────────────────────────────── */
+const elCajon = document.getElementById('cajon');
+const btnCajon = document.getElementById('abrir-cajon');
+const lupa = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                 stroke-linecap="round" aria-hidden="true">
+                 <circle cx="10.5" cy="10.5" r="7"/><line x1="15.8" y1="15.8" x2="21" y2="21"/></svg>`;
+
+function cajonAbierto() { return elCajon.classList.contains('abierto'); }
+function alternarCajon(abrir) {
+  const v = abrir === undefined ? !cajonAbierto() : abrir;
+  elCajon.classList.toggle('abierto', v);
+  btnCajon.setAttribute('aria-expanded', String(v));
+  btnCajon.innerHTML = lupa + `<span>${v ? t('cerrarCajon') : t('abrirCajon')}</span>`;
+  setTimeout(() => { map.invalidateSize({ animate: false }); revisarBordes(); }, 60);
+}
+btnCajon.addEventListener('click', () => alternarCajon());
+/* clic en el mapa o Escape lo cierran */
+document.getElementById('cuerpo').addEventListener('pointerdown', () => {
+  if (cajonAbierto()) alternarCajon(false);
+}, true);
+
+/* ── Mostrar u ocultar la lista, para que el mapa ocupe todo ── */
+const btnLista = document.getElementById('alternar-lista');
+function pintarBotonLista() {
+  const oculta = document.body.classList.contains('sin-lista');
+  btnLista.textContent = oculta ? t('verLista') : t('ocultarLista');
+  btnLista.setAttribute('aria-pressed', String(!oculta));
+}
+btnLista.addEventListener('click', () => {
+  document.body.classList.toggle('sin-lista');
+  pintarBotonLista();
+  setTimeout(() => map.invalidateSize({ animate: false }), 60);
+});
+
 /* ── Botones de idioma ───────────────────────────────────── */
 const elIdiomas = document.getElementById('idiomas');
 Object.entries(IDIOMAS).forEach(([codigo, i]) => {
@@ -660,6 +807,10 @@ function traducir() {
 
   elIdiomas.querySelectorAll('[data-idioma]').forEach(el =>
     el.setAttribute('aria-pressed', String(el.dataset.idioma === estado.idioma)));
+
+  btnCajon.innerHTML = lupa +
+    `<span>${cajonAbierto() ? t('cerrarCajon') : t('abrirCajon')}</span>`;
+  pintarBotonLista();
 }
 
 function encuadrar() {
@@ -779,11 +930,14 @@ elBuscar.addEventListener('input', e => {
   pintar();
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && estado.elegido) { estado.elegido = null; pintar(); }
+  if (e.key !== 'Escape') return;
+  if (cajonAbierto()) { alternarCajon(false); return; }
+  if (estado.elegido) { estado.elegido = null; pintar(); }
 });
 
 traducir();
 pintar();
+revisarBordes();
 </script>
 </body>
 </html>
