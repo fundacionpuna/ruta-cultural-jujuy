@@ -17,6 +17,9 @@ Doble clic en `index.html`. No necesita servidor ni instalación.
 |---|---|
 | `index.html` | El mapa. No hace falta tocarlo para cargar lugares. |
 | `datos.js` | **Todos los datos.** Regiones, colores y lista de lugares. |
+| `logo-puna.png` | Logo de la fundación, para el encabezado (284×198). |
+| `favicon.png` | Icono de la pestaña. Va cuadrado y aparte: el navegador estira cualquier imagen que no lo sea. |
+| `apple-touch-icon.png` | Icono para iOS, con fondo crema (Apple no respeta la transparencia). |
 | `LEEME.md` | Este archivo. |
 
 ## El diseño, en criollo
