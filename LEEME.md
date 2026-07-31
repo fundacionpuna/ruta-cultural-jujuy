@@ -31,6 +31,11 @@ El logo de la fundación va arriba, con la línea «Un proyecto de Fundación Pu
 La regla de uso es una sola: **tiene que poder usarlo alguien de ochenta años, al sol,
 en el teléfono, sin que nadie le explique nada.**
 
+- **Tres idiomas.** Botones ES / EN / PT arriba a la derecha. El mapa arranca en el
+  idioma del navegador si es uno de los tres, y recuerda el que se elige. Los nombres
+  propios (Salinas Grandes, Purmamarca) no se traducen.
+- **Fondo blanco**, que es lo que se lee más fácil. La crema de la marca quedó como
+  acento: el resaltado de la lista y el recuadro de la foto que falta.
 - **Un solo botón pintado por fila, siempre.** El pintado es el que se está viendo, en
   el coral de Puna. No es un sistema de tildes: se elige uno, como en un formulario
   de papel.
@@ -73,8 +78,18 @@ Abrí `datos.js` con cualquier editor de texto, copiá un bloque de `window.LUGA
 ```js
 { id: 'qu-16', nombre: 'Hostal La Copla', categoria: 'hostal', region: 'quebrada',
   localidad: 'Tilcara', lat: -23.5801, lng: -65.3944,
-  descripcion: 'Ocho habitaciones en casa de adobe, a dos cuadras de la plaza.' },
+  descripcion: {
+    es: 'Ocho habitaciones en casa de adobe, a dos cuadras de la plaza.',
+    en: 'Eight rooms in an adobe house, two blocks from the square.',
+    pt: 'Oito quartos em casa de adobe, a duas quadras da praça.' } },
 ```
+
+La descripción va en los tres idiomas. Si falta alguno, el mapa muestra el castellano,
+así que se puede cargar primero en castellano y traducir después. El **nombre** y la
+**localidad** son nombres propios: van una sola vez, sin traducir.
+
+Los textos de los botones y carteles están todos juntos en `window.TEXTOS`, al principio
+de `datos.js`, uno por idioma.
 
 - `categoria`: `hostal` · `restaurante` · `oferta` · `punto`
 - `region`: `puna` · `quebrada` · `valles` · `yungas`
@@ -108,7 +123,7 @@ pero quedan disponibles si más adelante se quiere una página por región.
 6. **Nombres en lengua.** Si las comunidades quieren, cada lugar puede llevar su nombre en
    quechua o guaraní además del castellano, y la categoría puede renombrarse con las
    palabras que ellas usen en lugar de las cuatro genéricas de ahora.
-7. Sin versión en inglés todavía.
+7. ~~Sin versión en inglés todavía.~~ Hecho: castellano, inglés y portugués.
 
 ## Referencias que se miraron
 

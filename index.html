@@ -22,7 +22,8 @@
 
 :root {
   /* marca Puna */
-  --crema:   #ffead2;
+  --papel:   #ffffff;   /* fondo: blanco, para leer más fácil */
+  --crema:   #ffead2;   /* la crema de la marca queda como acento */
   --blanco:  #ffffff;
   --coral:   #ff5a4a;
   --verde:   #7ba551;
@@ -31,12 +32,10 @@
   --morado:  #79408d;
   --morado-medio: #9e69b1;
 
-  /* neutros de la marca */
+  /* neutros de la marca. Con el fondo blanco, el gris malva de la
+     marca vuelve a su valor original: sobre blanco da 5.2:1. */
   --tinta:  #2a1f2e;
-  /* El gris malva de la marca es #78677e, pensado sobre blanco. Sobre
-     la crema, que es más oscura, da 4.44:1 y no llega al mínimo, así
-     que va un punto más oscuro: 4.8:1. Misma familia de color. */
-  --suave:  #6f5f75;
+  --suave:  #78677e;
   --borde:  #d8cede;
 
   --curva: 999px;   /* todo redondeado: botones tipo píldora */
@@ -52,7 +51,7 @@ html, body { height: 100%; }
 body {
   font-family: 'Open Sans', system-ui, sans-serif;
   font-size: 17px;
-  background: var(--crema);
+  background: var(--papel);
   color: var(--tinta);
   display: flex;
   flex-direction: column;
@@ -69,7 +68,36 @@ header {
   flex-shrink: 0;
   padding: 15px 24px 0;
   text-align: center;
+  position: relative;
 }
+#idiomas {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  display: flex;
+  gap: 5px;
+}
+.idioma {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  min-width: 48px;
+  min-height: 44px;   /* mismo mínimo que el resto, para el dedo */
+  padding: 8px 13px;
+  border: 2px solid var(--borde);
+  border-radius: var(--curva);
+  background: var(--blanco);
+  color: var(--suave);
+  cursor: pointer;
+}
+.idioma:hover { border-color: var(--morado-medio); color: var(--tinta); }
+.idioma[aria-pressed="true"] {
+  background: var(--morado);
+  border-color: var(--morado);
+  color: var(--blanco);
+}
+
 .marca {
   display: flex;
   align-items: center;
@@ -221,7 +249,7 @@ h1 {
   min-height: 72px;
   cursor: pointer;
 }
-.item:hover { background: rgba(255,255,255,.55); }
+.item:hover { background: var(--crema); }
 .pastilla {
   width: 42px; height: 42px;
   border-radius: 50%;
@@ -267,7 +295,7 @@ h1 {
 #volver:hover { color: var(--tinta); }
 .f-foto {
   height: 150px;
-  background: var(--blanco);
+  background: var(--crema);
   border-top: 1px solid var(--borde);
   border-bottom: 1px solid var(--borde);
   display: flex; flex-direction: column;
@@ -316,7 +344,7 @@ a.llegar:hover { background: #8c4ba3; }
 
 /* ── Mapa ────────────────────────────────────────────────── */
 .leaflet-container {
-  background: var(--crema);
+  background: #f2eef4;
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
 }
@@ -359,14 +387,15 @@ a.llegar:hover { background: #8c4ba3; }
   color: var(--c);
   white-space: nowrap;
   transform: translate(-50%, -50%);
-  text-shadow: 0 0 4px var(--crema), 0 0 8px var(--crema),
-               0 0 12px var(--crema), 0 0 16px var(--crema);
+  text-shadow: 0 0 4px var(--papel), 0 0 8px var(--papel),
+               0 0 12px var(--papel), 0 0 16px var(--papel);
 }
 
 /* ── Teléfono ────────────────────────────────────────────── */
 @media (max-width: 900px) {
   html, body { height: auto; overflow: visible; }
   header { padding: 12px 14px 0; }
+  #idiomas { position: static; justify-content: center; margin-bottom: 11px; }
   .marca { flex-direction: column; gap: 8px; }
   .marca .textos { text-align: center; }
   .marca img { height: 36px; }
@@ -399,27 +428,25 @@ a.llegar:hover { background: #8c4ba3; }
 <div id="hilos"></div>
 
 <header>
+  <div id="idiomas"></div>
   <div class="marca">
     <img src="logo-puna.png" alt="Fundación Puna">
     <div class="textos">
-      <h1>Ruta Cultural de Jujuy</h1>
-      <p class="proyecto">Un proyecto de Fundación Puna</p>
+      <h1 id="titulo">Ruta Cultural de Jujuy</h1>
+      <p class="proyecto" id="proyecto">Un proyecto de Fundación Puna</p>
     </div>
   </div>
-  <p class="aviso">
-    Lugares para visitar, dormir, comer y pasear en las cuatro regiones de la provincia.
-    <b>Es una muestra:</b> los hospedajes, comidas y paseos son ejemplos inventados.
-  </p>
+  <p class="aviso" id="aviso"></p>
 </header>
 
-<p class="paso">1 · Elegí una región</p>
+<p class="paso" id="paso1"></p>
 <div class="fila-botones" id="regiones"></div>
 
-<p class="paso">2 · Elegí qué estás buscando</p>
+<p class="paso" id="paso2"></p>
 <div class="fila-botones" id="tipos"></div>
 
 <div id="barra-buscar">
-  <input id="buscar" type="search" placeholder="O buscá un lugar por nombre" aria-label="Buscar un lugar por nombre">
+  <input id="buscar" type="search">
 </div>
 
 <div id="cuerpo">
@@ -435,6 +462,23 @@ const REG = window.REGIONES;
 const ORDEN = window.ORDEN_REGIONES;
 const CAT = window.CATEGORIAS;
 const LUGARES = window.LUGARES;
+const IDIOMAS = window.IDIOMAS;
+const TEXTOS = window.TEXTOS;
+
+/* Idioma: el que eligió antes, o el del navegador si es uno de los
+   tres, o castellano. */
+function idiomaInicial() {
+  const guardado = localStorage.getItem('rcj-idioma');
+  if (guardado && IDIOMAS[guardado]) return guardado;
+  const nav = (navigator.language || 'es').slice(0, 2).toLowerCase();
+  return IDIOMAS[nav] ? nav : 'es';
+}
+/* t() para los textos de interfaz; tr() para los campos {es,en,pt}
+   de los datos, con el castellano como respaldo si falta alguno. */
+const t = clave => TEXTOS[estado.idioma][clave];
+const tr = campo => typeof campo === 'string'
+  ? campo
+  : (campo[estado.idioma] || campo.es);
 
 const TINTE = {};
 ORDEN.forEach(k => TINTE[k] = REG[k].color);
@@ -443,7 +487,8 @@ const LIMITES = L.latLngBounds([[-24.75, -67.35], [-21.70, -63.85]]);
 
 /* Una región y un tipo a la vez: siempre hay exactamente un botón
    encendido y es el que se está viendo. */
-const estado = { zona: 'todas', tipo: 'todos', busqueda: '', elegido: null };
+const estado = { idioma: 'es', zona: 'todas', tipo: 'todos', busqueda: '', elegido: null };
+estado.idioma = idiomaInicial();
 
 /* ── Dibujos ─────────────────────────────────────────────── */
 const ICONOS = {
@@ -531,7 +576,7 @@ function pasa(l) {
   if (estado.zona !== 'todas' && l.region !== estado.zona) return false;
   if (estado.tipo !== 'todos' && l.categoria !== estado.tipo) return false;
   if (estado.busqueda) {
-    const h = `${l.nombre} ${l.localidad} ${l.descripcion}`.toLowerCase();
+    const h = `${l.nombre} ${l.localidad} ${tr(l.descripcion)}`.toLowerCase();
     if (!h.includes(estado.busqueda)) return false;
   }
   return true;
@@ -540,13 +585,12 @@ const porId = id => LUGARES.find(l => l.id === id);
 
 /* ── Paso 1: regiones, todas en una línea ────────────────── */
 const elReg = document.getElementById('regiones');
-[['todas', 'Todas las regiones'], ...ORDEN.map(k => [k, REG[k].nombre])]
-.forEach(([k, nombre]) => {
+[['todas'], ...ORDEN.map(k => [k])].forEach(([k]) => {
   const b = document.createElement('button');
   b.className = 'pildora region' + (k === 'todas' ? '' : ' c-' + k);
   b.dataset.region = k;
   b.innerHTML = (k === 'todas' ? chakana('currentColor', 'chakana')
-                               : '<span class="punto"></span>') + `<span>${nombre}</span>`;
+                               : '<span class="punto"></span>') + '<span class="et"></span>';
   b.addEventListener('click', () => {
     estado.zona = k;
     if (estado.elegido && !pasa(porId(estado.elegido))) estado.elegido = null;
@@ -558,12 +602,12 @@ const elReg = document.getElementById('regiones');
 
 /* ── Paso 2: qué busca, en una línea y más chico ──────────── */
 const elTipos = document.getElementById('tipos');
-[['todos', 'Todo', null], ...Object.entries(CAT).map(([k, c]) => [k, c.boton, c.icono])]
-.forEach(([k, texto, icono]) => {
+[['todos', null], ...Object.entries(CAT).map(([k, c]) => [k, c.icono])]
+.forEach(([k, icono]) => {
   const b = document.createElement('button');
   b.className = 'pildora tipo';
   b.dataset.tipo = k;
-  b.innerHTML = (icono ? svg(icono, 'currentColor') : '') + `<span>${texto}</span>`;
+  b.innerHTML = (icono ? svg(icono, 'currentColor') : '') + '<span class="et"></span>';
   b.addEventListener('click', () => {
     estado.tipo = k;
     if (estado.elegido && !pasa(porId(estado.elegido))) estado.elegido = null;
@@ -571,6 +615,52 @@ const elTipos = document.getElementById('tipos');
   });
   elTipos.appendChild(b);
 });
+
+/* ── Botones de idioma ───────────────────────────────────── */
+const elIdiomas = document.getElementById('idiomas');
+Object.entries(IDIOMAS).forEach(([codigo, i]) => {
+  const b = document.createElement('button');
+  b.className = 'idioma';
+  b.dataset.idioma = codigo;
+  b.textContent = i.etiqueta;
+  b.lang = codigo;
+  b.title = i.nombre;
+  b.setAttribute('aria-label', i.nombre);
+  b.addEventListener('click', () => {
+    estado.idioma = codigo;
+    localStorage.setItem('rcj-idioma', codigo);
+    traducir();
+    pintar();
+  });
+  elIdiomas.appendChild(b);
+});
+
+/* Cambia todo el texto fijo de la página al idioma elegido. Lo que
+   sale de los datos (lista y ficha) lo rehace pintar(). */
+function traducir() {
+  document.documentElement.lang = estado.idioma;
+  document.title = t('titulo') + ' — Fundación Puna';
+  document.getElementById('titulo').textContent = t('titulo');
+  document.getElementById('proyecto').textContent = t('proyecto');
+  document.getElementById('aviso').innerHTML =
+    `${t('aviso')} <b>${t('avisoFuerte')}</b> ${t('avisoResto')}`;
+  document.getElementById('paso1').textContent = t('paso1');
+  document.getElementById('paso2').textContent = t('paso2');
+
+  const buscar = document.getElementById('buscar');
+  buscar.placeholder = t('buscar');
+  buscar.setAttribute('aria-label', t('buscarAria'));
+
+  elReg.querySelector('[data-region="todas"] .et').textContent = t('todasRegiones');
+  ORDEN.forEach(k =>
+    elReg.querySelector(`[data-region="${k}"] .et`).textContent = REG[k].nombre);
+  elTipos.querySelector('[data-tipo="todos"] .et').textContent = t('todo');
+  Object.keys(CAT).forEach(k =>
+    elTipos.querySelector(`[data-tipo="${k}"] .et`).textContent = tr(CAT[k].boton));
+
+  elIdiomas.querySelectorAll('[data-idioma]').forEach(el =>
+    el.setAttribute('aria-pressed', String(el.dataset.idioma === estado.idioma)));
+}
 
 function encuadrar() {
   if (estado.zona === 'todas') { map.flyToBounds(LIMITES, { duration: .6 }); return; }
@@ -606,16 +696,16 @@ function pintarLista(visibles) {
     const l = porId(estado.elegido), c = TINTE[l.region];
     const gm = `https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}`;
     elLista.innerHTML = `
-      <button id="volver">← Volver a la lista</button>
-      <div class="f-foto">${chakana('#79408d')}<span>Todavía sin foto</span></div>
+      <button id="volver">${t('volver')}</button>
+      <div class="f-foto">${chakana('#79408d')}<span>${t('sinFoto')}</span></div>
       <div class="f-cuerpo">
         <span class="f-tipo" style="--c:${c}">${svg(CAT[l.categoria].icono, '#2a1f2e')}
-          ${CAT[l.categoria].nombre}</span>
+          ${tr(CAT[l.categoria].nombre)}</span>
         <div class="f-nombre">${l.nombre}</div>
-        <div class="f-donde">${l.localidad} · ${REG[l.region].nombre} · ${REG[l.region].altura}</div>
-        <p class="f-texto">${l.descripcion}</p>
-        <a class="llegar" href="${gm}" target="_blank" rel="noopener">Cómo llegar →</a>
-        ${l.muestra ? '<p class="f-muestra">Este lugar es un ejemplo inventado.</p>' : ''}
+        <div class="f-donde">${l.localidad} · ${REG[l.region].nombre} · ${tr(REG[l.region].altura)}</div>
+        <p class="f-texto">${tr(l.descripcion)}</p>
+        <a class="llegar" href="${gm}" target="_blank" rel="noopener">${t('comoLlegar')}</a>
+        ${l.muestra ? `<p class="f-muestra">${t('ejemplo')}</p>` : ''}
       </div>`;
     document.getElementById('volver').addEventListener('click', () => {
       estado.elegido = null; pintar();
@@ -624,14 +714,13 @@ function pintarLista(visibles) {
   }
 
   if (!visibles.length) {
-    elLista.innerHTML = `<p class="vacio">No encontramos nada así.
-      Probá con otro nombre, o tocá <b>Todas las regiones</b> y <b>Todo</b>.</p>`;
+    elLista.innerHTML = `<p class="vacio">${t('vacio')}</p>`;
     return;
   }
 
   /* la altura de la región se muestra acá, ya que salió de los botones */
-  const cuenta = visibles.length === 1 ? '1 lugar' : visibles.length + ' lugares';
-  const cola = estado.zona === 'todas' ? '' : ` · ${REG[estado.zona].altura}`;
+  const cuenta = visibles.length === 1 ? t('unLugar') : t('nLugares')(visibles.length);
+  const cola = estado.zona === 'todas' ? '' : ` · ${tr(REG[estado.zona].altura)}`;
 
   elLista.innerHTML = `<p class="cuenta">${cuenta}${cola}</p>` +
     visibles.map(l => `
@@ -693,6 +782,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && estado.elegido) { estado.elegido = null; pintar(); }
 });
 
+traducir();
 pintar();
 </script>
 </body>
