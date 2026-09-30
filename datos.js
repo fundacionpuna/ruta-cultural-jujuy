@@ -11,10 +11,16 @@
 
    Para agregar un lugar, copiá un bloque y editalo.
 
-   categoria: "hostal" | "restaurante" | "oferta" | "punto"
+   categoria: "hostal" | "restaurante" | "oferta" | "punto" | "sendero"
    region:    "puna" | "quebrada" | "valles" | "yungas"
    muestra:   true = dato de muestra, todavía sin confirmar
    ruta_orden: posición en la ruta de la región (opcional)
+   contacto:  { whatsapp, telefono, instagram, web, email } (opcional)
+   sendero:   en un paseo con guía, el id del sendero que recorre
+
+   Los senderos llevan además dificultad ("facil" | "media" |
+   "exigente") y duracion. El dibujo del camino está en
+   senderos.js, que se arma con herramientas/trazados.py.
    ============================================================ */
 
 window.IDIOMAS = {
@@ -28,9 +34,9 @@ window.TEXTOS = {
   es: {
     titulo: 'Ruta Cultural de Jujuy',
     proyecto: 'Un proyecto de Fundación Puna',
-    aviso: 'Lugares para visitar, dormir, comer y pasear en las cuatro regiones de la provincia.',
+    aviso: 'Lugares para visitar, dormir, comer, pasear y caminar en las cuatro regiones de la provincia.',
     avisoFuerte: 'Es una muestra:',
-    avisoResto: 'los hospedajes, comidas y paseos son ejemplos inventados.',
+    avisoResto: 'los hospedajes, comidas y paseos son ejemplos inventados. Los senderos son reales.',
     paso1: '1 · Elegí una región',
     paso2: '2 · Elegí qué estás buscando',
     todasRegiones: 'Todas las regiones',
@@ -49,14 +55,38 @@ window.TEXTOS = {
     abrirCajon: 'Buscar lugares',
     cerrarCajon: 'Ver el mapa',
     verLista: 'Ver la lista',
-    ocultarLista: 'Ocultar la lista'
+    ocultarLista: 'Ocultar la lista',
+    contacto: 'Contacto',
+    whatsapp: 'Escribir por WhatsApp',
+    llamar: 'Llamar',
+    instagram: 'Instagram',
+    web: 'Sitio web',
+    correo: 'Correo',
+    mensajeWhatsapp: n => `Hola, vi ${n} en el mapa de la Ruta Cultural de Jujuy, de Fundación Puna, y quería hacer una consulta.`,
+    asuntoCorreo: n => `Consulta desde la Ruta Cultural de Jujuy: ${n}`,
+    contactoEjemplo: 'Es un ejemplo: cuando el emprendimiento esté cargado de verdad, este botón abre la conversación con quien lo atiende.',
+    compartir: 'Compartir',
+    copiado: 'Enlace copiado',
+    cerca: 'Cerca de acá',
+    aKm: km => `a ${km} km`,
+    conGuia: 'Hacelo con alguien de la zona',
+    recorre: 'Este paseo recorre el sendero',
+    largo: km => `${km} km de sendero`,
+    dificultad: { facil: 'Fácil', media: 'Media', exigente: 'Exigente' },
+    gpx: 'Descargar el recorrido',
+    gpxAyuda: 'Archivo GPX, para seguir el camino sin señal con una aplicación de mapas',
+    avisoSendero: 'Trazado tomado de OpenStreetMap. Los tiempos son aproximados: antes de salir, preguntá en el pueblo cómo está el camino, y llevá agua, abrigo y protector solar.',
+    sumate: '¿Tenés un emprendimiento en Jujuy?',
+    sumateBoton: 'Sumalo al mapa →',
+    sumateAsunto: 'Quiero sumar mi emprendimiento a la Ruta Cultural de Jujuy',
+    sumateCuerpo: 'Hola, quiero sumar mi emprendimiento a la Ruta Cultural de Jujuy.\n\nNombre:\nLocalidad:\nQué ofrezco (hospedaje, comida, paseo, taller):\nWhatsApp o teléfono:\nInstagram o sitio web:\n'
   },
   en: {
     titulo: 'Jujuy Cultural Route',
     proyecto: 'A project by Fundación Puna',
-    aviso: "Places to visit, sleep, eat and explore across the province's four regions.",
+    aviso: "Places to visit, sleep, eat, explore and hike across the province's four regions.",
     avisoFuerte: 'This is a sample:',
-    avisoResto: 'the lodgings, food and tours are invented examples.',
+    avisoResto: 'the lodgings, food and tours are invented examples. The trails are real.',
     paso1: '1 · Choose a region',
     paso2: "2 · Choose what you're looking for",
     todasRegiones: 'All regions',
@@ -75,14 +105,38 @@ window.TEXTOS = {
     abrirCajon: 'Find places',
     cerrarCajon: 'See the map',
     verLista: 'Show the list',
-    ocultarLista: 'Hide the list'
+    ocultarLista: 'Hide the list',
+    contacto: 'Contact',
+    whatsapp: 'Message on WhatsApp',
+    llamar: 'Call',
+    instagram: 'Instagram',
+    web: 'Website',
+    correo: 'Email',
+    mensajeWhatsapp: n => `Hello! I found ${n} on the Jujuy Cultural Route map by Fundación Puna and I'd like to ask a question.`,
+    asuntoCorreo: n => `Question from the Jujuy Cultural Route: ${n}`,
+    contactoEjemplo: "This is an example: once the real business is listed, this button opens a conversation with whoever runs it.",
+    compartir: 'Share',
+    copiado: 'Link copied',
+    cerca: 'Nearby',
+    aKm: km => `${km} km away`,
+    conGuia: 'Go with someone from the area',
+    recorre: 'This outing follows the trail',
+    largo: km => `${km} km of trail`,
+    dificultad: { facil: 'Easy', media: 'Moderate', exigente: 'Hard' },
+    gpx: 'Download the route',
+    gpxAyuda: 'GPX file, to follow the path without signal in a maps app',
+    avisoSendero: 'Route taken from OpenStreetMap. Times are approximate: before setting out, ask in the village about the state of the path, and bring water, warm clothes and sunscreen.',
+    sumate: 'Do you run a business in Jujuy?',
+    sumateBoton: 'Add it to the map →',
+    sumateAsunto: 'I would like to add my business to the Jujuy Cultural Route',
+    sumateCuerpo: 'Hello, I would like to add my business to the Jujuy Cultural Route.\n\nName:\nTown:\nWhat I offer (lodging, food, tour, workshop):\nWhatsApp or phone:\nInstagram or website:\n'
   },
   pt: {
     titulo: 'Rota Cultural de Jujuy',
     proyecto: 'Um projeto da Fundación Puna',
-    aviso: 'Lugares para visitar, dormir, comer e passear nas quatro regiões da província.',
+    aviso: 'Lugares para visitar, dormir, comer, passear e caminhar nas quatro regiões da província.',
     avisoFuerte: 'É uma amostra:',
-    avisoResto: 'as hospedagens, comidas e passeios são exemplos inventados.',
+    avisoResto: 'as hospedagens, comidas e passeios são exemplos inventados. As trilhas são reais.',
     paso1: '1 · Escolha uma região',
     paso2: '2 · Escolha o que você procura',
     todasRegiones: 'Todas as regiões',
@@ -101,7 +155,31 @@ window.TEXTOS = {
     abrirCajon: 'Buscar lugares',
     cerrarCajon: 'Ver o mapa',
     verLista: 'Ver a lista',
-    ocultarLista: 'Ocultar a lista'
+    ocultarLista: 'Ocultar a lista',
+    contacto: 'Contato',
+    whatsapp: 'Mandar mensagem no WhatsApp',
+    llamar: 'Ligar',
+    instagram: 'Instagram',
+    web: 'Site',
+    correo: 'E-mail',
+    mensajeWhatsapp: n => `Olá! Vi ${n} no mapa da Rota Cultural de Jujuy, da Fundación Puna, e queria fazer uma pergunta.`,
+    asuntoCorreo: n => `Pergunta pela Rota Cultural de Jujuy: ${n}`,
+    contactoEjemplo: 'É um exemplo: quando o empreendimento estiver cadastrado de verdade, este botão abre a conversa com quem o atende.',
+    compartir: 'Compartilhar',
+    copiado: 'Link copiado',
+    cerca: 'Perto daqui',
+    aKm: km => `a ${km} km`,
+    conGuia: 'Faça com alguém da região',
+    recorre: 'Este passeio percorre a trilha',
+    largo: km => `${km} km de trilha`,
+    dificultad: { facil: 'Fácil', media: 'Moderada', exigente: 'Difícil' },
+    gpx: 'Baixar o percurso',
+    gpxAyuda: 'Arquivo GPX, para seguir o caminho sem sinal num aplicativo de mapas',
+    avisoSendero: 'Traçado tirado do OpenStreetMap. Os tempos são aproximados: antes de sair, pergunte no povoado como está o caminho, e leve água, agasalho e protetor solar.',
+    sumate: 'Você tem um empreendimento em Jujuy?',
+    sumateBoton: 'Coloque-o no mapa →',
+    sumateAsunto: 'Quero colocar meu empreendimento na Rota Cultural de Jujuy',
+    sumateCuerpo: 'Olá, quero colocar meu empreendimento na Rota Cultural de Jujuy.\n\nNome:\nLocalidade:\nO que ofereço (hospedagem, comida, passeio, oficina):\nWhatsApp ou telefone:\nInstagram ou site:\n'
   }
 };
 
@@ -160,6 +238,11 @@ window.CATEGORIAS = {
     nombre: { es: 'Lugar para visitar', en: 'Place to visit', pt: 'Lugar para visitar' },
     icono: 'cerro'
   },
+  sendero: {
+    boton:  { es: 'Dónde caminar', en: 'Where to hike', pt: 'Onde caminhar' },
+    nombre: { es: 'Sendero', en: 'Hiking trail', pt: 'Trilha' },
+    icono: 'bota'
+  },
   hostal: {
     boton:  { es: 'Dónde dormir', en: 'Where to sleep', pt: 'Onde dormir' },
     nombre: { es: 'Hospedaje', en: 'Lodging', pt: 'Hospedagem' },
@@ -176,6 +259,9 @@ window.CATEGORIAS = {
     icono: 'brujula'
   }
 };
+
+/* A dónde escribe un emprendimiento que quiere sumarse al mapa. */
+window.FUNDACION = { email: 'info@punafoundation.org' };
 
 window.LUGARES = [
 
@@ -238,6 +324,7 @@ window.LUGARES = [
 
   { id: 'pu-09', nombre: 'Hospedaje Killa', categoria: 'hostal', region: 'puna', muestra: true,
     localidad: 'Susques', lat: -23.4110, lng: -66.3610,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Cuatro habitaciones de adobe con estufa a leña, gestionadas por familias de la comunidad. Desayuno con pan de horno de barro.',
       en: 'Four adobe rooms with wood stoves, run by families from the community. Breakfast with bread from the clay oven.',
@@ -245,6 +332,7 @@ window.LUGARES = [
 
   { id: 'pu-10', nombre: 'Albergue del Salar', categoria: 'hostal', region: 'puna', muestra: true,
     localidad: 'Salinas Grandes', lat: -23.6280, lng: -66.0210,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Alojamiento a la orilla del salar, con paredes de bloque de sal. Se duerme con el silencio más completo de la provincia.',
       en: 'Lodging at the edge of the salt flat, with walls built from blocks of salt. You sleep in the deepest silence in the province.',
@@ -252,6 +340,7 @@ window.LUGARES = [
 
   { id: 'pu-11', nombre: 'Cocina de Altura', categoria: 'restaurante', region: 'puna', muestra: true,
     localidad: 'Abra Pampa', lat: -22.7180, lng: -65.6960,
+    contacto: { whatsapp: '5493880000000', telefono: '3880000000' },
     descripcion: {
       es: 'Carne de llama, quinoa, papas andinas y guiso de maíz. Menú fijo del día, a la mesa larga.',
       en: 'Llama, quinoa, Andean potatoes and corn stew. A set menu of the day, served at one long table.',
@@ -259,6 +348,7 @@ window.LUGARES = [
 
   { id: 'pu-12', nombre: 'Travesía al salar con guías de la comunidad', categoria: 'oferta', region: 'puna', muestra: true,
     localidad: 'Salinas Grandes', lat: -23.6650, lng: -66.0750,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Recorrido por los pozos de sal acompañado por salineros de las comunidades, que explican la extracción en costra y el reparto del agua.',
       en: 'A walk through the salt pools with salt workers from the communities, who explain how the crust is cut and how the water is shared.',
@@ -266,6 +356,7 @@ window.LUGARES = [
 
   { id: 'pu-13', nombre: 'Taller de telar de piso', categoria: 'oferta', region: 'puna', muestra: true,
     localidad: 'Cochinoca', lat: -22.7500, lng: -65.9000,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Hilado con huso, teñido con cochinilla y tola, y las primeras pasadas en telar de piso, con teleras de la zona.',
       en: 'Spinning with a drop spindle, dyeing with cochineal and tola, and your first rows on a ground loom, with local weavers.',
@@ -277,6 +368,15 @@ window.LUGARES = [
       es: 'Alto del camino a 4.170 metros, entre Purmamarca y Salinas Grandes. Mate cocido, artesanías y el mirador sobre la cuesta.',
       en: 'A rest stop at 4,170 metres, on the road between Purmamarca and Salinas Grandes. Hot mate, crafts, and the lookout over the pass.',
       pt: 'Parada a 4.170 metros, na estrada entre Purmamarca e Salinas Grandes. Mate cozido, artesanato e o mirante sobre a subida.' } },
+
+  /* Senderos de la Puna. El trazado de cada uno está en senderos.js. */
+  { id: 'pu-s1', nombre: 'Mirador de Yavi', categoria: 'sendero', region: 'puna',
+    localidad: 'Yavi', lat: -22.12833, lng: -65.46569, dificultad: 'media',
+    duracion: { es: 'Alrededor de 1 hora ida y vuelta', en: 'About 1 hour there and back', pt: 'Cerca de 1 hora ida e volta' },
+    descripcion: {
+      es: 'Subida corta desde el pueblo hasta un mirador sobre Yavi: los techos de adobe, la iglesia de San Francisco y el valle. A 3.400 metros se camina más lento que en el llano.',
+      en: 'A short climb from the village to a lookout over Yavi: the adobe roofs, the church of San Francisco and the valley. At 3,400 metres you walk more slowly than at sea level.',
+      pt: 'Subida curta desde o povoado até um mirante sobre Yavi: os telhados de adobe, a igreja de São Francisco e o vale. A 3.400 metros se caminha mais devagar que na planície.' } },
 
 
   /* ─────────────── QUEBRADA ─────────────── */
@@ -345,6 +445,7 @@ window.LUGARES = [
 
   { id: 'qu-10', nombre: 'Casa de Adobe Purmamarca', categoria: 'hostal', region: 'quebrada', muestra: true,
     localidad: 'Purmamarca', lat: -23.7420, lng: -65.4980,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Seis habitaciones alrededor de un patio con horno de barro, a dos cuadras de la plaza. Techos de caña y torta de barro.',
       en: 'Six rooms around a courtyard with a clay oven, two blocks from the square. Cane ceilings finished with packed earth.',
@@ -352,6 +453,7 @@ window.LUGARES = [
 
   { id: 'qu-11', nombre: 'Hostel La Copla', categoria: 'hostal', region: 'quebrada', muestra: true,
     localidad: 'Tilcara', lat: -23.5760, lng: -65.3930,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Habitaciones compartidas y privadas, cocina de uso común y terraza mirando al Pucará. Ronda de coplas los sábados.',
       en: 'Shared and private rooms, a common kitchen and a terrace facing the Pucará. A round of coplas — sung verses — on Saturdays.',
@@ -359,6 +461,7 @@ window.LUGARES = [
 
   { id: 'qu-12', nombre: 'Los Cardones', categoria: 'restaurante', region: 'quebrada', muestra: true,
     localidad: 'Tilcara', lat: -23.5820, lng: -65.3960,
+    contacto: { whatsapp: '5493880000000', telefono: '3880000000' },
     descripcion: {
       es: 'Llama a la cacerola, humita en chala, tamales y vinos de altura de la quebrada. Mesas en el patio cuando el viento lo permite.',
       en: 'Braised llama, humita steamed in corn husk, tamales, and high-altitude wines from the gorge. Tables in the courtyard when the wind allows.',
@@ -366,13 +469,16 @@ window.LUGARES = [
 
   { id: 'qu-13', nombre: 'Peña de la Caja', categoria: 'restaurante', region: 'quebrada', muestra: true,
     localidad: 'Humahuaca', lat: -23.2040, lng: -65.3480,
+    contacto: { whatsapp: '5493880000000', telefono: '3880000000' },
     descripcion: {
       es: 'Comida regional y peña desde las diez de la noche: caja, copla y erke, con los músicos del pueblo.',
       en: 'Regional food and live music from ten at night: the caja drum, sung coplas and the erke horn, played by musicians from the village.',
       pt: 'Comida regional e música ao vivo a partir das dez da noite: caja, copla e erke, com os músicos do povoado.' } },
 
   { id: 'qu-14', nombre: 'Caminata a la Garganta del Diablo', categoria: 'oferta', region: 'quebrada', muestra: true,
+    sendero: 'qu-s1',
     localidad: 'Tilcara', lat: -23.5990, lng: -65.3650,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Tres horas de subida por el cauce del río Huasamayo hasta el cañón y la cascada, con guía de Tilcara.',
       en: 'A three-hour climb up the bed of the Huasamayo river to the canyon and waterfall, with a guide from Tilcara.',
@@ -380,10 +486,36 @@ window.LUGARES = [
 
   { id: 'qu-15', nombre: 'Ruta del Carnaval', categoria: 'oferta', region: 'quebrada', muestra: true,
     localidad: 'Varias localidades', lat: -23.4700, lng: -65.4200,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Circuito por las comparsas de la quebrada en febrero, del desentierro al entierro del diablo. Se arma con cada comparsa, no se vende suelto.',
       en: "A February circuit through the gorge's carnival troupes, from the unearthing to the burial of the devil. Arranged with each troupe; not sold as a package.",
       pt: 'Circuito pelos blocos de carnaval do desfiladeiro em fevereiro, do desenterro ao enterro do diabo. Combina-se com cada bloco, não se vende solto.' } },
+
+  /* Senderos de la Quebrada */
+  { id: 'qu-s1', nombre: 'Garganta del Diablo', categoria: 'sendero', region: 'quebrada',
+    localidad: 'Tilcara', lat: -23.58897, lng: -65.38774, dificultad: 'media',
+    duracion: { es: '2 a 3 horas ida y vuelta desde el pueblo', en: '2 to 3 hours there and back from the village', pt: '2 a 3 horas ida e volta desde o povoado' },
+    descripcion: {
+      es: 'Sendero de piedra que sube desde Tilcara por la quebrada del río Huasamayo hasta un cañón angosto, con un mirador sobre la garganta y, un poco más arriba, la cascada.',
+      en: 'A stony path that climbs from Tilcara up the gorge of the Huasamayo river to a narrow canyon, with a lookout over the gorge and, a little higher, the waterfall.',
+      pt: 'Trilha de pedra que sobe desde Tilcara pelo vale do rio Huasamayo até um cânion estreito, com um mirante sobre a garganta e, um pouco mais acima, a cachoeira.' } },
+
+  { id: 'qu-s2', nombre: 'Quebrada de las Señoritas', categoria: 'sendero', region: 'quebrada',
+    localidad: 'Uquía', lat: -23.30900, lng: -65.36485, dificultad: 'facil',
+    duracion: { es: 'Unas 2 horas ida y vuelta', en: 'About 2 hours there and back', pt: 'Cerca de 2 horas ida e volta' },
+    descripcion: {
+      es: 'Cañón de arcilla roja a pocos minutos de Uquía. Se camina por el lecho seco del arroyo, entre paredes altas que el agua y el viento fueron tallando.',
+      en: 'A red clay canyon a few minutes from Uquía. You walk up the dry stream bed, between tall walls carved by water and wind.',
+      pt: 'Cânion de argila vermelha a poucos minutos de Uquía. Caminha-se pelo leito seco do riacho, entre paredes altas talhadas pela água e pelo vento.' } },
+
+  { id: 'qu-s3', nombre: 'Inca Cueva', categoria: 'sendero', region: 'quebrada',
+    localidad: 'Azul Pampa', lat: -22.97600, lng: -65.46465, dificultad: 'media',
+    duracion: { es: '3 a 4 horas ida y vuelta', en: '3 to 4 hours there and back', pt: '3 a 4 horas ida e volta' },
+    descripcion: {
+      es: 'Sale de la ruta 9 al norte de Humahuaca y sube por una quebrada hasta aleros de roca con pinturas rupestres. Hay rastros de gente que vivió acá hace unos diez mil años. El sitio es frágil: conviene ir con alguien de la zona y no tocar las pinturas.',
+      en: 'It leaves Route 9 north of Humahuaca and climbs a ravine to rock shelters with ancient paintings. People lived here some ten thousand years ago. The site is fragile: go with someone from the area and do not touch the paintings.',
+      pt: 'Sai da estrada 9 ao norte de Humahuaca e sobe por um vale até abrigos de rocha com pinturas rupestres. Há vestígios de gente que viveu aqui há uns dez mil anos. O sítio é frágil: é melhor ir com alguém da região e não tocar nas pinturas.' } },
 
 
   /* ─────────────── VALLES ─────────────── */
@@ -438,6 +570,7 @@ window.LUGARES = [
 
   { id: 'va-08', nombre: 'Hostería del Alisal', categoria: 'hostal', region: 'valles', muestra: true,
     localidad: 'Yala', lat: -24.1150, lng: -65.3880,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Casa de campo con ocho habitaciones y galería sobre el valle. Se llega en veinte minutos desde la capital.',
       en: 'A country house with eight rooms and a veranda over the valley. Twenty minutes from the capital.',
@@ -445,6 +578,7 @@ window.LUGARES = [
 
   { id: 'va-09', nombre: 'Casona del Centro', categoria: 'hostal', region: 'valles', muestra: true,
     localidad: 'San Salvador de Jujuy', lat: -24.1880, lng: -65.3040,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Casa colonial reciclada a dos cuadras de la plaza Belgrano, con patio de naranjos y once habitaciones.',
       en: 'A restored colonial house two blocks from Plaza Belgrano, with an orange-tree courtyard and eleven rooms.',
@@ -452,6 +586,7 @@ window.LUGARES = [
 
   { id: 'va-10', nombre: 'Mercado del Sur', categoria: 'restaurante', region: 'valles', muestra: true,
     localidad: 'San Salvador de Jujuy', lat: -24.1910, lng: -65.2980,
+    contacto: { whatsapp: '5493880000000', telefono: '3880000000' },
     descripcion: {
       es: 'Puestos de comida regional y productores de los valles bajo un mismo techo. Empanadas de carne cortada a cuchillo y api caliente.',
       en: 'Regional food stalls and valley producers under one roof. Empanadas of hand-cut beef, and hot api, a spiced purple-corn drink.',
@@ -459,6 +594,7 @@ window.LUGARES = [
 
   { id: 'va-11', nombre: 'Bodega de vinos de altura', categoria: 'oferta', region: 'valles', muestra: true,
     localidad: 'San Antonio', lat: -24.4200, lng: -65.3500,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Visita a la sala de vasijas y degustación de malbec y criolla de viñedos por encima de los dos mil metros.',
       en: 'A visit to the amphora room and a tasting of malbec and criolla from vineyards above two thousand metres.',
@@ -466,6 +602,7 @@ window.LUGARES = [
 
   { id: 'va-12', nombre: 'Circuito de museos a pie', categoria: 'oferta', region: 'valles', muestra: true,
     localidad: 'San Salvador de Jujuy', lat: -24.1840, lng: -65.3020,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Dos horas y media por el casco histórico: catedral, cabildo, casa de gobierno y el museo arqueológico, con guía local.',
       en: 'Two and a half hours through the old town: cathedral, town hall, government house and the archaeological museum, with a local guide.',
@@ -531,6 +668,7 @@ window.LUGARES = [
 
   { id: 'yu-09', nombre: 'Cabañas de la Selva', categoria: 'hostal', region: 'yungas', muestra: true,
     localidad: 'Calilegua', lat: -23.7720, lng: -64.7800,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Cinco cabañas de madera junto al acceso del parque nacional, con galería y mosquitero. Los tucanes despiertan antes que el sol.',
       en: 'Five wooden cabins by the national park entrance, with verandas and mosquito nets. The toucans wake before the sun does.',
@@ -538,6 +676,7 @@ window.LUGARES = [
 
   { id: 'yu-10', nombre: 'Casas de Familia de Valle Grande', categoria: 'hostal', region: 'yungas', muestra: true,
     localidad: 'Valle Grande', lat: -23.6150, lng: -64.9700,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Alojamiento en casas de familia de los pueblos del valle, con comida casera y el fogón de la cocina como living.',
       en: 'Homestays in the villages of the valley, with home cooking and the kitchen hearth as the living room.',
@@ -545,23 +684,68 @@ window.LUGARES = [
 
   { id: 'yu-11', nombre: 'Comedor Monte Adentro', categoria: 'restaurante', region: 'yungas', muestra: true,
     localidad: 'San Pedro de Jujuy', lat: -24.2280, lng: -64.8680,
+    contacto: { whatsapp: '5493880000000', telefono: '3880000000' },
     descripcion: {
       es: 'Cocina criolla con productos de la selva: palta, cítricos, mandioca y locro los viernes.',
       en: 'Creole cooking with produce from the forest: avocado, citrus, cassava, and locro stew on Fridays.',
       pt: 'Cozinha criolla com produtos da mata: abacate, cítricos, mandioca e locro nas sextas.' } },
 
   { id: 'yu-12', nombre: 'Avistaje de aves al amanecer', categoria: 'oferta', region: 'yungas', muestra: true,
+    sendero: 'yu-s1',
     localidad: 'Parque Nacional Calilegua', lat: -23.7300, lng: -64.8700,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
-      es: 'Salida de cuatro horas desde antes del amanecer por la senda de la Junta, con guía habilitado y telescopio. Grupos de seis personas.',
-      en: 'A four-hour outing starting before dawn along the Junta trail, with a licensed guide and a spotting scope. Groups of six.',
-      pt: 'Saída de quatro horas antes do amanhecer pela trilha da Junta, com guia habilitado e telescópio. Grupos de seis pessoas.' } },
+      es: 'Salida de cuatro horas desde antes del amanecer por el sendero La Lagunita, con guía habilitado y telescopio. Grupos de seis personas.',
+      en: 'A four-hour outing starting before dawn along the La Lagunita trail, with a licensed guide and a spotting scope. Groups of six.',
+      pt: 'Saída de quatro horas antes do amanhecer pela trilha La Lagunita, com guia habilitado e telescópio. Grupos de seis pessoas.' } },
 
   { id: 'yu-13', nombre: 'Visita a finca de caña', categoria: 'oferta', region: 'yungas', muestra: true,
     localidad: 'Libertador Gral. San Martín', lat: -23.8200, lng: -64.7700,
+    contacto: { whatsapp: '5493880000000', instagram: 'ejemplo' },
     descripcion: {
       es: 'Recorrido por el cañaveral y el trapiche, con degustación de azúcar rubio y miel de caña.',
       en: 'A walk through the cane field and the mill, with a tasting of raw sugar and cane syrup.',
-      pt: 'Percurso pelo canavial e pelo engenho, com degustação de açúcar mascavo e melado de cana.' } }
+      pt: 'Percurso pelo canavial e pelo engenho, com degustação de açúcar mascavo e melado de cana.' } },
+
+  /* Senderos de las Yungas */
+  { id: 'yu-s1', nombre: 'Sendero La Lagunita', categoria: 'sendero', region: 'yungas',
+    localidad: 'Parque Nacional Calilegua', lat: -23.75425, lng: -64.85425, dificultad: 'facil',
+    duracion: { es: 'Menos de 1 hora ida y vuelta', en: 'Under 1 hour there and back', pt: 'Menos de 1 hora ida e volta' },
+    descripcion: {
+      es: 'Paseo corto por la selva hasta una laguna chica, cerca de la entrada del parque en Aguas Negras. Temprano a la mañana es bueno para ver aves.',
+      en: 'A short walk through the forest to a small lagoon, near the park entrance at Aguas Negras. Early morning is good for birds.',
+      pt: 'Passeio curto pela mata até uma lagoa pequena, perto da entrada do parque em Aguas Negras. De manhã cedo é bom para ver aves.' } },
+
+  { id: 'yu-s2', nombre: 'Sendero Pedemontano', categoria: 'sendero', region: 'yungas',
+    localidad: 'Parque Nacional Calilegua', lat: -23.75787, lng: -64.85440, dificultad: 'facil',
+    duracion: { es: '1 hora y media ida y vuelta', en: '1½ hours there and back', pt: '1 hora e meia ida e volta' },
+    descripcion: {
+      es: 'Sale de la ruta 83, junto a un mirador y un área de picnic, y sigue por la selva baja del pie de monte, casi sin pendiente.',
+      en: 'It starts from Route 83, beside a lookout and a picnic area, and runs through the low foothill forest with hardly any slope.',
+      pt: 'Sai da estrada 83, junto a um mirante e uma área de piquenique, e segue pela mata baixa do sopé, quase sem subida.' } },
+
+  { id: 'yu-s3', nombre: 'Sendero Tapir', categoria: 'sendero', region: 'yungas',
+    localidad: 'Parque Nacional Calilegua', lat: -23.73557, lng: -64.84929, dificultad: 'media',
+    duracion: { es: '2 a 3 horas ida y vuelta', en: '2 to 3 hours there and back', pt: '2 a 3 horas ida e volta' },
+    descripcion: {
+      es: 'Sendero de montaña que parte de la ruta 83 y se mete en la selva, más largo y con más pendiente que los del llano. Lleva el nombre del tapir, el mamífero más grande de la selva.',
+      en: 'A mountain trail that leaves Route 83 and heads into the forest, longer and steeper than the lowland ones. It is named after the tapir, the largest mammal in the forest.',
+      pt: 'Trilha de montanha que sai da estrada 83 e entra na mata, mais longa e mais íngreme que as da planície. Leva o nome da anta, o maior mamífero da mata.' } },
+
+  { id: 'yu-s4', nombre: 'Sendero a la Cascada', categoria: 'sendero', region: 'yungas',
+    localidad: 'San Francisco', lat: -23.62430, lng: -64.94627, dificultad: 'media',
+    duracion: { es: '2 a 3 horas ida y vuelta', en: '2 to 3 hours there and back', pt: '2 a 3 horas ida e volta' },
+    descripcion: {
+      es: 'Sale del pueblo de San Francisco, sobre la ruta 83 que sube a Valle Grande, y sigue por la selva de montaña hasta una cascada.',
+      en: 'It leaves the village of San Francisco, on Route 83 up to Valle Grande, and follows the mountain forest to a waterfall.',
+      pt: 'Sai do povoado de San Francisco, na estrada 83 que sobe para Valle Grande, e segue pela mata de montanha até uma cachoeira.' } },
+
+  { id: 'yu-s5', nombre: 'Qhapaq Ñan — Las Escaleras', categoria: 'sendero', region: 'yungas',
+    localidad: 'Santa Ana', lat: -23.36392, lng: -64.97712, dificultad: 'exigente',
+    duracion: { es: '3 a 4 horas ida y vuelta', en: '3 to 4 hours there and back', pt: '3 a 4 horas ida e volta' },
+    descripcion: {
+      es: 'Un tramo del Qhapaq Ñan, el camino de los incas, que baja por escalones de piedra en la Quebrada Grande, cerca de Santa Ana. La red de caminos incas es Patrimonio Mundial de la UNESCO desde 2014.',
+      en: 'A stretch of the Qhapaq Ñan, the Inca road, that descends on stone steps through the Quebrada Grande near Santa Ana. The Inca road network has been a UNESCO World Heritage Site since 2014.',
+      pt: 'Um trecho do Qhapaq Ñan, o caminho dos incas, que desce por degraus de pedra na Quebrada Grande, perto de Santa Ana. A rede de caminhos incas é Patrimônio Mundial da UNESCO desde 2014.' } }
 
 ];

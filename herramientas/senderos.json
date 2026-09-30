@@ -1,0 +1,15 @@
+{
+  "_como": "De dónde sale el trazado de cada sendero. 'osm': números de vía de OpenStreetMap (se ven en openstreetmap.org al tocar el camino). 'gpx': un archivo grabado con el teléfono, dentro de herramientas/gpx/. Después de editar, correr: python3 herramientas/trazados.py",
+
+  "pu-s1": { "osm": [1182785191] },
+
+  "qu-s1": { "osm": [320374906, 314175090, 1382892909, 1382892911, 314175089] },
+  "qu-s2": { "osm": [244863267] },
+  "qu-s3": { "osm": [961132824, 961132823, 491638130] },
+
+  "yu-s1": { "osm": [501824352] },
+  "yu-s2": { "osm": [329762846] },
+  "yu-s3": { "osm": [501824357] },
+  "yu-s4": { "osm": [485175990] },
+  "yu-s5": { "osm": [914196185, 862106218, 862106219] }
+}
