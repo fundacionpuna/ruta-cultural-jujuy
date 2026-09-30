@@ -374,9 +374,17 @@ window.LUGARES = [
     localidad: 'Yavi', lat: -22.12833, lng: -65.46569, dificultad: 'media',
     duracion: { es: 'Alrededor de 1 hora ida y vuelta', en: 'About 1 hour there and back', pt: 'Cerca de 1 hora ida e volta' },
     descripcion: {
-      es: 'Subida corta desde el pueblo hasta un mirador sobre Yavi: los techos de adobe, la iglesia de San Francisco y el valle. A 3.400 metros se camina más lento que en el llano.',
-      en: 'A short climb from the village to a lookout over Yavi: the adobe roofs, the church of San Francisco and the valley. At 3,400 metres you walk more slowly than at sea level.',
-      pt: 'Subida curta desde o povoado até um mirante sobre Yavi: os telhados de adobe, a igreja de São Francisco e o vale. A 3.400 metros se caminha mais devagar que na planície.' } },
+      es: 'Subida corta desde el pueblo hasta un mirador sobre Yavi: los techos de adobe, la iglesia de San Francisco y el valle. Al empezar el camino hay pinturas rupestres. A 3.400 metros se camina más lento que en el llano.',
+      en: 'A short climb from the village to a lookout over Yavi: the adobe roofs, the church of San Francisco and the valley. There are ancient rock paintings where the path begins. At 3,400 metres you walk more slowly than at sea level.',
+      pt: 'Subida curta desde o povoado até um mirante sobre Yavi: os telhados de adobe, a igreja de São Francisco e o vale. No começo do caminho há pinturas rupestres. A 3.400 metros se caminha mais devagar que na planície.' } },
+
+  { id: 'pu-s2', nombre: 'Petroglifos de Laguna Colorada', categoria: 'sendero', region: 'puna',
+    localidad: 'Laguna Colorada', lat: -22.17682, lng: -65.51390, dificultad: 'facil',
+    duracion: { es: 'Menos de 1 hora ida y vuelta', en: 'Under 1 hour there and back', pt: 'Menos de 1 hora ida e volta' },
+    descripcion: {
+      es: 'Camino corto hasta la Laguna Colorada, a pocos kilómetros de Yavi, donde hay piedras con grabados antiguos. Se miran sin tocarlos ni pisarlos.',
+      en: 'A short path to the Laguna Colorada, a few kilometres from Yavi, where there are stones carved with ancient petroglyphs. Look without touching or stepping on them.',
+      pt: 'Caminho curto até a Laguna Colorada, a poucos quilômetros de Yavi, onde há pedras com gravuras antigas. Olha-se sem tocar nem pisar.' } },
 
 
   /* ─────────────── QUEBRADA ─────────────── */
@@ -517,6 +525,54 @@ window.LUGARES = [
       en: 'It leaves Route 9 north of Humahuaca and climbs a ravine to rock shelters with ancient paintings. People lived here some ten thousand years ago. The site is fragile: go with someone from the area and do not touch the paintings.',
       pt: 'Sai da estrada 9 ao norte de Humahuaca e sobe por um vale até abrigos de rocha com pinturas rupestres. Há vestígios de gente que viveu aqui há uns dez mil anos. O sítio é frágil: é melhor ir com alguém da região e não tocar nas pinturas.' } },
 
+  { id: 'qu-s4', nombre: 'Cuevas de Wayra', categoria: 'sendero', region: 'quebrada',
+    localidad: 'Tilcara', lat: -23.56989, lng: -65.39839, dificultad: 'media',
+    duracion: { es: 'Unas 2 horas ida y vuelta', en: 'About 2 hours there and back', pt: 'Cerca de 2 horas ida e volta' },
+    descripcion: {
+      es: 'Sube por la ladera del cerro, al noroeste de Tilcara, hasta dos cuevas en la roca. Wayra quiere decir viento en quechua.',
+      en: 'It climbs the hillside northwest of Tilcara to two caves in the rock. Wayra means wind in Quechua.',
+      pt: 'Sobe pela encosta do morro, a noroeste de Tilcara, até duas cavernas na rocha. Wayra quer dizer vento em quíchua.' } },
+
+  { id: 'qu-s5', nombre: 'Castillos de Huichaira', categoria: 'sendero', region: 'quebrada',
+    localidad: 'Huichaira', lat: -23.59065, lng: -65.42094, dificultad: 'media',
+    duracion: { es: '1 a 2 horas ida y vuelta', en: '1 to 2 hours there and back', pt: '1 a 2 horas ida e volta' },
+    descripcion: {
+      es: 'Formaciones de roca con forma de torres de castillo, en Huichaira, al oeste de Tilcara. Junto a los castillos hay una cueva.',
+      en: 'Rock formations shaped like castle towers, at Huichaira, west of Tilcara. There is a cave beside them.',
+      pt: 'Formações de rocha com forma de torres de castelo, em Huichaira, a oeste de Tilcara. Junto aos castelos há uma caverna.' } },
+
+  { id: 'qu-s6', nombre: 'Miradores del Cerro de los Siete Colores', categoria: 'sendero', region: 'quebrada',
+    localidad: 'Purmamarca', lat: -23.74640, lng: -65.49671, dificultad: 'facil',
+    duracion: { es: 'Alrededor de 1 hora ida y vuelta', en: 'About 1 hour there and back', pt: 'Cerca de 1 hora ida e volta' },
+    descripcion: {
+      es: 'Caminos cortos que suben desde el pueblo a los miradores de enfrente del cerro, para verlo entero. La mejor luz es la de la mañana.',
+      en: 'Short paths that climb from the village to the lookouts facing the hill, where you can see it whole. The best light is in the morning.',
+      pt: 'Caminhos curtos que sobem do povoado aos mirantes em frente ao morro, para vê-lo inteiro. A melhor luz é a da manhã.' } },
+
+  { id: 'qu-s7', nombre: 'Sendero Los Colorados', categoria: 'sendero', region: 'quebrada',
+    localidad: 'Purmamarca', lat: -23.74641, lng: -65.50165, dificultad: 'facil',
+    duracion: { es: 'Menos de 1 hora ida y vuelta', en: 'Under 1 hour there and back', pt: 'Menos de 1 hora ida e volta' },
+    descripcion: {
+      es: 'Caminata corta que sale del pueblo hacia los cerros rojos del sur, hasta el mirador de Los Colorados.',
+      en: 'A short walk from the village towards the red hills to the south, as far as the Los Colorados lookout.',
+      pt: 'Caminhada curta que sai do povoado rumo aos morros vermelhos do sul, até o mirante de Los Colorados.' } },
+
+  { id: 'qu-s8', nombre: 'Peña Blanca', categoria: 'sendero', region: 'quebrada',
+    localidad: 'Humahuaca', lat: -23.20571, lng: -65.34200, dificultad: 'media',
+    duracion: { es: 'Unas 2 horas ida y vuelta', en: 'About 2 hours there and back', pt: 'Cerca de 2 horas ida e volta' },
+    descripcion: {
+      es: 'Sale del otro lado del río Grande, frente a Humahuaca, y sube por la ladera hasta Peña Blanca, con vista sobre el pueblo y la quebrada.',
+      en: 'It starts across the Río Grande from Humahuaca and climbs the slope to Peña Blanca, with a view over the town and the gorge.',
+      pt: 'Sai do outro lado do rio Grande, em frente a Humahuaca, e sobe pela encosta até Peña Blanca, com vista sobre a cidade e o vale.' } },
+
+  { id: 'qu-s9', nombre: 'Miradores del Hornocal', categoria: 'sendero', region: 'quebrada',
+    localidad: 'Hornocal', lat: -23.19742, lng: -65.19342, dificultad: 'media',
+    duracion: { es: '1 a 2 horas ida y vuelta', en: '1 to 2 hours there and back', pt: '1 a 2 horas ida e volta' },
+    descripcion: {
+      es: 'A 4.350 metros, dos caminos llevan a los miradores sobre la serranía de catorce colores. A esta altura se camina despacio, y hace frío aunque haya sol.',
+      en: 'At 4,350 metres, two paths lead to the lookouts over the fourteen-coloured range. At this height you walk slowly, and it is cold even in the sun.',
+      pt: 'A 4.350 metros, dois caminhos levam aos mirantes sobre a serra de catorze cores. Nessa altitude se caminha devagar, e faz frio mesmo com sol.' } },
+
 
   /* ─────────────── VALLES ─────────────── */
   { id: 'va-01', nombre: 'Catedral y Cabildo de Jujuy', categoria: 'punto', region: 'valles',
@@ -607,6 +663,31 @@ window.LUGARES = [
       es: 'Dos horas y media por el casco histórico: catedral, cabildo, casa de gobierno y el museo arqueológico, con guía local.',
       en: 'Two and a half hours through the old town: cathedral, town hall, government house and the archaeological museum, with a local guide.',
       pt: 'Duas horas e meia pelo centro histórico: catedral, prefeitura, casa de governo e o museu arqueológico, com guia local.' } },
+
+  /* Senderos de los Valles */
+  { id: 'va-s1', nombre: 'Lagunas de Yala', categoria: 'sendero', region: 'valles',
+    localidad: 'Yala', lat: -24.10934, lng: -65.47839, dificultad: 'facil',
+    duracion: { es: '1 hora y media ida y vuelta', en: '1½ hours there and back', pt: '1 hora e meia ida e volta' },
+    descripcion: {
+      es: 'Sendero del Parque Provincial Potrero de Yala que pasa junto a las lagunas Desaguadero, Comedero y Neques, entre alisos y pastizales de altura.',
+      en: 'A trail in the Potrero de Yala provincial park that runs past the Desaguadero, Comedero and Neques lakes, through alder woods and high grassland.',
+      pt: 'Trilha do Parque Provincial Potrero de Yala que passa junto às lagoas Desaguadero, Comedero e Neques, entre amieiros e campos de altitude.' } },
+
+  { id: 'va-s2', nombre: 'Cascada de la Horqueta', categoria: 'sendero', region: 'valles',
+    localidad: 'Yala', lat: -24.12548, lng: -65.49108, dificultad: 'media',
+    duracion: { es: '1 a 2 horas ida y vuelta', en: '1 to 2 hours there and back', pt: '1 a 2 horas ida e volta' },
+    descripcion: {
+      es: 'Camino de montaña cerca de las lagunas de Yala que termina en la cascada de la Horqueta.',
+      en: 'A mountain path near the Yala lakes that ends at the Horqueta waterfall.',
+      pt: 'Caminho de montanha perto das lagoas de Yala que termina na cachoeira da Horqueta.' } },
+
+  { id: 'va-s3', nombre: 'Circuito de la Mina 9 de Octubre', categoria: 'sendero', region: 'valles',
+    localidad: 'Zapla', lat: -24.24567, lng: -65.08618, dificultad: 'media',
+    duracion: { es: '2 a 3 horas, en circuito', en: '2 to 3 hours, as a loop', pt: '2 a 3 horas, em circuito' },
+    descripcion: {
+      es: 'Circuito por la serranía de Zapla alrededor de la mina 9 de Octubre, de donde salía el hierro para los Altos Hornos de Palpalá. Sale junto al camping Cielos de Zapla.',
+      en: 'A loop through the Zapla hills around the 9 de Octubre mine, which supplied iron ore to the Palpalá blast furnaces. It starts beside the Cielos de Zapla campsite.',
+      pt: 'Circuito pela serra de Zapla ao redor da mina 9 de Octubre, de onde saía o ferro para os Altos-Fornos de Palpalá. Sai junto ao camping Cielos de Zapla.' } },
 
 
   /* ─────────────── YUNGAS ─────────────── */
@@ -746,6 +827,22 @@ window.LUGARES = [
     descripcion: {
       es: 'Un tramo del Qhapaq Ñan, el camino de los incas, que baja por escalones de piedra en la Quebrada Grande, cerca de Santa Ana. La red de caminos incas es Patrimonio Mundial de la UNESCO desde 2014.',
       en: 'A stretch of the Qhapaq Ñan, the Inca road, that descends on stone steps through the Quebrada Grande near Santa Ana. The Inca road network has been a UNESCO World Heritage Site since 2014.',
-      pt: 'Um trecho do Qhapaq Ñan, o caminho dos incas, que desce por degraus de pedra na Quebrada Grande, perto de Santa Ana. A rede de caminhos incas é Patrimônio Mundial da UNESCO desde 2014.' } }
+      pt: 'Um trecho do Qhapaq Ñan, o caminho dos incas, que desce por degraus de pedra na Quebrada Grande, perto de Santa Ana. A rede de caminhos incas é Patrimônio Mundial da UNESCO desde 2014.' } },
+
+  { id: 'yu-s6', nombre: 'Travesía Molulo – Pampichuela', categoria: 'sendero', region: 'yungas',
+    localidad: 'Molulo', lat: -23.56529, lng: -65.15931, dificultad: 'exigente',
+    duracion: { es: '2 o 3 días, solo ida', en: '2 or 3 days, one way', pt: '2 ou 3 dias, só ida' },
+    descripcion: {
+      es: 'Travesía por caminos de montaña que baja de Molulo, en los cerros de la Quebrada, a Pampichuela, en Valle Grande, pasando por San Lucas. En el camino hay refugios, como Lo de Lili en Molulo y Ramona más adelante. Sólo con guía y equipo de montaña.',
+      en: 'A trek on mountain paths that descends from Molulo, in the hills of the Quebrada, to Pampichuela in Valle Grande, by way of San Lucas. There are huts along the way, such as Lo de Lili at Molulo and Ramona further on. Only with a guide and mountain gear.',
+      pt: 'Travessia por caminhos de montanha que desce de Molulo, nos morros da Quebrada, até Pampichuela, em Valle Grande, passando por San Lucas. No caminho há refúgios, como Lo de Lili em Molulo e Ramona mais adiante. Só com guia e equipamento de montanha.' } },
+
+  { id: 'yu-s7', nombre: 'Anfiteatro y Termas del Jordán', categoria: 'sendero', region: 'yungas',
+    localidad: 'San Francisco', lat: -23.63421, lng: -64.95223, dificultad: 'media',
+    duracion: { es: '4 a 5 horas, en circuito', en: '4 to 5 hours, as a loop', pt: '4 a 5 horas, em circuito' },
+    descripcion: {
+      es: 'Circuito de montaña al sur de San Francisco: sube por la selva hasta el Anfiteatro y las Termas del Jordán, y vuelve por otro camino.',
+      en: 'A mountain loop south of San Francisco: it climbs through the forest to the Anfiteatro and the Jordán hot springs, and returns by another path.',
+      pt: 'Circuito de montanha ao sul de San Francisco: sobe pela mata até o Anfiteatro e as Termas del Jordán, e volta por outro caminho.' } }
 
 ];

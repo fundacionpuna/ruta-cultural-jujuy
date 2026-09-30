@@ -188,6 +188,10 @@ con el mismo `id`:
 - **De OpenStreetMap**: en [openstreetmap.org](https://www.openstreetmap.org) se busca el
   sendero, se toca el camino y el número de la vía aparece a la izquierda («Vía 244863267»).
   Si el sendero está cortado en varias vías, se ponen todas.
+  Si el sendero es sólo un pedazo de una red de caminos más grande, se agregan `desde` y
+  `hasta` ([latitud, longitud]) y queda sólo el camino más corto entre esos dos puntos:
+  `"yu-s6": { "osm": [215810075, …], "desde": [-23.565, -65.159], "hasta": [-23.554, -65.010] }`.
+  `"invertir": true` da vuelta el sentido, para que el recorrido empiece donde empieza el sendero.
 - **De un GPX**: se graba caminándolo con el teléfono (Wikiloc, OsmAnd, Organic Maps o
   cualquier aplicación que exporte GPX), y el archivo se deja en `herramientas/gpx/`.
 
@@ -202,28 +206,42 @@ para copiar la del comienzo en `lat`/`lng`.
 
 ### Los senderos de ahora
 
-Nueve, todos **reales**, con el trazado tomado de OpenStreetMap:
+Veintiuno, todos **reales**, con el trazado tomado de OpenStreetMap. Se eligieron a mano:
+OpenStreetMap tiene muchísimos caminos más en la provincia, pero la idea es que el mapa sea
+una guía, no un catálogo. Quedaron los que llevan a algo que vale la pena y los que cuentan
+algo del lugar.
 
 | Región | Sendero | Largo | Dificultad |
 |---|---|---|---|
 | Puna | Mirador de Yavi | 1,2 km | media |
+| Puna | Petroglifos de Laguna Colorada | 0,8 km | fácil |
 | Quebrada | Garganta del Diablo (Tilcara) | 2,1 km | media |
+| Quebrada | Cuevas de Wayra (Tilcara) | 1,7 km | media |
+| Quebrada | Castillos de Huichaira | 1,4 km | media |
+| Quebrada | Miradores del Cerro de los Siete Colores (Purmamarca) | 2,3 km | fácil |
+| Quebrada | Sendero Los Colorados (Purmamarca) | 0,9 km | fácil |
 | Quebrada | Quebrada de las Señoritas (Uquía) | 1,8 km | fácil |
+| Quebrada | Peña Blanca (Humahuaca) | 3,1 km | media |
+| Quebrada | Miradores del Hornocal | 2,3 km | media |
 | Quebrada | Inca Cueva (Azul Pampa) | 3,3 km | media |
+| Valles | Lagunas de Yala | 2,4 km | fácil |
+| Valles | Cascada de la Horqueta (Yala) | 1,9 km | media |
+| Valles | Circuito de la Mina 9 de Octubre (Zapla) | 4,7 km | media |
 | Yungas | La Lagunita (P. N. Calilegua) | 0,7 km | fácil |
 | Yungas | Pedemontano (P. N. Calilegua) | 1,8 km | fácil |
 | Yungas | Tapir (P. N. Calilegua) | 2,3 km | media |
 | Yungas | Sendero a la Cascada (San Francisco) | 3 km | media |
+| Yungas | Anfiteatro y Termas del Jordán (San Francisco) | 7,3 km | media |
 | Yungas | Qhapaq Ñan — Las Escaleras (Santa Ana) | 2,6 km | exigente |
+| Yungas | Travesía Molulo – Pampichuela | 30,9 km | exigente |
 
 Las **dificultades y los tiempos son estimados**, sacados de cómo está marcado el camino en
-OpenStreetMap: hay que confirmarlos con quien los conoce. Los **Valles no tienen senderos
-todavía**: en Yala hay muchos caminos cargados en OpenStreetMap, pero sin nombre, y no se
-quiso adivinar cuál es cuál. Es el mejor lugar para grabar el primer GPX.
+OpenStreetMap: hay que confirmarlos con quien los conoce.
 
-En `window.REGIONES` cada región guarda además sus `pueblos`, su `hilo` (el tinte del que
-sale el color) y su `resumen`. Hoy no se muestran en pantalla — se sacaron para simplificar —
-pero quedan disponibles si más adelante se quiere una página por región.
+Quedaron afuera, a propósito: senderitos de menos de un kilómetro pegados a otros (en
+Calilegua hay cuatro más: Guaraní, Tataupá, El Alejo y La Junta), caminatas de plaza en la
+capital, y rutas de montaña técnicas o muy aisladas (el Cerro Sixilera, la Laguna de Molulo).
+Se pueden sumar cuando alguien que los conoce diga que valen la pena.
 
 ## Qué falta antes de publicar
 

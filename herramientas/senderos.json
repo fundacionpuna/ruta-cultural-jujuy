@@ -1,15 +1,28 @@
 {
-  "_como": "De dónde sale el trazado de cada sendero. 'osm': números de vía de OpenStreetMap (se ven en openstreetmap.org al tocar el camino). 'gpx': un archivo grabado con el teléfono, dentro de herramientas/gpx/. Después de editar, correr: python3 herramientas/trazados.py",
+  "_como": "De dónde sale el trazado de cada sendero. osm: números de vía de OpenStreetMap (se ven en openstreetmap.org al tocar el camino). gpx: un archivo grabado con el teléfono, dentro de herramientas/gpx/. desde y hasta (opcionales): si el sendero es sólo un pedazo de las vías, se queda con el camino más corto entre esos dos puntos [latitud, longitud]. Después de editar, correr: python3 herramientas/trazados.py",
 
-  "pu-s1": { "osm": [1182785191] },
+  "pu-s1": {"osm": [1182785191]},
+  "pu-s2": {"osm": [960885349], "invertir": true},
 
-  "qu-s1": { "osm": [320374906, 314175090, 1382892909, 1382892911, 314175089] },
-  "qu-s2": { "osm": [244863267] },
-  "qu-s3": { "osm": [961132824, 961132823, 491638130] },
+  "qu-s1": {"osm": [320374906, 314175090, 1382892909, 1382892911, 314175089]},
+  "qu-s2": {"osm": [244863267]},
+  "qu-s3": {"osm": [961132824, 961132823, 491638130]},
+  "qu-s4": {"osm": [507855094]},
+  "qu-s5": {"osm": [1468115109], "desde": [-23.59065, -65.42094], "hasta": [-23.59573, -65.43268]},
+  "qu-s6": {"osm": [499199713, 358237202, 358237199, 1192505574]},
+  "qu-s7": {"osm": [485168292, 499185100, 499185106, 499185107]},
+  "qu-s8": {"osm": [605378565, 605378566, 193263152], "desde": [-23.20571, -65.342], "hasta": [-23.19888, -65.33769]},
+  "qu-s9": {"osm": [499204318, 499204316]},
 
-  "yu-s1": { "osm": [501824352] },
-  "yu-s2": { "osm": [329762846] },
-  "yu-s3": { "osm": [501824357] },
-  "yu-s4": { "osm": [485175990] },
-  "yu-s5": { "osm": [914196185, 862106218, 862106219] }
+  "va-s1": {"osm": [321037094]},
+  "va-s2": {"osm": [626267770], "desde": [-24.12548, -65.49108], "hasta": [-24.1248, -65.5069]},
+  "va-s3": {"osm": [847795638, 847795639, 847795640, 847795641, 847795642, 847795643, 847795644, 847795645, 847795646, 847795647, 847795648, 847795649, 847795650, 847795651, 847795652, 847795653, 847795654, 847795655, 847795656, 847795657, 847795658, 847795659, 847795660, 847795661, 847795662, 847795663, 847795664, 847795665, 847795666]},
+
+  "yu-s1": {"osm": [501824352]},
+  "yu-s2": {"osm": [329762846]},
+  "yu-s3": {"osm": [501824357]},
+  "yu-s4": {"osm": [485175990]},
+  "yu-s5": {"osm": [914196185, 862106218, 862106219]},
+  "yu-s6": {"osm": [215810075, 215810093, 215796533, 215810080, 306089153, 1278819830], "desde": [-23.56529, -65.15931], "hasta": [-23.55358, -65.01024]},
+  "yu-s7": {"osm": [499569208, 499569212, 499569213, 499569214, 499569216, 499569217, 499569218, 499569221, 499569222, 499569224, 499569225, 1547798543, 1547798544, 1547908106]}
 }

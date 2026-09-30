@@ -1158,7 +1158,10 @@ function pintarFicha(l) {
       <span class="f-tipo" style="--c:${c}">${svg(CAT[l.categoria].icono, '#2a1f2e')}
         ${tr(CAT[l.categoria].nombre)}</span>
       <div class="f-nombre">${l.nombre}</div>
-      <div class="f-donde">${l.localidad} · ${REG[l.region].nombre} · ${tr(REG[l.region].altura)}</div>
+      <div class="f-donde">${l.localidad} · ${REG[l.region].nombre}${esSendero ? ''
+        /* la altura es la de la región: en un sendero confunde, porque
+           muchos suben bastante más (el Hornocal está a 4.350 m) */
+        : ` · ${tr(REG[l.region].altura)}`}</div>
       ${esSendero ? datosSendero(l) : ''}
       <p class="f-texto">${tr(l.descripcion)}</p>
       ${botonesContacto(l)}

@@ -10,9 +10,11 @@ Uso:  python3 herramientas/trazados.py
 
 No necesita instalar nada: sólo Python 3.
 """
+import heapq
 import json
 import math
 import sys
+import time
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -103,24 +105,64 @@ def encadenar(lineas):
     return sorted(lineas, key=lambda l: -largo_km([l]))
 
 
+def recorrer(lineas, desde, hasta):
+    """El camino más corto entre dos puntos por una red de sendas.
+
+    Sirve cuando un sendero es sólo un pedazo de una red más grande: se dan
+    las vías y dónde empieza y termina, y queda sólo el recorrido."""
+    vecinos = {}
+    for l in lineas:
+        for a, b in zip(l, l[1:]):
+            d = distancia_m(a, b)
+            vecinos.setdefault(a, []).append((b, d))
+            vecinos.setdefault(b, []).append((a, d))
+    ini = min(vecinos, key=lambda n: distancia_m(n, desde))
+    fin = min(vecinos, key=lambda n: distancia_m(n, hasta))
+    for nombre, punto, nodo in (('desde', desde, ini), ('hasta', hasta, fin)):
+        lejos = distancia_m(punto, nodo)
+        if lejos > 300:
+            print(f'  ojo: el punto «{nombre}» queda a {lejos:.0f} m del camino', file=sys.stderr)
+    dist, previo, cola = {ini: 0}, {}, [(0, ini)]
+    while cola:
+        d, n = heapq.heappop(cola)
+        if n == fin:
+            break
+        if d > dist[n]:
+            continue
+        for m, w in vecinos[n]:
+            if d + w < dist.get(m, float('inf')):
+                dist[m], previo[m] = d + w, n
+                heapq.heappush(cola, (d + w, m))
+    if fin not in dist:
+        sys.exit('No hay camino entre «desde» y «hasta» con esas vías.')
+    camino = [fin]
+    while camino[-1] != ini:
+        camino.append(previo[camino[-1]])
+    return [camino[::-1]]
+
+
 def vias_osm(ids):
-    consulta = f'[out:json][timeout:60];way(id:{",".join(map(str, ids))});out geom;'
+    """Baja todas las vías de una sola vez: los servidores públicos cortan
+    si se les hacen muchos pedidos seguidos."""
+    consulta = f'[out:json][timeout:120];way(id:{",".join(map(str, ids))});out geom;'
     datos = urllib.parse.urlencode({'data': consulta}).encode()
     ultimo_error = None
-    for url in OVERPASS:
-        try:
-            pedido = urllib.request.Request(url, data=datos, headers={
-                'User-Agent': 'ruta-cultural-jujuy/1.0 (Fundacion Puna)'})
-            with urllib.request.urlopen(pedido, timeout=90) as r:
-                elementos = json.load(r)['elements']
-            por_id = {e['id']: [(g['lat'], g['lon']) for g in e['geometry']] for e in elementos}
-            faltan = [i for i in ids if i not in por_id]
-            if faltan:
-                sys.exit(f'OpenStreetMap no tiene estas vías: {faltan}')
-            return [por_id[i] for i in ids]
-        except (OSError, ValueError, KeyError) as e:
-            ultimo_error = e
-            print(f'  {url} no respondió ({e}); pruebo el siguiente…', file=sys.stderr)
+    for vuelta in range(3):
+        for url in OVERPASS:
+            try:
+                pedido = urllib.request.Request(url, data=datos, headers={
+                    'User-Agent': 'ruta-cultural-jujuy/1.0 (Fundacion Puna)'})
+                with urllib.request.urlopen(pedido, timeout=180) as r:
+                    elementos = json.load(r)['elements']
+                por_id = {e['id']: [(g['lat'], g['lon']) for g in e['geometry']] for e in elementos}
+                faltan = [i for i in ids if i not in por_id]
+                if faltan:
+                    sys.exit(f'OpenStreetMap no tiene estas vías: {faltan}')
+                return por_id
+            except (OSError, ValueError, KeyError) as e:
+                ultimo_error = e
+                print(f'  {url} no respondió ({e}); pruebo el siguiente…', file=sys.stderr)
+        time.sleep(20)
     sys.exit(f'Ningún servidor de OpenStreetMap respondió: {ultimo_error}')
 
 
@@ -140,9 +182,15 @@ def lineas_gpx(nombre):
 
 def main():
     fuentes = {k: v for k, v in json.loads(FUENTES.read_text()).items() if not k.startswith('_')}
+    todas = sorted({v for f in fuentes.values() for v in f.get('osm', [])})
+    vias = vias_osm(todas) if todas else {}
     trazados = {}
     for id_, f in fuentes.items():
-        crudas = vias_osm(f['osm']) if 'osm' in f else lineas_gpx(f['gpx'])
+        crudas = [vias[v] for v in f['osm']] if 'osm' in f else lineas_gpx(f['gpx'])
+        if 'desde' in f:
+            crudas = recorrer(crudas, tuple(f['desde']), tuple(f['hasta']))
+        elif f.get('invertir'):
+            crudas = [l[::-1] for l in crudas[::-1]]
         lineas = [[(round(la, 5), round(lo, 5)) for la, lo in simplificar(l)]
                   for l in encadenar(crudas)]
         trazados[id_] = lineas
