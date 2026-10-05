@@ -355,3 +355,22 @@ el Ministerio de Cultura de la Nación y notas de prensa con fecha.
 
 A propósito **no** se cargaron comedores comunitarios de asistencia social: son espacios
 de ayuda alimentaria para vecinos, no de visita turística.
+
+Más fácil de usar, 5 de octubre de 2026
+---------------------------------------
+
+- **En el teléfono, la ficha sube desde abajo** sobre el mapa (antes se abría debajo del
+  mapa, fuera de la pantalla, y al tocar un pin parecía que no pasaba nada). El mapa se
+  corre para que el lugar quede en la franja visible.
+- **Pines en forma de gota** con el dibujo del tipo de lugar, borde blanco y trazo oscuro
+  de la región. La gota es «un lugar»; el **círculo oscuro con número**, «varios lugares»:
+  se abre al acercarse (Leaflet.markercluster, desde unpkg). El nombre y la región van en
+  el título de cada pin, así el color no es la única pista.
+- **Aa · Letra grande**: agranda un cuarto la lista, la ficha, el cajón y los pines. Se recuerda.
+- **Cerca mío**: con permiso de ubicación, ordena la lista por distancia, muestra
+  «a X km» y avisa una vez por lugar al pasar a menos de 2 km, mientras la página está
+  abierta (con el teléfono bloqueado no puede: eso pediría una aplicación instalada).
+  La ubicación no sale del teléfono.
+- **Calendario de fiestas** (`calendario.js`): tarjeta «Este mes en Jujuy» arriba de la
+  lista y calendario completo desde el mes actual, cada fiesta con su fuente y, si tiene,
+  el enlace a su ficha.

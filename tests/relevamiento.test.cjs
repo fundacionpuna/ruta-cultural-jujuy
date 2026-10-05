@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const raiz = path.join(__dirname, '..');
 const datos = { window: {} };
 vm.createContext(datos);
-for (const archivo of ['datos.js', 'relevados.js', 'actividades.js', 'fotos.js', 'rastreo-octubre.js', 'senderos.js']) {
+for (const archivo of ['datos.js', 'relevados.js', 'actividades.js', 'fotos.js', 'rastreo-octubre.js', 'calendario.js', 'senderos.js']) {
   vm.runInContext(fs.readFileSync(path.join(raiz, archivo), 'utf8'), datos);
 }
 const { LUGARES, LUGARES_MUESTRA, CATEGORIAS, TEXTOS, REGIONES } = datos.window;
@@ -162,3 +162,15 @@ for (const l of octubre) {
   if (l.precio.estado === 'gratis') assert(l.precio.fuentes.length, l.id);
 }
 console.log(`OK: ${octubre.length} fichas del segundo rastreo, con fuente y en tres idiomas.`);
+
+// Calendario de fiestas
+const FIESTAS = datos.window.FIESTAS;
+assert(FIESTAS.length >= 8);
+for (const x of FIESTAS) {
+  assert(x.meses.length && x.meses.every(m => m >= 1 && m <= 12), x.id);
+  assert.equal(new URL(x.fuente.url).protocol, 'https:');
+  for (const idioma of ['es', 'en', 'pt']) assert(x.cuando[idioma] && x.descripcion[idioma], x.id);
+  if (x.ficha) assert(LUGARES.some(l => l.id === x.ficha), `${x.id}: falta la ficha ${x.ficha}`);
+}
+for (const idioma of ['es', 'en', 'pt']) assert.equal(TEXTOS[idioma].meses.length, 12);
+console.log(`OK: ${FIESTAS.length} fiestas en el calendario, con fuente y enlace al mapa.`);

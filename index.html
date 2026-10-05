@@ -13,6 +13,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Agrupa los pines cercanos en un círculo con número que se abre al acercarse -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <style>
 /* ══════════════════════════════════════════════════════════
    VAMO PUE — ruta cultural jujeña · Fundación Puna
@@ -624,6 +627,117 @@ a.llegar { display: inline-flex; align-items: center; }
                0 0 12px var(--papel), 0 0 16px var(--papel);
 }
 
+/* ── Pin en forma de gota ────────────────────────────────────
+   La gota es «un lugar»; el círculo con número, «varios lugares».
+   Borde blanco grueso y trazo oscuro de la región: se despega del mapa
+   claro aunque el relleno sea un pastel. */
+.pin.gota {
+  width: 36px; height: 46px; position: relative;
+  background: none; border: none; border-radius: 0; box-shadow: none;
+  display: block;
+  filter: drop-shadow(0 2px 3px rgba(36,27,40,.35));
+  transform-origin: 50% 100%;
+  transition: transform .15s;
+}
+.gota svg.forma { position: absolute; inset: 0; width: 36px; height: 46px; overflow: visible; }
+.gota .fondo { fill: none; stroke: #fff; stroke-width: 6; }
+.gota .relleno { fill: var(--c); stroke: var(--t); stroke-width: 2.5; }
+.gota.orientativo .relleno { stroke-dasharray: 5 3; }
+.gota .icono {
+  position: absolute; top: 7px; left: 8px; width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+}
+.gota .icono svg { width: 18px; height: 18px; }
+.pin.gota.elegido { transform: scale(1.35); width: 36px; height: 46px; box-shadow: none; }
+.pin.gota.elegido .relleno { stroke-width: 3.5; }
+
+/* Varios lugares juntos: círculo oscuro con el número en blanco (16:1) */
+.racimo {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--tinta); color: var(--blanco);
+  border: 3px solid var(--blanco);
+  box-shadow: 0 0 0 2px var(--coral), 0 2px 6px rgba(36,27,40,.35);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', system-ui, sans-serif; font-weight: 700; font-size: 17px;
+}
+
+/* el grupo que contiene el lugar abierto: aro coral ancho */
+.racimo.elegido { transform: scale(1.18); box-shadow: 0 0 0 5px var(--coral), 0 3px 8px rgba(36,27,40,.4); }
+
+/* Tu posición, con «Cerca mío» */
+.yo {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #1a73e8; border: 4px solid #fff;
+  box-shadow: 0 0 0 2px #1a73e8, 0 0 0 10px rgba(26,115,232,.18);
+}
+
+/* Botón «Cerca mío», flotando sobre el mapa */
+.cerca-control { margin: 0 12px 26px 0 !important; }
+#cerca {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Outfit', system-ui, sans-serif; font-size: 16px; font-weight: 600;
+  background: var(--blanco); color: var(--tinta);
+  border: 2px solid var(--coral); border-radius: var(--curva);
+  padding: 10px 18px; min-height: 48px; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(36,27,40,.22);
+}
+#cerca svg { width: 20px; height: 20px; }
+#cerca[aria-pressed="true"] { background: var(--coral); }
+
+/* Aviso de «estás cerca», arriba del mapa */
+#aviso-cerca {
+  position: fixed; left: 50%; top: 84px; transform: translateX(-50%);
+  z-index: 1500; width: min(92vw, 440px);
+  background: var(--tinta); color: var(--blanco);
+  border-radius: 20px; padding: 13px 14px 13px 18px;
+  display: flex; align-items: center; gap: 12px;
+  font-size: 16px; line-height: 1.35;
+  box-shadow: 0 8px 24px rgba(36,27,40,.35);
+}
+#aviso-cerca[hidden] { display: none; }
+#aviso-cerca .texto { flex: 1; }
+#aviso-cerca button {
+  font-family: 'Outfit', system-ui, sans-serif; font-weight: 600; font-size: 15px;
+  min-height: 44px; padding: 8px 16px; border-radius: var(--curva); cursor: pointer;
+  border: 2px solid var(--blanco);
+}
+#aviso-cerca .ver { background: var(--coral); border-color: var(--coral); color: var(--tinta); }
+#aviso-cerca .x { background: none; color: var(--blanco); padding: 8px 12px; }
+.distancia { color: var(--tinta); font-weight: 600; }
+
+/* ── Calendario de fiestas ───────────────────────────────── */
+.este-mes {
+  margin: 14px 18px 4px; padding: 14px 16px;
+  background: var(--amarillo); border-radius: 20px;
+  border: 2px solid #efe38a;
+}
+.este-mes .titulo, .cal-mes {
+  font-family: 'Outfit', system-ui, sans-serif; font-weight: 700; font-size: 15px;
+  color: var(--tinta); text-transform: uppercase; letter-spacing: .04em;
+}
+.este-mes .fiesta { margin-top: 6px; font-size: 16px; line-height: 1.4; }
+.este-mes .fiesta b { font-family: 'Outfit', system-ui, sans-serif; font-size: 18px; }
+.este-mes .boton { margin-top: 10px; min-height: 44px; padding: 8px 16px; font-size: 15px; }
+.calendario { padding: 4px 24px 30px; }
+.cal-mes { padding: 18px 0 6px; border-bottom: 2px solid var(--borde); }
+.cal-mes.ahora { color: var(--coral); border-color: var(--coral); }
+.cal-fiesta { padding: 12px 0; border-bottom: 1px solid var(--borde); }
+.cal-fiesta .n { font-family: 'Outfit', system-ui, sans-serif; font-weight: 700; font-size: 19px; }
+.cal-fiesta .c { font-weight: 600; margin: 2px 0 4px; }
+.cal-fiesta .l { color: var(--suave); font-size: 15px; }
+.cal-fiesta p { font-size: 16px; line-height: 1.55; margin-top: 6px; }
+.cal-fiesta .pie { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 8px; font-size: 14px; }
+.cal-fiesta .pie a { color: var(--tinta); }
+.cal-fiesta .boton { min-height: 44px; padding: 8px 16px; font-size: 15px; }
+
+/* ── Letra grande: todo un cuarto más grande, también los pines ── */
+body.grande #lista, body.grande #cajon, body.grande #aviso-cerca { zoom: 1.25; }
+body.grande .pin.gota { transform: scale(1.3); }
+body.grande .pin.gota.elegido { transform: scale(1.65); }
+body.grande .racimo { transform: scale(1.2); }
+body.grande #cerca { font-size: 19px; min-height: 56px; }
+#letra { font-size: 17px; }
+
 /* ── Teléfono ────────────────────────────────────────────── */
 @media (max-width: 900px) {
   html, body { height: auto; overflow: visible; }
@@ -643,6 +757,24 @@ a.llegar { display: inline-flex; align-items: center; }
   .tipo { font-size: 14px; padding: 7px 13px; }
   #barra-buscar { padding: 11px 14px 12px; }
   #buscar { width: 100%; }
+  .idioma { min-width: 44px; padding: 8px 10px; }
+
+  /* La ficha sube desde abajo sobre el mapa, como en las aplicaciones de
+     mapas: antes se abría debajo del mapa, fuera de la pantalla, y al
+     tocar un pin parecía que no pasaba nada. */
+  body.con-ficha #lista {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 1300;
+    max-height: 60vh; overflow-y: auto; overscroll-behavior: contain;
+    background: var(--papel);
+    border-radius: 24px 24px 0 0; border-top: none;
+    box-shadow: 0 -8px 28px rgba(36,27,40,.28);
+  }
+  body.con-ficha #lista::before {
+    content: ''; display: block; width: 48px; height: 5px; border-radius: 3px;
+    background: var(--borde); margin: 10px auto 0;
+  }
+  body.grande.con-ficha #lista { max-height: 60vh; }
+  #aviso-cerca { top: 12px; }
 
   #cuerpo { flex-direction: column; min-height: 0; }
   #mapa { order: 1; height: 62vh; flex: none; }   /* el mapa, grande */
@@ -678,6 +810,7 @@ a.llegar { display: inline-flex; align-items: center; }
     </div>
   </div>
   <div class="der">
+    <button id="letra" class="idioma" aria-pressed="false">Aa</button>
     <div id="idiomas"></div>
     <button id="abrir-cajon" aria-expanded="false" aria-controls="cajon"></button>
   </div>
@@ -714,6 +847,7 @@ a.llegar { display: inline-flex; align-items: center; }
 <script src="actividades.js"></script>
 <script src="fotos.js"></script>
 <script src="rastreo-octubre.js"></script>
+<script src="calendario.js"></script>
 <script src="senderos.js"></script>
 <script>
 'use strict';
@@ -818,7 +952,16 @@ base.on('tileerror', () => {
 
 const capaZonas    = L.layerGroup().addTo(map);
 const capaSenderos = L.layerGroup().addTo(map);
-const capaPins     = L.layerGroup().addTo(map);
+/* Los pines cercanos se juntan en un círculo con número; al tocarlo, el
+   mapa se acerca y se separan. Desde zoom 13 se ven todos sueltos. */
+const capaPins = L.markerClusterGroup({
+  maxClusterRadius: 44, disableClusteringAtZoom: 13,
+  showCoverageOnHover: false, spiderfyOnMaxZoom: true,
+  iconCreateFunction: racimo => L.divIcon({
+    className: '', iconSize: [46, 46],
+    html: `<div class="racimo" role="img" aria-label="${racimo.getChildCount()}">${racimo.getChildCount()}</div>`
+  })
+}).addTo(map);
 
 /* Leaflet guarda el tamaño del contenedor y sólo lo recalcula con el
    resize de la ventana. Acá el mapa se encoge sin que la ventana se
@@ -852,18 +995,22 @@ function rotulo(k) {
 
 /* El dibujo del pin va en tinta, no en blanco: sobre los pasteles de la
    marca el blanco casi no se ve. */
+/* La gota apunta con la punta al lugar: el ancla va abajo al centro. */
+const GOTA = 'M18 44C18 44 3.5 27 3.5 17.5a14.5 14.5 0 0 1 29 0C32.5 27 18 44 18 44z';
 function pin(l, elegido) {
   return L.divIcon({
-    className: '', iconSize: elegido ? [46, 46] : [34, 34],
-    iconAnchor: elegido ? [23, 23] : [17, 17],
-    html: `<div class="pin${elegido ? ' elegido' : ''}${l.relevamiento?.ubicacion === 'referencia' ? ' orientativo' : ''}" style="${tinte(l.region)}">
-             ${svg(CAT[l.categoria].icono, '#241b28')}</div>`
+    className: '', iconSize: [36, 46], iconAnchor: [18, 44],
+    html: `<div class="pin gota${elegido ? ' elegido' : ''}${l.relevamiento?.ubicacion === 'referencia' ? ' orientativo' : ''}" style="${tinte(l.region)}">
+             <svg class="forma" viewBox="0 0 36 46" aria-hidden="true"><path class="fondo" d="${GOTA}"/><path class="relleno" d="${GOTA}"/></svg>
+             <span class="icono">${svg(CAT[l.categoria].icono, '#241b28')}</span></div>`
   });
 }
 
 const marcadores = {};
 LUGARES.forEach(l => {
-  const m = L.marker([l.lat, l.lng], { title: l.nombre, alt: l.nombre, icon: pin(l, false) });
+  /* El nombre y la región van en el título: el color no es la única pista */
+  const etiqueta = `${l.nombre} · ${REG[l.region].nombre}`;
+  const m = L.marker([l.lat, l.lng], { title: etiqueta, alt: etiqueta, icon: pin(l, false) });
   m.on('click', () => irA(l.id));
   marcadores[l.id] = m;
 });
@@ -921,6 +1068,7 @@ const porId = id => LUGARES.find(l => l.id === id);
    puede mandar por WhatsApp y el botón de volver del teléfono la cierra. */
 function soltarElegido() {
   estado.elegido = null;
+  document.body.classList.remove('con-ficha');
   if (location.hash) history.replaceState(null, '', location.pathname + location.search);
 }
 
@@ -1030,6 +1178,7 @@ Object.entries(IDIOMAS).forEach(([codigo, i]) => {
     estado.idioma = codigo;
     localStorage.setItem('rcj-idioma', codigo);
     traducir();
+    traducirExtras();
     pintar();
   });
   elIdiomas.appendChild(b);
@@ -1105,6 +1254,7 @@ window.addEventListener('hashchange', seguirDireccion);
 
 function cerrarFicha() { soltarElegido(); pintar(); }
 
+const telefono = matchMedia('(max-width: 900px)');
 function abrir(id) {
   const l = porId(id);
   /* Si se llega desde «Cerca de acá» o desde un enlace, el lugar puede no
@@ -1114,6 +1264,8 @@ function abrir(id) {
   if (!pasa(l)) estado.zona = 'todas';
   if (!pasa(l)) estado.precio = 'todos';
   estado.elegido = id;
+  estado.calendario = false;
+  document.body.classList.add('con-ficha');
   /* la ficha va en la lista: si estaba escondida, se muestra */
   if (document.body.classList.contains('sin-lista')) {
     document.body.classList.remove('sin-lista');
@@ -1121,11 +1273,25 @@ function abrir(id) {
     map.invalidateSize({ animate: false });
   }
   pintar();
+  /* En el teléfono la ficha tapa la parte de abajo del mapa: el lugar se
+     muestra en la franja que queda libre arriba del panel. */
+  let tapado = 0, corrimiento = 0;
+  if (telefono.matches) {
+    const r = document.getElementById('mapa').getBoundingClientRect();
+    const libreArriba = Math.max(r.top, 0);
+    const libreAbajo = Math.min(r.bottom, innerHeight * 0.4);   // el panel ocupa el 60% de abajo
+    tapado = Math.max(0, r.bottom - libreAbajo);
+    corrimiento = (r.top + r.height / 2) - (libreArriba + libreAbajo) / 2;
+  }
   if (TRAZADOS[id]) {
     map.flyToBounds(L.latLngBounds(TRAZADOS[id].flat()),
-      { padding: [40, 40], maxZoom: 15, duration: .6 });
+      { paddingTopLeft: [40, 40], paddingBottomRight: [40, 40 + tapado], maxZoom: 15, duration: .6 });
   } else {
-    map.panTo([l.lat, l.lng], { animate: true, duration: .5 });
+    /* Se acerca hasta el zoom en que los círculos con número ya se
+       separaron (13), así el pin elegido se ve suelto. */
+    const z = Math.max(map.getZoom(), 13);
+    const centro = map.unproject(map.project([l.lat, l.lng], z).add([0, corrimiento]), z);
+    map.flyTo(centro, z, { duration: .6 });
   }
   elLista.scrollTop = 0;
   const v = document.getElementById('volver');
@@ -1324,6 +1490,8 @@ function pintarFicha(l) {
 
 function pintarLista(visibles) {
   if (estado.elegido) { pintarFicha(porId(estado.elegido)); return; }
+  if (estado.calendario) { pintarCalendario(); return; }
+  const yo = estado.cerca && [estado.cerca.lat, estado.cerca.lng];
 
   const sumate = `
     <div class="sumate">
@@ -1350,12 +1518,13 @@ function pintarLista(visibles) {
            <div class="lema">${tr(REG[estado.zona].lema)}</div></div>
     </div>`;
 
-  elLista.innerHTML = portada + `<p class="cuenta">${cuenta}${cola}</p>` +
+  elLista.innerHTML = tarjetaEsteMes() + portada + `<p class="cuenta">${cuenta}${cola}</p>` +
     visibles.map(l => `
       <button class="item" data-abre="${l.id}">
         <span class="pastilla" style="${tinte(l.region)}">${svg(CAT[l.categoria].icono, '#241b28')}</span>
         <span class="t">
           <span class="n">${l.nombre}</span>
+          ${yo ? `<span class="d distancia">${t('aKm')(cifra(distanciaKm(yo, [l.lat, l.lng])))}</span>` : ''}
           <span class="d">${l.localidad} · ${TRAZADOS[l.id]
             ? `${cifra(largoKm(l.id))} km · ${t('dificultad')[l.dificultad]}`
             : REG[l.region].nombre}</span>
@@ -1366,11 +1535,75 @@ function pintarLista(visibles) {
 
   elLista.querySelectorAll('[data-abre]').forEach(b =>
     b.addEventListener('click', () => irA(b.dataset.abre)));
+  const vc = document.getElementById('ver-calendario');
+  if (vc) vc.addEventListener('click', abrirCalendario);
+}
+
+/* ── Calendario de fiestas ───────────────────────────────── */
+const FIESTAS = window.FIESTAS || [];
+const mesActual = new Date().getMonth() + 1;
+function fiestasDelMes() {
+  /* este mes; si no hay ninguna, la próxima que viene */
+  const ahora = FIESTAS.filter(x => x.meses.includes(mesActual));
+  if (ahora.length) return { titulo: t('esteMes'), lista: ahora };
+  for (let i = 1; i < 12; i++) {
+    const m = (mesActual - 1 + i) % 12 + 1;
+    const prox = FIESTAS.filter(x => x.meses.includes(m));
+    if (prox.length) return { titulo: `${t('proximamente')} · ${t('meses')[m - 1]}`, lista: prox };
+  }
+  return { titulo: '', lista: [] };
+}
+function tarjetaEsteMes() {
+  const { titulo, lista } = fiestasDelMes();
+  if (!lista.length) return '';
+  return `<section class="este-mes" aria-label="${titulo}">
+    <div class="titulo">${titulo}</div>
+    ${lista.map(x => `<div class="fiesta"><b>${escaparHtml(x.nombre)}</b> · ${escaparHtml(tr(x.cuando))} · ${escaparHtml(x.lugar)}</div>`).join('')}
+    <button class="boton" id="ver-calendario">${t('verCalendario')}</button>
+  </section>`;
+}
+function pintarCalendario() {
+  const meses = [];
+  for (let i = 0; i < 12; i++) meses.push((mesActual - 1 + i) % 12 + 1);   // desde este mes
+  elLista.innerHTML = `<button id="volver">${t('volver')}</button>
+    <div class="calendario"><h2 class="f-nombre">${t('calendario')}</h2>
+    ${meses.map(m => {
+      const del = FIESTAS.filter(x => x.meses[0] === m);
+      if (!del.length) return '';
+      return `<h3 class="cal-mes${m === mesActual ? ' ahora' : ''}">${t('meses')[m - 1]}</h3>` + del.map(x => `
+        <div class="cal-fiesta">
+          <div class="n">${escaparHtml(x.nombre)}</div>
+          <div class="c">${escaparHtml(tr(x.cuando))}</div>
+          <div class="l">${escaparHtml(x.lugar)}${x.region ? ' · ' + REG[x.region].nombre : ''}</div>
+          <p>${escaparHtml(tr(x.descripcion))}</p>
+          <div class="pie">
+            ${x.ficha && porId(x.ficha) ? `<button class="boton" data-abre="${x.ficha}">${t('verEnMapa')}</button>` : ''}
+            <span>${t('fuenteFecha')}: <a href="${escaparHtml(x.fuente.url)}" target="_blank" rel="noopener noreferrer">${escaparHtml(x.fuente.titulo)}</a></span>
+          </div>
+        </div>`).join('');
+    }).join('')}</div>`;
+  document.getElementById('volver').addEventListener('click', () => {
+    estado.calendario = false; document.body.classList.remove('con-ficha'); pintar();
+  });
+  elLista.querySelectorAll('[data-abre]').forEach(b =>
+    b.addEventListener('click', () => irA(b.dataset.abre)));
+}
+function abrirCalendario() {
+  estado.calendario = true;
+  document.body.classList.add('con-ficha');   // en el teléfono sube como la ficha
+  pintarCalendario();
+  elLista.scrollTop = 0;
+  document.getElementById('volver').focus({ preventScroll: true });
 }
 
 /* ── Pintar ──────────────────────────────────────────────── */
 function pintar() {
   const visibles = LUGARES.filter(pasa);
+  /* con «Cerca mío», lo más cercano primero */
+  if (estado.cerca) {
+    const yo = [estado.cerca.lat, estado.cerca.lng];
+    visibles.sort((a, b) => distanciaKm(yo, [a.lat, a.lng]) - distanciaKm(yo, [b.lat, b.lng]));
+  }
 
   capaPins.clearLayers();
   // Varias fichas tienen la misma referencia de localidad: un marcador
@@ -1386,8 +1619,8 @@ function pintar() {
     const m = marcadores[l.id];
     const elegido = l.id === estado.elegido;
     if (grupo.length > 1) {
-      const icono = L.divIcon({ className: '', iconSize: [44, 44], iconAnchor: [22, 22],
-        html: `<div class="pin grupo orientativo${elegido ? ' elegido' : ''}" style="${tinte(l.region)};width:44px;height:44px">${grupo.length}</div>` });
+      const icono = L.divIcon({ className: '', iconSize: [46, 46], iconAnchor: [23, 23],
+        html: `<div class="racimo${elegido ? ' elegido' : ''}">${grupo.length}</div>` });
       const conjunto = L.marker([l.lat, l.lng], { icon: icono, title: `${t('propuestasLocalidad')}: ${grupo.length}` });
       conjunto.bindPopup(`<div class="grupo-propuestas"><strong>${t('propuestasLocalidad')}</strong>
         ${grupo.some(o => o.relevamiento?.ubicacion === 'referencia') ? `<p>${t('ubicacionOrientativa')}</p>` : ''}
@@ -1456,7 +1689,100 @@ document.addEventListener('keydown', e => {
   if (estado.elegido) cerrarFicha();
 });
 
+/* ── Letra grande ────────────────────────────────────────── */
+const btnLetra = document.getElementById('letra');
+function ponerLetra(grande) {
+  document.body.classList.toggle('grande', grande);
+  btnLetra.setAttribute('aria-pressed', String(grande));
+  try { localStorage.setItem('rcj-letra', grande ? '1' : ''); } catch (e) {}
+}
+btnLetra.addEventListener('click', () => ponerLetra(!document.body.classList.contains('grande')));
+try { if (localStorage.getItem('rcj-letra')) ponerLetra(true); } catch (e) {}
+
+/* ── Cerca mío ───────────────────────────────────────────────
+   Como las aplicaciones que avisan qué hay cerca: con la página abierta,
+   sigue tu posición y avisa una vez por lugar cuando pasás a menos de
+   2 km. Con el teléfono bloqueado no puede avisar: eso pediría una
+   aplicación instalada. Tu ubicación no sale del teléfono. */
+const AVISO_KM = 2;
+let seguimiento = null, marcaYo = null;
+const avisados = new Set();
+const elAviso = document.createElement('div');
+elAviso.id = 'aviso-cerca';
+elAviso.setAttribute('role', 'status');
+elAviso.hidden = true;
+document.body.appendChild(elAviso);
+
+function mostrarAviso(texto, idLugar) {
+  elAviso.innerHTML = `<span class="texto">${texto}</span>
+    ${idLugar ? `<button class="ver">${t('verLugar')}</button>` : ''}
+    <button class="x" aria-label="${t('cerrar')}">✕</button>`;
+  elAviso.hidden = false;
+  if (idLugar) elAviso.querySelector('.ver').addEventListener('click', () => { elAviso.hidden = true; irA(idLugar); });
+  elAviso.querySelector('.x').addEventListener('click', () => { elAviso.hidden = true; });
+}
+const distanciaTexto = km => km < 1 ? `${Math.max(50, Math.round(km * 20) * 50)} m` : `${cifra(km)} km`;
+
+function enPosicion(p) {
+  const primera = !estado.cerca;
+  estado.cerca = { lat: p.coords.latitude, lng: p.coords.longitude };
+  const yo = [estado.cerca.lat, estado.cerca.lng];
+  if (!marcaYo) {
+    marcaYo = L.marker(yo, { interactive: false, keyboard: false, zIndexOffset: 2000,
+      icon: L.divIcon({ className: '', iconSize: [22, 22], html: `<div class="yo" role="img" aria-label="${t('aquiEstas')}"></div>` }) }).addTo(map);
+  } else marcaYo.setLatLng(yo);
+  if (primera) {
+    if (LIMITES.contains(yo)) map.flyTo(yo, 12, { duration: .8 });
+    else { mostrarAviso(t('cercaFuera')); map.flyToBounds(LIMITES, { duration: .6 }); }
+    pintar();
+  }
+  /* el lugar más cercano al que todavía no se avisó */
+  const cerca = LUGARES.filter(pasa)
+    .map(l => ({ l, km: distanciaKm(yo, [l.lat, l.lng]) }))
+    .filter(x => x.km <= AVISO_KM && !avisados.has(x.l.id))
+    .sort((a, b) => a.km - b.km)[0];
+  if (cerca) {
+    avisados.add(cerca.l.id);
+    mostrarAviso(t('cercaAviso')(cerca.l.nombre, distanciaTexto(cerca.km)), cerca.l.id);
+    if (navigator.vibrate) navigator.vibrate(150);
+  }
+}
+function apagarCerca() {
+  if (seguimiento !== null) navigator.geolocation.clearWatch(seguimiento);
+  seguimiento = null; estado.cerca = null;
+  if (marcaYo) { map.removeLayer(marcaYo); marcaYo = null; }
+  btnCerca.setAttribute('aria-pressed', 'false');
+  pintar();
+}
+const ControlCerca = L.Control.extend({
+  onAdd() {
+    const c = L.DomUtil.create('div', 'cerca-control');
+    c.innerHTML = `<button id="cerca" aria-pressed="false">${pinMarca('currentColor')}<span></span></button>`;
+    L.DomEvent.disableClickPropagation(c);
+    return c;
+  }
+});
+new ControlCerca({ position: 'bottomright' }).addTo(map);
+const btnCerca = document.getElementById('cerca');
+btnCerca.addEventListener('click', () => {
+  if (seguimiento !== null) { apagarCerca(); return; }
+  if (!navigator.geolocation) { mostrarAviso(t('cercaError')); return; }
+  btnCerca.setAttribute('aria-pressed', 'true');
+  mostrarAviso(t('cercaBuscando'));
+  seguimiento = navigator.geolocation.watchPosition(
+    p => { if (elAviso.textContent.includes(t('cercaBuscando'))) elAviso.hidden = true; enPosicion(p); },
+    () => { apagarCerca(); mostrarAviso(t('cercaError')); },
+    { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 });
+});
+function traducirExtras() {
+  btnLetra.setAttribute('aria-label', t('letraGrande'));
+  btnLetra.title = t('letraGrande');
+  btnCerca.querySelector('span').textContent = t('cercaMio');
+  btnCerca.title = t('cercaAyuda');
+}
+
 traducir();
+traducirExtras();
 pintar();
 revisarBordes();
 /* si se entró con un enlace a un lugar (…/#qu-s1), se abre su ficha */
