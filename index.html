@@ -4,6 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vamo pue · Ruta cultural jujeña — Fundación Puna</title>
+<!-- Para buscadores y para la vista previa del enlace en WhatsApp y redes.
+     La imagen tiene que ir con la dirección completa. -->
+<meta name="description" content="Mapa de la ruta cultural de Jujuy: qué ver, dónde dormir y comer, senderos y fiestas en la Puna, la Quebrada, los Valles y las Yungas. Un proyecto de Fundación Puna.">
+<link rel="canonical" href="https://vamopue.com/">
+<meta name="theme-color" content="#ff5b4d">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vamo pue">
+<meta property="og:locale" content="es_AR">
+<meta property="og:url" content="https://vamopue.com/">
+<meta property="og:title" content="Vamo pue · Ruta cultural jujeña">
+<meta property="og:description" content="Qué ver, dónde dormir y comer, senderos y fiestas en las cuatro regiones de Jujuy: Puna, Quebrada, Valles y Yungas.">
+<meta property="og:image" content="https://vamopue.com/marca/compartir.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vamo pue, ruta cultural jujeña: Puna, Quebrada, Valles y Yungas">
+<meta name="twitter:card" content="summary_large_image">
 <!-- El favicon es el pin del logo «vamo pue», en un PNG cuadrado aparte:
      el navegador estira cualquier imagen que no lo sea. -->
 <link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
@@ -712,6 +728,9 @@ a.llegar { display: inline-flex; align-items: center; }
   box-shadow: 0 8px 24px rgba(36,27,40,.35);
 }
 #aviso-cerca[hidden] { display: none; }
+/* con letra grande el aviso se agranda un cuarto: se achica el ancho
+   para que siga entrando en la pantalla del teléfono */
+body.grande #aviso-cerca { width: min(73vw, 352px); }
 #aviso-cerca .texto { flex: 1; }
 #aviso-cerca button {
   font-family: 'Outfit', system-ui, sans-serif; font-weight: 600; font-size: 15px;
@@ -901,7 +920,8 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
     content: ''; display: block; width: 48px; height: 5px; border-radius: 3px;
     background: var(--borde); margin: 10px auto 0;
   }
-  body.grande.con-ficha #lista { max-height: 60vh; }
+  /* con zoom 1.25, 48vh se ve como el 60% de la pantalla, igual que sin letra grande */
+  body.grande.con-ficha #lista { max-height: 48vh; }
   #aviso-cerca { top: 12px; }
 
   #cuerpo { flex-direction: column; min-height: 0; }
@@ -1002,7 +1022,10 @@ const FUNDACION = window.FUNDACION;
 /* Idioma: el que eligió antes, o el del navegador si es uno de los
    tres, o castellano. */
 function idiomaInicial() {
-  const guardado = localStorage.getItem('rcj-idioma');
+  /* Con los datos del sitio bloqueados, localStorage tira error y el
+     mapa no cargaba entero: se lee con cuidado, como la letra grande. */
+  let guardado = null;
+  try { guardado = localStorage.getItem('rcj-idioma'); } catch (e) {}
   if (guardado && IDIOMAS[guardado]) return guardado;
   const nav = (navigator.language || 'es').slice(0, 2).toLowerCase();
   return IDIOMAS[nav] ? nav : 'es';
@@ -1097,7 +1120,12 @@ const capaPins = L.markerClusterGroup({
   showCoverageOnHover: false, spiderfyOnMaxZoom: true,
   iconCreateFunction: racimo => L.divIcon({
     className: '', iconSize: [46, 46],
-    html: `<div class="racimo" role="img" aria-label="${racimo.getChildCount()}">${racimo.getChildCount()}</div>`
+    html: (() => {
+      /* Un marcador puede ser un grupo de la misma localidad (cuantos > 1):
+         getChildCount() lo contaba como uno y el número quedaba corto. */
+      const n = racimo.getAllChildMarkers().reduce((s, m) => s + (m.options.cuantos || 1), 0);
+      return `<div class="racimo" role="img" aria-label="${n}">${n}</div>`;
+    })()
   })
 }).addTo(map);
 
@@ -1190,12 +1218,16 @@ const cifra = km => km.toLocaleString(estado.idioma,
   { maximumFractionDigits: km < 10 ? 1 : 0 });
 
 /* ── Filtro ──────────────────────────────────────────────── */
+/* En el teléfono casi nadie escribe las tildes: «maimara» tiene que
+   encontrar Maimará y «chani», Chañi. */
+const sinTildes = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
 function pasa(l) {
   if (estado.precio && estado.precio !== 'todos' && (l.precio?.estado || 'consultar') !== estado.precio) return false;
   if (estado.zona !== 'todas' && l.region !== estado.zona) return false;
   if (estado.tipo !== 'todos' && l.categoria !== estado.tipo) return false;
   if (estado.busqueda) {
-    const h = `${l.nombre} ${l.localidad} ${tr(l.descripcion)}`.toLowerCase();
+    const h = sinTildes(`${l.nombre} ${l.localidad} ${tr(l.descripcion)}`);
     if (!h.includes(estado.busqueda)) return false;
   }
   return true;
@@ -1204,6 +1236,13 @@ const porId = id => LUGARES.find(l => l.id === id);
 
 /* La ficha abierta queda en la dirección (…/#qu-s1), así el enlace se
    puede mandar por WhatsApp y el botón de volver del teléfono la cierra. */
+/* Cualquier filtro o búsqueda vuelve a la lista: con el calendario
+   abierto, la lista no cambiaba y parecía que el filtro no andaba. */
+function dejarCalendario() {
+  if (!estado.calendario) return;
+  estado.calendario = false;
+  if (!estado.elegido) document.body.classList.remove('con-ficha');
+}
 function soltarElegido() {
   estado.elegido = null;
   document.body.classList.remove('con-ficha');
@@ -1220,6 +1259,7 @@ const elReg = document.getElementById('regiones');
                                : '<span class="punto"></span>') + '<span class="et"></span>';
   b.addEventListener('click', () => {
     estado.zona = k;
+    dejarCalendario();
     if (estado.elegido && !pasa(porId(estado.elegido))) soltarElegido();
     pintar();
     encuadrar();
@@ -1237,6 +1277,7 @@ const elTipos = document.getElementById('tipos');
   b.innerHTML = (icono ? svg(icono, 'currentColor') : '') + '<span class="et"></span>';
   b.addEventListener('click', () => {
     estado.tipo = k;
+    dejarCalendario();
     if (estado.elegido && !pasa(porId(estado.elegido))) soltarElegido();
     pintar();
   });
@@ -1249,6 +1290,7 @@ const elPrecios = document.getElementById('precios');
   b.className = 'pildora tipo'; b.dataset.precio = k;
   b.addEventListener('click', () => {
     estado.precio = k;
+    dejarCalendario();
     if (estado.elegido && !pasa(porId(estado.elegido))) soltarElegido();
     pintar();
   });
@@ -1278,6 +1320,14 @@ const lupa = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-
 function cajonAbierto() { return elCajon.classList.contains('abierto'); }
 function alternarCajon(abrir) {
   const v = abrir === undefined ? !cajonAbierto() : abrir;
+  /* En el teléfono la hoja de la ficha (o del calendario) tapaba la
+     búsqueda del cajón: al abrirlo, la hoja se cierra. */
+  if (v && document.body.classList.contains('con-ficha')) {
+    dejarCalendario();
+    if (estado.elegido) soltarElegido();
+    document.body.classList.remove('con-ficha');
+    pintar();
+  }
   elCajon.classList.toggle('abierto', v);
   btnCajon.setAttribute('aria-expanded', String(v));
   btnCajon.innerHTML = lupa + `<span>${v ? t('cerrarCajon') : t('abrirCajon')}</span>`;
@@ -1314,7 +1364,7 @@ Object.entries(IDIOMAS).forEach(([codigo, i]) => {
   b.setAttribute('aria-label', i.nombre);
   b.addEventListener('click', () => {
     estado.idioma = codigo;
-    localStorage.setItem('rcj-idioma', codigo);
+    try { localStorage.setItem('rcj-idioma', codigo); } catch (e) {}
     traducir();
     traducirExtras();
     pintar();
@@ -1389,7 +1439,9 @@ function irA(id) {
 function seguirDireccion() {
   const id = decodeURIComponent(location.hash.slice(1));
   if (porId(id)) abrir(id);
-  else if (estado.elegido) { estado.elegido = null; pintar(); }
+  /* soltarElegido() también saca body.con-ficha: si no, con el botón de
+     volver del teléfono la hoja quedaba abierta, con la lista entera. */
+  else if (estado.elegido) { soltarElegido(); pintar(); }
 }
 window.addEventListener('hashchange', seguirDireccion);
 
@@ -1420,7 +1472,8 @@ function abrir(id) {
   if (telefono.matches) {
     const r = document.getElementById('mapa').getBoundingClientRect();
     const libreArriba = Math.max(r.top, 0);
-    const libreAbajo = Math.min(r.bottom, innerHeight * 0.4);   // el panel ocupa el 60% de abajo
+    /* donde empieza la hoja de verdad: con letra grande es más alta */
+    const libreAbajo = Math.min(r.bottom, elLista.getBoundingClientRect().top);
     tapado = Math.max(0, r.bottom - libreAbajo);
     corrimiento = (r.top + r.height / 2) - (libreArriba + libreAbajo) / 2;
   }
@@ -1479,6 +1532,7 @@ function botonesContacto(l) {
   if (c.email) lista.push(['', 'sobre', t('correo'),
     `mailto:${c.email}?subject=${encodeURIComponent(t('asuntoCorreo')(l.nombre))}`]);
 
+  if (!lista.length) return '';   // contacto: {} no deja un recuadro vacío
   const botones = lista.map(([clase, icono, texto, href]) => l.muestra
     ? `<button class="boton ${clase}" data-ejemplo>${svg(icono, 'currentColor')}${texto}</button>`
     : `<a class="boton ${clase}" href="${href}" target="_blank" rel="noopener">${svg(icono, 'currentColor')}${texto}</a>`
@@ -1641,6 +1695,7 @@ function activarQuitar() {
   b.addEventListener('click', () => {
     const habiaZona = estado.zona !== 'todas';
     Object.assign(estado, { zona: 'todas', tipo: 'todos', precio: 'todos', busqueda: '' });
+    dejarCalendario();
     elBuscar.value = '';
     pintar();
     if (habiaZona) encuadrar();
@@ -1785,7 +1840,8 @@ function pintar() {
     if (grupo.length > 1) {
       const icono = L.divIcon({ className: '', iconSize: [46, 46], iconAnchor: [23, 23],
         html: `<div class="racimo${elegido ? ' elegido' : ''}">${grupo.length}</div>` });
-      const conjunto = L.marker([l.lat, l.lng], { icon: icono, title: `${t('propuestasLocalidad')}: ${grupo.length}` });
+      const conjunto = L.marker([l.lat, l.lng], { icon: icono, cuantos: grupo.length,
+        title: `${t('propuestasLocalidad')}: ${grupo.length}` });
       conjunto.bindPopup(`<div class="grupo-propuestas"><strong>${t('propuestasLocalidad')}</strong>
         ${grupo.some(o => o.relevamiento?.ubicacion === 'referencia') ? `<p>${t('ubicacionOrientativa')}</p>` : ''}
         ${grupo.map(o => `<button data-propuesta="${escaparHtml(o.id)}">${escaparHtml(o.nombre)}</button>`).join('')}</div>`);
@@ -1843,7 +1899,8 @@ function pintar() {
 /* ── Búsqueda ────────────────────────────────────────────── */
 const elBuscar = document.getElementById('buscar');
 elBuscar.addEventListener('input', e => {
-  estado.busqueda = e.target.value.trim().toLowerCase();
+  estado.busqueda = sinTildes(e.target.value.trim());
+  dejarCalendario();
   soltarElegido();
   pintar();
 });
@@ -1851,6 +1908,7 @@ document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
   if (cajonAbierto()) { alternarCajon(false); return; }
   if (estado.elegido) cerrarFicha();
+  else if (estado.calendario) { dejarCalendario(); pintar(); }
 });
 
 /* ── Letra grande ────────────────────────────────────────── */
