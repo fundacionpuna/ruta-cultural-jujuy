@@ -16,7 +16,8 @@ Doble clic en `index.html`. No necesita servidor ni instalación.
 | Archivo | Qué es |
 |---|---|
 | `index.html` | El mapa. No hace falta tocarlo para cargar lugares. |
-| `datos.js` | **Todos los datos.** Regiones, colores y lista de lugares. |
+| `datos.js` | Regiones, traducciones, categorías, lugares y ejemplos originales. |
+| `relevados.js` | Selección de propuestas reales, fuentes, contactos y fecha de consulta. Retira los ejemplos inventados de la vista pública. |
 | `senderos.js` | El dibujo de cada sendero. Se arma solo con `herramientas/trazados.py`: no se toca a mano. |
 | `herramientas/senderos.json` | De dónde sale el dibujo de cada sendero: OpenStreetMap o un GPX grabado con el teléfono. |
 | `herramientas/trazados.py` | Arma `senderos.js`. Sólo necesita Python 3. |
@@ -157,7 +158,7 @@ de `datos.js`, uno por idioma.
 
 - `categoria`: `hostal` · `restaurante` · `oferta` · `punto` · `sendero`
 - `region`: `puna` · `quebrada` · `valles` · `yungas`
-- `muestra: true` marca un dato provisorio; la ficha lo aclara al pie.
+- `muestra: true` marca un ejemplo inventado; `relevados.js` lo oculta de la vista pública.
   Cuando el dato está confirmado, se borra el campo.
 - `ruta_orden`: número opcional. Si lo ponés, el lugar entra en la ruta de su región.
 - Las coordenadas salen de Google Maps: clic derecho sobre el punto y copiar las dos cifras.
@@ -261,14 +262,18 @@ Se pueden sumar cuando alguien que los conoce diga que valen la pena.
 
 ## Qué falta antes de publicar
 
-1. **Los datos de los emprendimientos son de muestra.** Los puntos turísticos son reales;
-   hospedajes, cocinas y ofertas están inventados para mostrar la estructura. Hay que
-   reemplazarlos por emprendimientos reales, cargados junto con las comunidades.
+1. **Verificar las propuestas relevadas.** Se incorporaron 24 propuestas públicas,
+   seis por región, con fuentes consultadas el 5/10/2026. No equivalen a 24 emprendimientos
+   verificados: incluyen prestadores, redes, servicios de información y actividades.
+   Los 22 ejemplos inventados se conservan en `datos.js`, pero `relevados.js` los retira
+   de la lista y del mapa. Para la selección inicial se priorizaron artesanías, producción
+   local, turismo comunitario y actividades culturales, sin un ranking por reseñas.
+   Hay que confirmar continuidad, contactos, dirección y condiciones de visita con cada prestador.
 2. **Faltan las fotos.** Cada ficha muestra un recuadro que dice «Todavía sin foto».
    Falta decidir dónde se alojan las imágenes y agregar un campo `foto` a cada lugar.
    Es lo que más le falta al mapa: un visitante elige por la foto.
-3. ~~Faltan los datos de contacto.~~ La ficha ya los muestra (ver `contacto` más arriba):
-   falta cargar los reales, con permiso de cada emprendimiento.
+3. **Contactos.** Las nuevas fichas usan datos de contacto comerciales publicados por
+   los organismos o prestadores citados. Hay que confirmar que sigan vigentes.
 4. **Los límites de las regiones son esquemáticos**, dibujados a mano. Si se quiere
    precisión, hay que reemplazar los `poligono` de `datos.js` por un GeoJSON de límites
    departamentales.
@@ -299,3 +304,34 @@ Se pueden sumar cuando alguien que los conoce diga que valen la pena.
   candidato obvio para la primera carga de datos reales.
 - El sitio oficial provincial, `turismocomunitariojujuy.travel`, **está caído**: el dominio
   ya no resuelve. Vale como argumento de por qué este mapa tiene sentido.
+
+Actualización del 5 de octubre de 2026: actividades y fotos
+---------------------------------------------------------
+
+`actividades.js` agrega 26 propuestas, 19 de ellas en Valles: museos, centros
+culturales, bici, mirador y diques. También suma caminatas en Pozuelos y Calilegua,
+y una excursión de mountain bike en Huacalera. Mejora fichas existentes sin
+crear duplicados. El filtro de costo distingue Gratis, Con costo y Consultar.
+Las entradas de Calilegua quedan en Consultar porque la aplicación del cobro
+previsto por la resolución de 2026 depende de su implementación en el parque.
+
+Las distancias publicadas especifican ida, total o tramo. Los nuevos recorridos
+sin geometría comprobada no ofrecen GPX ni líneas inventadas sobre el mapa.
+Los circuitos de bici por rutas no se presentan como senderos exclusivos.
+
+`fotos.js` enlaza fotografías de Wikimedia Commons cuya licencia individual
+fue comprobada. Cada ficha muestra autor, licencia y enlace original. Las fotos
+se muestran completas, sin recorte; requieren conexión y no se incluyen en un
+paquete sin conexión. Si fallan, aparece la ilustración regional. No se copian
+fotos de prestadores o de Google Maps sin permiso.
+
+`base-de-datos.json` es la exportación de todas las fichas visibles, con fuentes,
+costos y créditos de fotos. Regenerar después de editar los datos:
+
+```
+node herramientas/exportar-base.cjs
+node tests/relevamiento.test.cjs
+```
+
+La exportación local no implica que se haya escrito un Google Doc ni publicado
+el sitio de GitHub Pages.

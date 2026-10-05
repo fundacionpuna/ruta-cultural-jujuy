@@ -396,6 +396,10 @@ body.sin-lista #alternar-lista { left: 16px; }
   color: var(--suave);
   font-size: 13px;
 }
+.foto-libre { margin:0; background:#f9f0ee; }
+.foto-libre img { display:block; width:100%; height:210px; object-fit:contain; }
+.foto-libre figcaption { padding:8px 16px; font-size:12px; line-height:1.5; }
+.foto-libre a { color:inherit; }
 .f-cuerpo { padding: 18px 24px 34px; }
 .f-tipo {
   display: inline-flex; align-items: center; gap: 8px;
@@ -432,6 +436,16 @@ a.llegar {
 }
 a.llegar:hover { background: #3b2d42; }
 .f-muestra { font-size: 15px; color: var(--suave); margin-top: 14px; line-height: 1.5; }
+.f-relevamiento { margin: 16px 0; padding: 14px; background: var(--rosado); border-radius: 16px; font-size: 14px; line-height: 1.6; }
+.f-relevamiento p + p { margin-top: 8px; }
+.f-relevamiento ul { padding-left: 20px; margin-top: 5px; }
+.f-relevamiento a { color: var(--tinta); text-decoration: underline; overflow-wrap: anywhere; }
+.relevado-etiqueta { display: block; margin-top: 4px; font-size: 12px; color: var(--suave); }
+.pin.orientativo { border-style: dashed; }
+.pin.grupo { font-weight: 700; font-size: 16px; color: var(--tinta); }  /* tinta: en blanco, sobre el coral no llega al contraste */
+.grupo-propuestas { min-width: 220px; max-width: 280px; }
+.grupo-propuestas p { font-size: 13px; line-height: 1.5; }
+.grupo-propuestas button { display: block; width: 100%; min-height: 44px; margin-top: 6px; padding: 8px; border: 1px solid var(--borde); border-radius: 12px; background: white; color: var(--tinta); text-align: left; cursor: pointer; font: inherit; }
 
 /* datos del sendero: largo, dificultad y tiempo */
 .f-datos { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 11px; }
@@ -679,6 +693,7 @@ a.llegar { display: inline-flex; align-items: center; }
 
     <p class="paso" id="paso2"></p>
     <div class="fila-botones" id="tipos"></div>
+    <div class="fila-botones" id="precios" style="margin-top:12px"></div>
 
     <div id="barra-buscar">
       <input id="buscar" type="search">
@@ -695,6 +710,9 @@ a.llegar { display: inline-flex; align-items: center; }
 </div>
 
 <script src="datos.js"></script>
+<script src="relevados.js"></script>
+<script src="actividades.js"></script>
+<script src="fotos.js"></script>
 <script src="senderos.js"></script>
 <script>
 'use strict';
@@ -733,15 +751,17 @@ const LIMITES = L.latLngBounds([[-24.75, -67.35], [-21.70, -63.85]]);
 
 /* Una región y un tipo a la vez: siempre hay exactamente un botón
    encendido y es el que se está viendo. */
-const estado = { idioma: 'es', zona: 'todas', tipo: 'todos', busqueda: '', elegido: null };
+const estado = { idioma: 'es', zona: 'todas', tipo: 'todos', precio: 'todos', busqueda: '', elegido: null };
 estado.idioma = idiomaInicial();
 
 /* ── Dibujos ─────────────────────────────────────────────── */
 const ICONOS = {
+  bolsa:     '<path d="M5 7h14l1 14H4zM8 8V6a4 4 0 0 1 8 0v2"/>',
   cama:      '<path d="M3 18v-6h11a4 4 0 0 1 4 4v2M3 18h18M3 12V7M7.5 9.5h3"/>',
   cubiertos: '<path d="M8 3v7a2 2 0 0 1-4 0V3M6 12v9M16 3c1.8 0 2.8 2 2.8 4.6S17.6 12 17.6 12v9"/>',
   cerro:     '<path d="M2 19l6.5-10L13 16l2.5-3.5L22 19z"/>',
   brujula:   '<circle cx="12" cy="12" r="9"/><path d="M12 7.5l2.2 4.5L12 16.5 9.8 12z"/>',
+  bici: '<circle cx="5" cy="17" r="4"/><circle cx="19" cy="17" r="4"/><path d="M5 17l5-9 5 9H5M8 8h4M15 5h3l1 12"/>',
   bota:      '<path d="M7 3h6v7l5 2.3a2.5 2.5 0 0 1 1.5 2.3V18H6l1-7z"/><path d="M5 21h15M10 7h3"/>',
   reloj:     '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
   chat:      '<path d="M20.5 11.5a8.5 8.5 0 0 1-12.4 7.6L3.5 20.5l1.4-4.4a8.5 8.5 0 1 1 15.6-4.6z"/>',
@@ -835,7 +855,7 @@ function pin(l, elegido) {
   return L.divIcon({
     className: '', iconSize: elegido ? [46, 46] : [34, 34],
     iconAnchor: elegido ? [23, 23] : [17, 17],
-    html: `<div class="pin${elegido ? ' elegido' : ''}" style="${tinte(l.region)}">
+    html: `<div class="pin${elegido ? ' elegido' : ''}${l.relevamiento?.ubicacion === 'referencia' ? ' orientativo' : ''}" style="${tinte(l.region)}">
              ${svg(CAT[l.categoria].icono, '#241b28')}</div>`
   });
 }
@@ -885,6 +905,7 @@ const cifra = km => km.toLocaleString(estado.idioma,
 
 /* ── Filtro ──────────────────────────────────────────────── */
 function pasa(l) {
+  if (estado.precio && estado.precio !== 'todos' && (l.precio?.estado || 'consultar') !== estado.precio) return false;
   if (estado.zona !== 'todas' && l.region !== estado.zona) return false;
   if (estado.tipo !== 'todos' && l.categoria !== estado.tipo) return false;
   if (estado.busqueda) {
@@ -933,6 +954,18 @@ const elTipos = document.getElementById('tipos');
     pintar();
   });
   elTipos.appendChild(b);
+});
+
+const elPrecios = document.getElementById('precios');
+['todos', 'gratis', 'costo', 'consultar'].forEach(k => {
+  const b = document.createElement('button');
+  b.className = 'pildora tipo'; b.dataset.precio = k;
+  b.addEventListener('click', () => {
+    estado.precio = k;
+    if (estado.elegido && !pasa(porId(estado.elegido))) soltarElegido();
+    pintar();
+  });
+  elPrecios.appendChild(b);
 });
 
 /* ── Aviso de que la fila sigue para el costado ───────────── */
@@ -1024,6 +1057,10 @@ function traducir() {
   Object.keys(CAT).forEach(k =>
     elTipos.querySelector(`[data-tipo="${k}"] .et`).textContent = tr(CAT[k].boton));
 
+  elPrecios.querySelectorAll('[data-precio]').forEach(b => {
+    b.textContent = t(b.dataset.precio === 'todos' ? 'precioTodos' : b.dataset.precio);
+    b.setAttribute('aria-label', t('precio') + ': ' + b.textContent);
+  });
   elIdiomas.querySelectorAll('[data-idioma]').forEach(el =>
     el.setAttribute('aria-pressed', String(el.dataset.idioma === estado.idioma)));
 
@@ -1074,6 +1111,7 @@ function abrir(id) {
   if (!pasa(l) && estado.busqueda) { estado.busqueda = ''; elBuscar.value = ''; }
   if (!pasa(l)) estado.tipo = 'todos';
   if (!pasa(l)) estado.zona = 'todas';
+  if (!pasa(l)) estado.precio = 'todos';
   estado.elegido = id;
   /* la ficha va en la lista: si estaba escondida, se muestra */
   if (document.body.classList.contains('sin-lista')) {
@@ -1108,8 +1146,11 @@ function filaChica(l, detalle) {
 /* Lo más cercano, de cualquier tipo: un sendero lleva a dónde comer y
    dormir, y un hospedaje a los senderos y paseos de la zona. */
 function cercanos(l, apartar) {
+  // No calcular distancias a partir de un centro de localidad como si fuera
+  // la posición exacta del emprendimiento.
+  if (l.relevamiento?.ubicacion === 'referencia') return [];
   return LUGARES
-    .filter(o => o.id !== l.id && !apartar.includes(o.id))
+    .filter(o => o.id !== l.id && !apartar.includes(o.id) && o.relevamiento?.ubicacion !== 'referencia')
     .map(o => ({ o, km: distanciaKm([l.lat, l.lng], [o.lat, o.lng]) }))
     .filter(x => x.km <= 30)
     .sort((a, b) => a.km - b.km)
@@ -1139,14 +1180,15 @@ function botonesContacto(l) {
 }
 
 function datosSendero(l) {
-  const n = { facil: 1, media: 2, exigente: 3 }[l.dificultad];
-  const puntos = [1, 2, 3].map(i => `<i class="${i <= n ? 'on' : ''}"></i>`).join('');
-  return `
-    <div class="f-datos">
-      <span class="dato">${svg('bota', '#241b28')}${t('largo')(cifra(largoKm(l.id)))}</span>
-      <span class="dato"><span class="nivel" aria-hidden="true">${puntos}</span>${t('dificultad')[l.dificultad]}</span>
-    </div>
-    <p class="f-duracion">${svg('reloj', 'currentColor')}${tr(l.duracion)}</p>`;
+  const d = l.distancia_publicada;
+  const distancia = d ? `${cifra(d.km)} km · ${t(d.alcance)}`
+    : TRAZADOS[l.id] ? t('largo')(cifra(largoKm(l.id))) : t('datoConsultar');
+  return `<div class="f-datos">
+    <span class="dato">${svg(l.categoria === 'bici' ? 'bici' : 'bota', '#241b28')}${distancia}</span>
+    <span class="dato">${l.dificultad ? t('dificultad')[l.dificultad] : t('datoConsultar')}</span>
+    </div>${l.duracion ? `<p class="f-duracion">${svg('reloj', 'currentColor')}${tr(l.duracion)}</p>` : ''}
+    ${l.condiciones ? `<p class="f-nota">${escaparHtml(tr(l.condiciones))}</p>` : ''}
+    ${!TRAZADOS[l.id] ? `<p class="f-nota">${t('sinTrack')}</p>` : ''}`;
 }
 
 async function compartir(l, boton) {
@@ -1188,10 +1230,41 @@ ${tramos}
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
+function escaparHtml(texto) {
+  return String(texto).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function datosRelevamiento(l) {
+  const r = l.relevamiento;
+  if (!r) return '';
+  return `<aside class="f-relevamiento" aria-label="${t('relevado')}">
+    <strong>${t('relevado')}</strong>
+    <p>${t('pendienteVerificacion')}</p>
+    ${r.ubicacion === 'referencia' ? `<p>${t('ubicacionOrientativa')}</p>` : ''}
+    ${l.direccion ? `<p><b>${t('direccionPublicada')}:</b> ${escaparHtml(l.direccion)}</p>` : ''}
+    ${l.categoria === 'artesania' ? `<p>${t('consultaCompra')}</p>` : ''}
+    <p>${t('fuente')} · ${t('fechaConsulta')}: ${new Date(r.fecha + 'T12:00:00').toLocaleDateString(estado.idioma)}</p>
+    <ul>${r.fuentes.map(f => `<li><a href="${escaparHtml(f.url)}" target="_blank" rel="noopener noreferrer">${escaparHtml(f.titulo)}</a></li>`).join('')}</ul>
+  </aside>`;
+}
+
+function precioFicha(l) {
+  const p = l.precio;
+  return `<aside class="f-relevamiento"><strong>${t('precio')}: ${t(p?.estado || 'consultar')}</strong>
+    ${p ? `<p>${escaparHtml(tr(p.nota))}</p><ul>${p.fuentes.map(f => `<li><a href="${escaparHtml(f.url)}" target="_blank" rel="noopener noreferrer">${escaparHtml(f.titulo)}</a></li>`).join('')}</ul>` : ''}</aside>`;
+}
+function fotoFicha(l) {
+  const f = l.foto;
+  if (!f) return `<div class="f-foto" style="background-image:url('marca/region-${l.region}.jpg')"><span>${t('sinFoto')}</span></div>`;
+  return `<figure class="foto-libre"><img data-foto src="${escaparHtml(f.url)}" alt="${escaparHtml(f.alt)}" loading="lazy" referrerpolicy="no-referrer">
+    <figcaption>${escaparHtml(f.autor)} · <a href="${escaparHtml(f.licencia_url)}" target="_blank" rel="noopener noreferrer">${escaparHtml(f.licencia)}</a> · <a href="${escaparHtml(f.fuente)}" target="_blank" rel="noopener noreferrer">${t('fotoOriginal')}</a> · ${t('sinCambios')}</figcaption></figure>`;
+}
+
 function pintarFicha(l) {
   const c = tinte(l.region);
-  const gm = `https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}`;
-  const esSendero = l.categoria === 'sendero' && TRAZADOS[l.id];
+  const gm = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.mapas_busqueda || `${l.lat},${l.lng}`)}`;
+  const esSendero = ['sendero', 'bici'].includes(l.categoria);
+  const tieneTrack = Boolean(TRAZADOS[l.id]);
 
   /* el sendero y el paseo con guía se nombran uno al otro */
   const guias = LUGARES.filter(o => o.sendero === l.id);
@@ -1208,7 +1281,7 @@ function pintarFicha(l) {
 
   elLista.innerHTML = `
     <button id="volver">${t('volver')}</button>
-    <div class="f-foto" style="background-image:url('marca/region-${l.region}.jpg')"><span>${t('sinFoto')}</span></div>
+    ${fotoFicha(l)}
     <div class="f-cuerpo">
       <span class="f-tipo" style="${c}">${svg(CAT[l.categoria].icono, '#241b28')}
         ${tr(CAT[l.categoria].nombre)}</span>
@@ -1219,22 +1292,28 @@ function pintarFicha(l) {
         : ` · ${tr(REG[l.region].altura)}`}</div>
       ${esSendero ? datosSendero(l) : ''}
       <p class="f-texto">${tr(l.descripcion)}</p>
+      ${precioFicha(l)}
+      ${datosRelevamiento(l)}
       ${botonesContacto(l)}
       <div class="f-acciones">
-        <a class="llegar" href="${gm}" target="_blank" rel="noopener">${t('comoLlegar')}</a>
+        <a class="llegar" href="${gm}" target="_blank" rel="noopener">${t(l.relevamiento?.ubicacion === 'referencia' ? 'buscarMaps' : 'comoLlegar')}</a>
         <button class="boton" id="compartir">${svg('compartir', 'currentColor')}${t('compartir')}</button>
-        ${esSendero ? `<button class="boton" id="gpx" title="${t('gpxAyuda')}">${svg('bajar', 'currentColor')}${t('gpx')}</button>` : ''}
+        ${tieneTrack ? `<button class="boton" id="gpx" title="${t('gpxAyuda')}">${svg('bajar', 'currentColor')}${t('gpx')}</button>` : ''}
       </div>
       ${l.muestra ? `<p class="f-muestra">${t('ejemplo')}</p>` : ''}
-      ${esSendero ? `<p class="f-muestra">${t('avisoSendero')}</p>` : ''}
+      ${tieneTrack ? `<p class="f-muestra">${t('avisoSendero')}</p>` : ''}
     </div>
     ${enlace}
     ${cerca.length ? `<div class="f-bloque"><p class="f-sub">${t('cerca')}</p>
       ${cerca.map(x => filaChica(x.o, t('aKm')(cifra(x.km)))).join('')}</div>` : ''}`;
 
+  const imagen = elLista.querySelector('[data-foto]');
+  if (imagen) imagen.addEventListener('error', () => {
+    imagen.closest('figure').outerHTML = `<div class="f-foto" style="background-image:url('marca/region-${l.region}.jpg')"><span>${t('sinFoto')}</span></div>`;
+  }, { once: true });
   document.getElementById('volver').addEventListener('click', cerrarFicha);
   document.getElementById('compartir').addEventListener('click', e => compartir(l, e.currentTarget));
-  if (esSendero) document.getElementById('gpx').addEventListener('click', () => descargarGpx(l));
+  if (tieneTrack) document.getElementById('gpx').addEventListener('click', () => descargarGpx(l));
   elLista.querySelectorAll('[data-ejemplo]').forEach(b => b.addEventListener('click', () => {
     document.getElementById('nota-ejemplo').hidden = false;
   }));
@@ -1279,6 +1358,8 @@ function pintarLista(visibles) {
           <span class="d">${l.localidad} · ${TRAZADOS[l.id]
             ? `${cifra(largoKm(l.id))} km · ${t('dificultad')[l.dificultad]}`
             : REG[l.region].nombre}</span>
+          <span class="relevado-etiqueta">${t(l.precio?.estado || 'consultar')}</span>
+          ${l.relevamiento ? `<span class="relevado-etiqueta">${t('relevado')}${l.relevamiento.ubicacion === 'referencia' ? ` · ${t('orientativo')}` : ''}</span>` : ''}
         </span>
       </button>`).join('') + sumate;
 
@@ -1291,9 +1372,35 @@ function pintar() {
   const visibles = LUGARES.filter(pasa);
 
   capaPins.clearLayers();
+  // Varias fichas tienen la misma referencia de localidad: un marcador
+  // numerado permite elegir cualquiera sin desplazar artificialmente los pines.
+  const grupos = new Map();
   visibles.forEach(l => {
+    const clave = `${l.lat},${l.lng}`;
+    if (!grupos.has(clave)) grupos.set(clave, []);
+    grupos.get(clave).push(l);
+  });
+  grupos.forEach(grupo => {
+    const l = grupo.find(o => o.id === estado.elegido) || grupo[0];
     const m = marcadores[l.id];
     const elegido = l.id === estado.elegido;
+    if (grupo.length > 1) {
+      const icono = L.divIcon({ className: '', iconSize: [44, 44], iconAnchor: [22, 22],
+        html: `<div class="pin grupo orientativo${elegido ? ' elegido' : ''}" style="${tinte(l.region)};width:44px;height:44px">${grupo.length}</div>` });
+      const conjunto = L.marker([l.lat, l.lng], { icon: icono, title: `${t('propuestasLocalidad')}: ${grupo.length}` });
+      conjunto.bindPopup(`<div class="grupo-propuestas"><strong>${t('propuestasLocalidad')}</strong>
+        ${grupo.some(o => o.relevamiento?.ubicacion === 'referencia') ? `<p>${t('ubicacionOrientativa')}</p>` : ''}
+        ${grupo.map(o => `<button data-propuesta="${escaparHtml(o.id)}">${escaparHtml(o.nombre)}</button>`).join('')}</div>`);
+      conjunto.on('popupopen', () => {
+        conjunto.getPopup().getElement().querySelectorAll('[data-propuesta]').forEach(b => b.addEventListener('click', () => {
+          map.closePopup();
+          irA(b.dataset.propuesta);
+        }));
+      });
+      conjunto.setZIndexOffset(elegido ? 1000 : 0);
+      capaPins.addLayer(conjunto);
+      return;
+    }
     m.setIcon(pin(l, elegido));
     /* El z-index tiene que ir en el contenedor del marcador, que lo
        maneja Leaflet: puesto en el div de adentro no le gana al pin
@@ -1327,6 +1434,8 @@ function pintar() {
     el.setAttribute('aria-pressed', String(el.dataset.region === estado.zona)));
   elTipos.querySelectorAll('[data-tipo]').forEach(el =>
     el.setAttribute('aria-pressed', String(el.dataset.tipo === estado.tipo)));
+  elPrecios.querySelectorAll('[data-precio]').forEach(el =>
+    el.setAttribute('aria-pressed', String(el.dataset.precio === estado.precio)));
   ORDEN.forEach(k => {
     const on = estado.zona === 'todas' || estado.zona === k;
     elHilos.querySelector(`[data-region="${k}"]`).style.opacity = on ? '1' : '.2';
