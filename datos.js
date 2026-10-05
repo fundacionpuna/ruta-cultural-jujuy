@@ -240,7 +240,7 @@ window.TEXTOS = {
 window.REGIONES = {
   puna: {
     nombre: 'Puna',
-    color: '#a6d9fa',   // celeste — identidad «vamo pue» (octubre 2026)
+    color: '#cae7f2',   // celeste — identidad «vamo pue» (octubre 2026)
     trazo: '#1f6fa8',   // el mismo celeste oscurecido, para líneas y rótulos
     lema: { es: 'Altura, horizonte y resistencia', en: 'Altitude, horizon and resistance', pt: 'Altitude, horizonte e resistência' },
     altura: { es: '3.400 – 4.500 m', en: '3,400 – 4,500 m', pt: '3.400 – 4.500 m' },
@@ -253,7 +253,7 @@ window.REGIONES = {
   },
   quebrada: {
     nombre: 'Quebrada',
-    color: '#fdfaaf',   // amarillo
+    color: '#ffbe00',   // amarillo
     trazo: '#8a6a00',
     lema: { es: 'Colores, historia y comunidad', en: 'Colours, history and community', pt: 'Cores, história e comunidade' },
     altura: { es: '2.000 – 3.000 m', en: '2,000 – 3,000 m', pt: '2.000 – 3.000 m' },
@@ -277,8 +277,8 @@ window.REGIONES = {
   },
   yungas: {
     nombre: 'Yungas',
-    color: '#ff5b4d',   // coral
-    trazo: '#d63a2c',
+    color: '#bcd047',   // lima. El coral queda sólo para la marca
+    trazo: '#69761e',
     lema: { es: 'Selva, vida y diversidad', en: 'Jungle, life and diversity', pt: 'Selva, vida e diversidade' },
     altura: { es: '400 – 1.500 m', en: '400 – 1,500 m', pt: '400 – 1.500 m' },
     pueblos: 'Ocloya · Guaraní · Kolla',

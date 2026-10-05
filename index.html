@@ -30,11 +30,12 @@
   /* paleta «vamo pue» */
   --papel:    #ffffff;   /* fondo: blanco, para leer más fácil */
   --blanco:   #ffffff;
-  --coral:    #ff5b4d;   /* Yungas, y el color principal de la marca */
+  --coral:    #ff5b4d;   /* el color principal de la marca */
   --rosa:     #ffbbcc;   /* Valles */
-  --celeste:  #a6d9fa;   /* Puna */
-  --amarillo: #fdfaaf;   /* Quebrada */
-  --lima:     #bcd046;   /* el verde de las formas, para WhatsApp */
+  --celeste:  #cae7f2;   /* Puna */
+  --amarillo: #ffbe00;   /* Quebrada */
+  --amarillo-claro: #ffefbf;   /* el mismo, aclarado, para fondos */
+  --lima:     #bcd047;   /* Yungas, y el verde de WhatsApp */
   --rosado:   #fff1f4;   /* acento claro: resaltado de la lista, notas */
 
   /* neutros. La tinta es el fondo oscuro de la presentación. */
@@ -49,7 +50,7 @@
 .c-puna     { --c: var(--celeste);  --t: #1f6fa8; }
 .c-quebrada { --c: var(--amarillo); --t: #8a6a00; }
 .c-valles   { --c: var(--rosa);     --t: #d2306b; }
-.c-yungas   { --c: var(--coral);    --t: #d63a2c; }
+.c-yungas   { --c: var(--lima);     --t: #69761e; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -708,8 +709,8 @@ a.llegar { display: inline-flex; align-items: center; }
 /* ── Calendario de fiestas ───────────────────────────────── */
 .este-mes {
   margin: 14px 18px 4px; padding: 14px 16px;
-  background: var(--amarillo); border-radius: 20px;
-  border: 2px solid #efe38a;
+  background: var(--amarillo-claro); border-radius: 20px;
+  border: 2px solid #ffde80;
 }
 .este-mes .titulo, .cal-mes {
   font-family: 'Outfit', system-ui, sans-serif; font-weight: 700; font-size: 15px;

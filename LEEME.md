@@ -66,7 +66,7 @@ en el teléfono, sin que nadie le explique nada.**
 - **El pin del logo** (la «o» de «vamo») va en el botón de «Todas las regiones» y en
   el icono de la pestaña.
 - **Un color de marca por región**, como en la paleta de la presentación: **Puna
-  celeste**, **Quebrada amarilla**, **Valles rosa** y **Yungas coral**. Va de relleno
+  celeste**, **Quebrada amarilla**, **Valles rosa** y **Yungas lima**. Va de relleno
   en el punto del botón, en el pin y en la lista. Para las líneas del mapa (contorno de
   la región, senderos) y los rótulos se usa el mismo color oscurecido (`trazo` en
   `datos.js`), porque los pasteles sobre el mapa claro no se ven. Por lo mismo, cada
@@ -76,12 +76,14 @@ en el teléfono, sin que nadie le explique nada.**
 - **Todos los botones miden 44 px de alto como mínimo**, para el dedo.
 - **Contrastes medidos, no estimados.** El texto de las píldoras elegidas va en tinta
   y no en blanco, porque blanco sobre coral da 3.1:1 y no llega al mínimo; en tinta da
-  5.4:1. El dibujo de los pines también va en tinta (sobre el celeste da 11:1, sobre el
-  rosa 10.5, sobre el amarillo 15.4). Los colores oscurecidos de cada región dan entre
-  4.7 y 5.9:1 sobre blanco, y el gris de los textos secundarios 5.2:1.
-- **Una diferencia en la presentación de la marca:** la paleta escribe Puna `#cae7f2`
-  y Quebrada `#ffbe00`, pero los cuadros pintados son `#a6d9fa` (celeste) y `#fdfaaf`
-  (amarillo pálido). Se usaron los colores pintados, que son los que se ven en el logo.
+  5.4:1. El dibujo de los pines también va en tinta (sobre el celeste da 12.9:1, sobre
+  el rosa 10.5, sobre el amarillo 10.0, sobre el lima 9.7). Los colores oscurecidos de
+  cada región dan entre 4.8 y 5.4:1 sobre blanco, y el gris de los textos secundarios 5.2:1.
+- **Los colores salen de los códigos de la paleta**, no de los cuadros pintados de la
+  presentación, que no coinciden: Puna `#cae7f2`, Quebrada `#ffbe00`, Valles `#ffbbcc`,
+  Yungas `#bcd047` y el coral `#ff5b4d` sólo para la marca (botones, lo elegido).
+  El recuadro del calendario usa el amarillo aclarado, `#ffefbf`: el `#ffbe00` lleno
+  pesaba demasiado para un fondo.
 
 
 ## Cómo se usa
