@@ -1,6 +1,6 @@
-# Ruta Cultural de Jujuy — prototipo
+# Vamo pue · ruta cultural jujeña — prototipo
 
-**Un proyecto de Fundación Puna.**
+**Un proyecto de Fundación Puna.** (Hasta octubre de 2026 se llamaba «Ruta Cultural de Jujuy».)
 
 Mapa interactivo de la provincia en **cuatro regiones** — Puna, Quebrada, Valles, Yungas —
 con emprendimientos culturales en cuatro categorías: hospedajes, cocinas, ofertas y talleres,
@@ -20,16 +20,25 @@ Doble clic en `index.html`. No necesita servidor ni instalación.
 | `senderos.js` | El dibujo de cada sendero. Se arma solo con `herramientas/trazados.py`: no se toca a mano. |
 | `herramientas/senderos.json` | De dónde sale el dibujo de cada sendero: OpenStreetMap o un GPX grabado con el teléfono. |
 | `herramientas/trazados.py` | Arma `senderos.js`. Sólo necesita Python 3. |
-| `logo-puna.png` | Logo de la fundación, para el encabezado (284×198). |
-| `favicon.png` | Icono de la pestaña. Va cuadrado y aparte: el navegador estira cualquier imagen que no lo sea. |
-| `apple-touch-icon.png` | Icono para iOS, con fondo crema (Apple no respeta la transparencia). |
+| `marca/logo-vamo-pue.svg` | El logo completo, con la bajada «ruta cultural jujeña». Vectorial. |
+| `marca/logo-vamo-pue-corto.svg` | El logo sin la bajada, para el encabezado (a ese tamaño la bajada no se lee). |
+| `marca/region-*.jpg` | La ilustración de cada región. Va en la ficha mientras no haya foto, y arriba de la lista. |
+| `marca/forma-*.svg` | Las formas orgánicas de la página de recursos de la marca: adorno del cajón y del pie de la lista. |
+| `logo-puna.png` | Logo de la fundación, al pie de la lista con «Un proyecto de Fundación Puna» (284×198). |
+| `favicon.png` | Icono de la pestaña: el pin del logo. Va cuadrado y aparte: el navegador estira cualquier imagen que no lo sea. |
+| `apple-touch-icon.png` | Icono para iOS, con fondo rosado (Apple no respeta la transparencia). |
 | `LEEME.md` | Este archivo. |
 
 ## El diseño, en criollo
 
-Marca Puna: tipografía **Outfit** para los títulos y **Open Sans** para el cuerpo,
-la paleta de Amor, y todo redondeado — botones tipo píldora, sin esquinas.
-El logo de la fundación va arriba, con la línea «Un proyecto de Fundación Puna».
+Identidad **«vamo pue»** (octubre de 2026): coral, rosa, celeste y amarillo, formas
+orgánicas y colores planos. El logo —«vamo» con el pin en la «o», «pue» con el camino—
+va arriba; el de la fundación, al pie de la lista. Los archivos salen de la presentación
+de la marca (Canva) y están en `marca/`.
+
+Tipografía: **Open Sans** para el cuerpo, igual que en la presentación. El logo usa
+RTL Nova, que no está disponible para la web, así que los títulos siguen en **Outfit**,
+la geométrica libre más parecida. Todo redondeado: botones tipo píldora, sin esquinas.
 
 La regla de uso es una sola: **tiene que poder usarlo alguien de ochenta años, al sol,
 en el teléfono, sin que nadie le explique nada.**
@@ -37,10 +46,10 @@ en el teléfono, sin que nadie le explique nada.**
 - **Tres idiomas.** Botones ES / EN / PT arriba a la derecha. El mapa arranca en el
   idioma del navegador si es uno de los tres, y recuerda el que se elige. Los nombres
   propios (Salinas Grandes, Purmamarca) no se traducen.
-- **Fondo blanco**, que es lo que se lee más fácil. La crema de la marca quedó como
-  acento: el resaltado de la lista y el recuadro de la foto que falta.
+- **Fondo blanco**, que es lo que se lee más fácil. Un rosado muy claro queda como
+  acento: el resaltado de la lista, las notas y el pie.
 - **Un solo botón pintado por fila, siempre.** El pintado es el que se está viendo, en
-  el coral de Puna. No es un sistema de tildes: se elige uno, como en un formulario
+  el coral de la marca. No es un sistema de tildes: se elige uno, como en un formulario
   de papel.
 - **El mapa ocupa toda la pantalla.** Arriba queda una sola barra con el logo, los
   idiomas y un botón grande que abre el **cajón** con los filtros. En pantalla ancha
@@ -53,18 +62,25 @@ en el teléfono, sin que nadie le explique nada.**
   cuando se elige una. La fila de qué se busca va más chica.
 - **Un dibujo por tipo de lugar** (cama, cubiertos, cerro, brújula), el mismo en el
   botón, en la lista y en el mapa. No hay leyenda que aprender.
-- **La chakana**, la cruz escalonada andina, va en el botón de «Todas las regiones»
-  —sus cuatro brazos son las cuatro partes del mundo andino, igual que las cuatro
-  regiones— y en el recuadro de la foto que falta.
-- **Un color de marca por región**, en el punto del botón y en el pin del mapa:
-  Puna coral, Quebrada naranja, **Valles azul** (por los diques y lagos) y
-  **Yungas verde** (es la región más verde).
+- **El pin del logo** (la «o» de «vamo») va en el botón de «Todas las regiones» y en
+  el icono de la pestaña.
+- **Un color de marca por región**, como en la paleta de la presentación: **Puna
+  celeste**, **Quebrada amarilla**, **Valles rosa** y **Yungas coral**. Va de relleno
+  en el punto del botón, en el pin y en la lista. Para las líneas del mapa (contorno de
+  la región, senderos) y los rótulos se usa el mismo color oscurecido (`trazo` en
+  `datos.js`), porque los pasteles sobre el mapa claro no se ven. Por lo mismo, cada
+  pin lleva un aro fino en ese tono oscuro.
+- **Cada región tiene su ilustración y su lema** («Altura, horizonte y resistencia»…),
+  arriba de la lista cuando se la elige, y en la ficha mientras falta la foto.
 - **Todos los botones miden 44 px de alto como mínimo**, para el dedo.
 - **Contrastes medidos, no estimados.** El texto de las píldoras elegidas va en tinta
   y no en blanco, porque blanco sobre coral da 3.1:1 y no llega al mínimo; en tinta da
-  5.1:1. El dibujo de los pines también va en tinta por lo mismo (sobre el naranja da
-  7.0:1, sobre el verde 5.5, sobre el azul 5.0). El gris malva de la marca se oscureció
-  un punto porque sobre la crema quedaba en 4.44:1.
+  5.4:1. El dibujo de los pines también va en tinta (sobre el celeste da 11:1, sobre el
+  rosa 10.5, sobre el amarillo 15.4). Los colores oscurecidos de cada región dan entre
+  4.7 y 5.9:1 sobre blanco, y el gris de los textos secundarios 5.2:1.
+- **Una diferencia en la presentación de la marca:** la paleta escribe Puna `#cae7f2`
+  y Quebrada `#ffbe00`, pero los cuadros pintados son `#a6d9fa` (celeste) y `#fdfaaf`
+  (amarillo pálido). Se usaron los colores pintados, que son los que se ven en el logo.
 
 
 ## Cómo se usa

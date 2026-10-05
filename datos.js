@@ -32,7 +32,7 @@ window.IDIOMAS = {
 /* ── Textos de la interfaz ───────────────────────────────── */
 window.TEXTOS = {
   es: {
-    titulo: 'Ruta Cultural de Jujuy',
+    titulo: 'Ruta cultural jujeña',
     proyecto: 'Un proyecto de Fundación Puna',
     aviso: 'Lugares para visitar, dormir, comer, pasear y caminar en las cuatro regiones de la provincia.',
     avisoFuerte: 'Es una muestra:',
@@ -82,7 +82,7 @@ window.TEXTOS = {
     sumateCuerpo: 'Hola, quiero sumar mi emprendimiento a la Ruta Cultural de Jujuy.\n\nNombre:\nLocalidad:\nQué ofrezco (hospedaje, comida, paseo, taller):\nWhatsApp o teléfono:\nInstagram o sitio web:\n'
   },
   en: {
-    titulo: 'Jujuy Cultural Route',
+    titulo: 'Jujuy cultural route',
     proyecto: 'A project by Fundación Puna',
     aviso: "Places to visit, sleep, eat, explore and hike across the province's four regions.",
     avisoFuerte: 'This is a sample:',
@@ -132,7 +132,7 @@ window.TEXTOS = {
     sumateCuerpo: 'Hello, I would like to add my business to the Jujuy Cultural Route.\n\nName:\nTown:\nWhat I offer (lodging, food, tour, workshop):\nWhatsApp or phone:\nInstagram or website:\n'
   },
   pt: {
-    titulo: 'Rota Cultural de Jujuy',
+    titulo: 'Rota cultural de Jujuy',
     proyecto: 'Um projeto da Fundación Puna',
     aviso: 'Lugares para visitar, dormir, comer, passear e caminhar nas quatro regiões da província.',
     avisoFuerte: 'É uma amostra:',
@@ -186,7 +186,9 @@ window.TEXTOS = {
 window.REGIONES = {
   puna: {
     nombre: 'Puna',
-    color: '#ff5a4a',   // coral, el rojo de Puna
+    color: '#a6d9fa',   // celeste — identidad «vamo pue» (octubre 2026)
+    trazo: '#1f6fa8',   // el mismo celeste oscurecido, para líneas y rótulos
+    lema: { es: 'Altura, horizonte y resistencia', en: 'Altitude, horizon and resistance', pt: 'Altitude, horizonte e resistência' },
     altura: { es: '3.400 – 4.500 m', en: '3,400 – 4,500 m', pt: '3.400 – 4.500 m' },
     pueblos: 'Kolla · Atacama',
     poligono: [
@@ -197,7 +199,9 @@ window.REGIONES = {
   },
   quebrada: {
     nombre: 'Quebrada',
-    color: '#ff914d',   // naranja
+    color: '#fdfaaf',   // amarillo
+    trazo: '#8a6a00',
+    lema: { es: 'Colores, historia y comunidad', en: 'Colours, history and community', pt: 'Cores, história e comunidade' },
     altura: { es: '2.000 – 3.000 m', en: '2,000 – 3,000 m', pt: '2.000 – 3.000 m' },
     pueblos: 'Omaguaca · Tilcara · Kolla',
     poligono: [
@@ -207,7 +211,9 @@ window.REGIONES = {
   },
   valles: {
     nombre: 'Valles',
-    color: '#6492d8',   // azul — por los diques y lagos (Luis, 31/7)
+    color: '#ffbbcc',   // rosa
+    trazo: '#d2306b',
+    lema: { es: 'Tierra fértil, producción y futuro', en: 'Fertile land, production and future', pt: 'Terra fértil, produção e futuro' },
     altura: { es: '1.200 – 1.800 m', en: '1,200 – 1,800 m', pt: '1.200 – 1.800 m' },
     pueblos: 'Kolla · Ocloya',
     poligono: [
@@ -217,7 +223,9 @@ window.REGIONES = {
   },
   yungas: {
     nombre: 'Yungas',
-    color: '#7ba551',   // verde — es la región más verde (Luis, 31/7)
+    color: '#ff5b4d',   // coral
+    trazo: '#d63a2c',
+    lema: { es: 'Selva, vida y diversidad', en: 'Jungle, life and diversity', pt: 'Selva, vida e diversidade' },
     altura: { es: '400 – 1.500 m', en: '400 – 1,500 m', pt: '400 – 1.500 m' },
     pueblos: 'Ocloya · Guaraní · Kolla',
     poligono: [
