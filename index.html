@@ -2,6 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<script>
+/* Siempre por https: «Cerca mío» (la ubicación) no anda en una página sin
+   candado, y GitHub sólo fuerza https si lo activa un administrador. */
+if (location.protocol === 'http:' && /(^|\.)vamopue\.com$/.test(location.hostname)) {
+  location.replace('https://' + location.host + location.pathname + location.search + location.hash);
+}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vamo pue · Ruta cultural jujeña — Fundación Puna</title>
 <!-- Para buscadores y para la vista previa del enlace en WhatsApp y redes.
