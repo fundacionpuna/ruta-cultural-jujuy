@@ -11,11 +11,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Leaflet 1.9.4 y markercluster 1.5.3 van copiados en vendor/: si el
+     servidor de unpkg se cae, el mapa sigue andando. -->
+<link rel="stylesheet" href="vendor/leaflet.css">
+<script src="vendor/leaflet.js"></script>
 <!-- Agrupa los pines cercanos en un círculo con número que se abre al acercarse -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<link rel="stylesheet" href="vendor/MarkerCluster.css">
+<script src="vendor/leaflet.markercluster.js"></script>
 <style>
 /* ══════════════════════════════════════════════════════════
    VAMO PUE — ruta cultural jujeña · Fundación Puna

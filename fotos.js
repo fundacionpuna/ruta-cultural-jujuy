@@ -10,9 +10,9 @@
     ids.forEach(id => { const l = window.LUGARES.find(x => x.id === id); if (l) l.foto = { ...foto, alt: l.nombre }; });
   };
   poner(['va-03', 'va-s1'], 'Lagunas de Yala, 1.jpg', 'Luis Fernando Flores LAB', '4.0', 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lagunas_de_Yala%2C_1.jpg/960px-Lagunas_de_Yala%2C_1.jpg');
-  poner(['pu-01'], 'Salinas grandes - Jujuy.jpg', 'TitiNicola', '4.0', 'https://upload.wikimedia.org/wikipedia/commons/8/88/Salinas_grandes_-_Jujuy.jpg');
-  poner(['qu-01'], 'Cerro de los siete colores - Purmamarca.jpg', 'Littletroll', '4.0', 'https://upload.wikimedia.org/wikipedia/commons/1/15/Cerro_de_los_siete_colores_-_Purmamarca.jpg');
-  poner(['yu-s2'], 'Sendero El Pedemontano.jpg', 'Tencho', '3.0', 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Sendero_El_Pedemontano.jpg');
-  poner(['va-05'], 'Dique La Ciénaga 077.JPG', 'Claudio Elias', '3.0', 'https://upload.wikimedia.org/wikipedia/commons/d/d2/Dique_La_Ci%C3%A9naga_077.JPG');
-  poner(['pu-04', 'pu-a-pozuelos'], 'Laguna de Pozuelos.jpg', 'Manfred Fuks', '4.0', 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Laguna_de_Pozuelos.jpg');
+  poner(['pu-01'], 'Salinas grandes - Jujuy.jpg', 'TitiNicola', '4.0', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Salinas_grandes_-_Jujuy.jpg/960px-Salinas_grandes_-_Jujuy.jpg');
+  poner(['qu-01'], 'Cerro de los siete colores - Purmamarca.jpg', 'Littletroll', '4.0', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cerro_de_los_siete_colores_-_Purmamarca.jpg/960px-Cerro_de_los_siete_colores_-_Purmamarca.jpg');
+  poner(['yu-s2'], 'Sendero El Pedemontano.jpg', 'Tencho', '3.0', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Sendero_El_Pedemontano.jpg/960px-Sendero_El_Pedemontano.jpg');
+  poner(['va-05'], 'Dique La Ciénaga 077.JPG', 'Claudio Elias', '3.0', 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Dique_La_Ci%C3%A9naga_077.JPG/960px-Dique_La_Ci%C3%A9naga_077.JPG');
+  poner(['pu-04', 'pu-a-pozuelos'], 'Laguna de Pozuelos.jpg', 'Manfred Fuks', '4.0', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Laguna_de_Pozuelos.jpg/960px-Laguna_de_Pozuelos.jpg');
 })();
