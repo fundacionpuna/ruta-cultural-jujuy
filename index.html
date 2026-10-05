@@ -120,7 +120,21 @@ header {
   z-index: 1200;
   display: none;
 }
-#cajon.abierto { display: block; }
+/* En el cajón del teléfono las filas van una debajo de la otra, en el
+   orden de siempre: regiones, qué busca, costo, búsqueda y aviso. Las
+   cajitas que agrupan los filtros para la barra de la computadora acá
+   no cuentan (display: contents). */
+#cajon.abierto { display: flex; flex-direction: column; }
+#cajon .filtros-uno, #cajon .filtro { display: contents; }
+.f-region .paso { order: 1; }
+.f-region .fila-botones { order: 2; }
+.f-tipo .paso { order: 3; }
+.f-tipo .fila-botones { order: 4; }
+.f-precio .paso { display: none; }
+.f-precio .fila-botones { order: 5; margin-top: 12px; }
+#barra-buscar { order: 6; }
+#aviso { order: 7; }
+.paso .corto { display: none; }
 .cajon-aviso {
   font-size: 13.5px;
   color: var(--suave);
@@ -737,7 +751,116 @@ body.grande .pin.gota { transform: scale(1.3); }
 body.grande .pin.gota.elegido { transform: scale(1.65); }
 body.grande .racimo { transform: scale(1.2); }
 body.grande #cerca { font-size: 19px; min-height: 56px; }
-#letra { font-size: 17px; }
+/* El botón dice lo que hace: «A+ Letra grande». Antes decía «Aa», que
+   se confundía con los idiomas y no se entendía para qué era. Prendido
+   va en coral, como todo lo elegido. En el teléfono queda sólo «A+». */
+#letra {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; font-weight: 600;
+  min-height: 44px; padding: 8px 16px 8px 13px; margin-right: 8px;
+  background: var(--blanco); color: var(--tinta);
+  border: 2px solid var(--borde); border-radius: var(--curva);
+  cursor: pointer; white-space: nowrap;
+}
+#letra:hover { border-color: var(--coral); }
+#letra[aria-pressed="true"] { background: var(--coral); border-color: var(--coral); }
+#letra .a-mas { font-size: 19px; font-weight: 700; line-height: 1; }
+#letra .a-mas span { font-size: 14px; position: relative; top: -5px; margin-left: 1px; }
+
+/* ── Computadora: los filtros siempre a la vista ─────────────
+   Antes, en la computadora también había que abrir el cajón, que
+   bajaba tapando medio mapa, y al cerrarlo no quedaba a la vista qué
+   estaba elegido. Ahora la cabecera es una grilla: arriba el logo, la
+   búsqueda y los idiomas; abajo, dos filas de filtros. Cada fila sigue
+   en una sola línea, como pidió Luis, y se arrastra si no entra. */
+@media (min-width: 901px) {
+  header {
+    display: grid;
+    grid-template-columns: auto minmax(240px, 440px) auto;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 22px;
+    padding-bottom: 0;
+  }
+  .izq { grid-column: 1; grid-row: 1; }
+  .der { grid-column: 3; grid-row: 1; justify-self: end; }
+  #abrir-cajon { display: none; }
+  #cajon, #cajon.abierto { display: contents; }
+
+  #barra-buscar { grid-column: 2; grid-row: 1; padding: 0; }
+  #buscar {
+    width: 100%;
+    padding-left: 48px;
+    background: var(--blanco) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2375687a' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='7'/%3E%3Cline x1='15.8' y1='15.8' x2='21' y2='21'/%3E%3C/svg%3E") no-repeat 18px center / 19px;
+  }
+
+  .filtros-uno, .f-tipo { position: relative; z-index: 1; }
+  #cajon .filtros-uno {
+    grid-column: 1 / -1; grid-row: 2;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px;
+    margin: 9px -18px 0; padding: 10px 18px 0;
+    border-top: 1px solid var(--borde);
+  }
+  .f-tipo { grid-column: 1 / -1; grid-row: 3; padding: 8px 0 11px; }
+  #cajon .filtro { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  /* si costo no entra al lado de las regiones, baja a su propia línea */
+  .f-region, .f-precio { flex: 0 0 auto; max-width: 100%; }
+
+  /* el rótulo corto a la izquierda de cada fila, en lugar del paso */
+  .filtro .paso {
+    margin: 0; flex: none; text-align: left;
+    font-weight: 600; font-size: 14.5px; color: var(--suave);
+  }
+  .f-precio .paso { display: block; }
+  .paso .largo { display: none; }
+  .paso .corto { display: inline; }
+  .filtro .fila-botones {
+    padding: 0; justify-content: flex-start; margin: 0;
+    flex: 0 1 auto; min-width: 0;   /* en el cajón no se achican; acá sí, y se arrastran */
+  }
+  .region { font-size: 15.5px; padding: 8px 18px; min-height: 44px; }
+  .tipo { font-size: 14.5px; padding: 8px 13px; min-height: 44px; }
+  .f-tipo .fila-botones { gap: 8px; }
+
+  /* El aviso de que es un relevamiento pasa al pie de la lista */
+  #aviso { display: none; }
+
+  /* Las formas de la marca, en la punta derecha de la barra: ahí
+     sobra lugar cuando la pantalla es ancha. */
+  .f-tipo { padding-right: 160px; }
+  #cajon .forma { z-index: 0; }
+  #cajon .forma.ola  { width: 74px; right: 74px; bottom: 28px; top: auto; }
+  #cajon .forma.hoja { width: 46px; right: 26px; bottom: -8px; }
+  #cajon .forma.mano { width: 46px; left: auto; right: 86px; bottom: -16px; transform: rotate(-18deg); }
+  header { overflow: hidden; }
+
+  body.grande .filtros-uno, body.grande .f-tipo { zoom: 1.12; }
+  /* la lista crece un cuarto (380 → 475 px): el botón de esconderla se corre con ella */
+  body.grande #alternar-lista { left: 491px; }
+}
+@media (min-width: 901px) and (max-width: 1279px) {
+  .f-tipo { padding-right: 0; }
+  #cajon .forma { display: none; }
+}
+
+/* Pie de la lista en la computadora: el aviso del relevamiento */
+.aviso-lista {
+  font-size: 13.5px; line-height: 1.5; color: var(--suave);
+  padding: 14px 24px 18px; border-top: 1px solid var(--borde);
+}
+.aviso-lista b { color: var(--tinta); }
+@media (max-width: 900px) { .aviso-lista { display: none; } }
+
+/* «Quitar filtros», al lado de la cuenta, cuando hay algo elegido */
+.cuenta { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; }
+.quitar {
+  font: inherit; font-weight: 600; color: var(--tinta);
+  background: none; border: none; padding: 6px 0; min-height: 36px;
+  text-decoration: underline; text-decoration-color: var(--coral);
+  text-decoration-thickness: 2px; text-underline-offset: 4px;
+  cursor: pointer;
+}
+.quitar:hover { color: var(--coral); }
 
 /* ── Teléfono ────────────────────────────────────────────── */
 @media (max-width: 900px) {
@@ -759,6 +882,8 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
   #barra-buscar { padding: 11px 14px 12px; }
   #buscar { width: 100%; }
   .idioma { min-width: 44px; padding: 8px 10px; }
+  #letra { padding: 8px 11px; margin-right: 0; }
+  #letra .letra-texto { display: none; }
 
   /* La ficha sube desde abajo sobre el mapa, como en las aplicaciones de
      mapas: antes se abría debajo del mapa, fuera de la pantalla, y al
@@ -811,23 +936,33 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
     </div>
   </div>
   <div class="der">
-    <button id="letra" class="idioma" aria-pressed="false">Aa</button>
+    <button id="letra" aria-pressed="false"><span class="a-mas" aria-hidden="true">A<span>+</span></span><span class="letra-texto"></span></button>
     <div id="idiomas"></div>
     <button id="abrir-cajon" aria-expanded="false" aria-controls="cajon"></button>
   </div>
 
-  <!-- El cajón: los filtros salen de la pantalla y bajan de acá, así el
-       mapa se lleva todo el alto. -->
+  <!-- Los filtros. En el teléfono son un cajón que baja sobre el mapa y
+       se abre con «Buscar lugares». En la computadora quedan siempre a la
+       vista, en una barra de dos filas debajo del logo, y la búsqueda sube
+       a la cabecera: nada tapa el mapa y siempre se ve qué está elegido. -->
   <div id="cajon">
     <img class="forma mano" src="marca/forma-mano.svg" alt="">
     <img class="forma ola" src="marca/forma-ola.svg" alt="">
     <img class="forma hoja" src="marca/forma-hoja.svg" alt="">
-    <p class="paso" id="paso1"></p>
-    <div class="fila-botones" id="regiones"></div>
-
-    <p class="paso" id="paso2"></p>
-    <div class="fila-botones" id="tipos"></div>
-    <div class="fila-botones" id="precios" style="margin-top:12px"></div>
+    <div class="filtros-uno">
+      <div class="filtro f-region">
+        <p class="paso"><span class="largo" id="paso1"></span><span class="corto" id="paso1c"></span></p>
+        <div class="fila-botones" id="regiones"></div>
+      </div>
+      <div class="filtro f-precio">
+        <p class="paso"><span class="corto" id="paso3c"></span></p>
+        <div class="fila-botones" id="precios"></div>
+      </div>
+    </div>
+    <div class="filtro f-tipo">
+      <p class="paso"><span class="largo" id="paso2"></span><span class="corto" id="paso2c"></span></p>
+      <div class="fila-botones" id="tipos"></div>
+    </div>
 
     <div id="barra-buscar">
       <input id="buscar" type="search">
@@ -1196,6 +1331,9 @@ function traducir() {
     `${t('aviso')} <b>${t('avisoFuerte')}</b> ${t('avisoResto')}`;
   document.getElementById('paso1').textContent = t('paso1');
   document.getElementById('paso2').textContent = t('paso2');
+  document.getElementById('paso1c').textContent = t('etiquetaRegion');
+  document.getElementById('paso2c').textContent = t('etiquetaTipo');
+  document.getElementById('paso3c').textContent = t('precio');
 
   const buscar = document.getElementById('buscar');
   buscar.placeholder = t('buscar');
@@ -1489,6 +1627,24 @@ function pintarFicha(l) {
     b.addEventListener('click', () => irA(b.dataset.abre)));
 }
 
+/* ¿Hay algún filtro puesto? Entonces, al lado de la cuenta, un botón
+   para volver a ver todo de un toque. */
+function hayFiltros() {
+  return estado.zona !== 'todas' || estado.tipo !== 'todos' ||
+         estado.precio !== 'todos' || !!estado.busqueda;
+}
+function activarQuitar() {
+  const b = elLista.querySelector('[data-quitar]');
+  if (!b) return;
+  b.addEventListener('click', () => {
+    const habiaZona = estado.zona !== 'todas';
+    Object.assign(estado, { zona: 'todas', tipo: 'todos', precio: 'todos', busqueda: '' });
+    elBuscar.value = '';
+    pintar();
+    if (habiaZona) encuadrar();
+  });
+}
+
 function pintarLista(visibles) {
   if (estado.elegido) { pintarFicha(porId(estado.elegido)); return; }
   if (estado.calendario) { pintarCalendario(); return; }
@@ -1502,9 +1658,13 @@ function pintarLista(visibles) {
       <a class="boton" href="mailto:${FUNDACION.email}?subject=${encodeURIComponent(t('sumateAsunto'))}&body=${encodeURIComponent(t('sumateCuerpo'))}">${t('sumateBoton')}</a>
       <p class="de-puna"><img src="logo-puna.png" alt="">${t('proyecto')}</p>
     </div>`;
+  /* en la computadora el aviso del relevamiento va acá, al pie */
+  const aviso = `<p class="aviso-lista">${t('aviso')} <b>${t('avisoFuerte')}</b> ${t('avisoResto')}</p>`;
+  const quitar = hayFiltros() ? `<button class="quitar" data-quitar>${t('quitarFiltros')}</button>` : '';
 
   if (!visibles.length) {
-    elLista.innerHTML = `<p class="vacio">${t('vacio')}</p>` + sumate;
+    elLista.innerHTML = `<p class="vacio">${t('vacio')}</p><p class="cuenta">${quitar}</p>` + aviso + sumate;
+    activarQuitar();
     return;
   }
 
@@ -1519,7 +1679,7 @@ function pintarLista(visibles) {
            <div class="lema">${tr(REG[estado.zona].lema)}</div></div>
     </div>`;
 
-  elLista.innerHTML = tarjetaEsteMes() + portada + `<p class="cuenta">${cuenta}${cola}</p>` +
+  elLista.innerHTML = tarjetaEsteMes() + portada + `<p class="cuenta"><span>${cuenta}${cola}</span>${quitar}</p>` +
     visibles.map(l => `
       <button class="item" data-abre="${l.id}">
         <span class="pastilla" style="${tinte(l.region)}">${svg(CAT[l.categoria].icono, '#241b28')}</span>
@@ -1532,10 +1692,11 @@ function pintarLista(visibles) {
           <span class="relevado-etiqueta">${t(l.precio?.estado || 'consultar')}</span>
           ${l.relevamiento ? `<span class="relevado-etiqueta">${t('relevado')}${l.relevamiento.ubicacion === 'referencia' ? ` · ${t('orientativo')}` : ''}</span>` : ''}
         </span>
-      </button>`).join('') + sumate;
+      </button>`).join('') + aviso + sumate;
 
   elLista.querySelectorAll('[data-abre]').forEach(b =>
     b.addEventListener('click', () => irA(b.dataset.abre)));
+  activarQuitar();
   const vc = document.getElementById('ver-calendario');
   if (vc) vc.addEventListener('click', abrirCalendario);
 }
@@ -1776,6 +1937,7 @@ btnCerca.addEventListener('click', () => {
     { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 });
 });
 function traducirExtras() {
+  btnLetra.querySelector('.letra-texto').textContent = t('letraGrande');
   btnLetra.setAttribute('aria-label', t('letraGrande'));
   btnLetra.title = t('letraGrande');
   btnCerca.querySelector('span').textContent = t('cercaMio');
