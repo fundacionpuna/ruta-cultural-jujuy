@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const raiz = path.join(__dirname, '..');
 const contexto = { window: {} };
 vm.createContext(contexto);
-for (const nombre of ['datos.js', 'relevados.js', 'actividades.js', 'fotos.js']) {
+for (const nombre of ['datos.js', 'relevados.js', 'actividades.js', 'fotos.js', 'rastreo-octubre.js']) {
   vm.runInContext(fs.readFileSync(path.join(raiz, nombre), 'utf8'), contexto);
 }
 const base = { proyecto: 'Vamo Pue · Fundación Puna', version: 1,

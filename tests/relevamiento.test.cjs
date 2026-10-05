@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const raiz = path.join(__dirname, '..');
 const datos = { window: {} };
 vm.createContext(datos);
-for (const archivo of ['datos.js', 'relevados.js', 'actividades.js', 'fotos.js', 'senderos.js']) {
+for (const archivo of ['datos.js', 'relevados.js', 'actividades.js', 'fotos.js', 'rastreo-octubre.js', 'senderos.js']) {
   vm.runInContext(fs.readFileSync(path.join(raiz, archivo), 'utf8'), datos);
 }
 const { LUGARES, LUGARES_MUESTRA, CATEGORIAS, TEXTOS, REGIONES } = datos.window;
@@ -147,3 +147,18 @@ assert(!gratis.some(l => l.id.startsWith('yu-'))); // tarifa de Calilegua por co
 Object.assign(estado, { zona: 'valles', tipo: 'bici', precio: 'todos' });
 assert.equal(LUGARES.filter(contexto.pasa).length, 4);
 console.log(`OK: ${LUGARES.length} fichas en tres idiomas; 19 nuevas en Valles, 6 rutas de bici, ${gratis.length} gratuitas y 8 fichas con foto acreditada.`);
+
+// Segundo rastreo (rastreo-octubre.js): mismas reglas que el primero.
+const octubre = LUGARES.filter(l => /^(pu|qu|va|yu)-o-/.test(l.id));
+assert.equal(octubre.length, 26);
+for (const l of octubre) {
+  assert(CATEGORIAS[l.categoria], l.id);
+  assert(l.id.startsWith({ puna: 'pu', quebrada: 'qu', valles: 'va', yungas: 'yu' }[l.region]), l.id);
+  assert(l.lat >= -24.75 && l.lat <= -21.7 && l.lng >= -67.35 && l.lng <= -63.85, l.id);
+  assert.equal(l.relevamiento.ubicacion, 'referencia');
+  for (const f of l.relevamiento.fuentes) assert.equal(new URL(f.url).protocol, 'https:');
+  for (const idioma of ['es', 'en', 'pt']) assert(l.descripcion[idioma], l.id);
+  if (l.contacto.whatsapp) assert(/^\+?\d{10,15}$/.test(l.contacto.whatsapp), l.id);
+  if (l.precio.estado === 'gratis') assert(l.precio.fuentes.length, l.id);
+}
+console.log(`OK: ${octubre.length} fichas del segundo rastreo, con fuente y en tres idiomas.`);

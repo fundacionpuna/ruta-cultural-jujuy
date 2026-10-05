@@ -3396,6 +3396,1230 @@
         }
       },
       "direccion": "Belgrano s/n"
+    },
+    {
+      "id": "va-o-bunuelos",
+      "nombre": "Buñuelódromo · Paseo de los Buñuelos",
+      "categoria": "restaurante",
+      "localidad": "El Carmen",
+      "lat": -24.4,
+      "lng": -65.27,
+      "region": "valles",
+      "descripcion": {
+        "es": "Más de diez puestos en el camino a los diques: buñuelos, tortillas con api, quesillo y mate cocido, con artesanías y plantas. Lunes a viernes de 14 a 22; fines de semana y feriados de 8 a 23 (horario publicado en enero de 2026).",
+        "en": "More than ten stalls on the road to the reservoirs: buñuelos (fried dough), tortillas with api (purple-corn drink), quesillo cheese and mate cocido, plus crafts and plants. Mon–Fri 2–10 pm; weekends and holidays 8 am–11 pm (hours published January 2026).",
+        "pt": "Mais de dez barracas no caminho dos diques: buñuelos, tortillas com api (bebida de milho roxo), quesillo e mate cocido, além de artesanato e plantas. Seg–sex 14–22 h; fins de semana e feriados 8–23 h (horário publicado em janeiro de 2026)."
+      },
+      "contacto": {
+        "web": "https://www.todojujuy.com/jujuy/bunuelodromo-el-clasico-jujeno-que-endulza-el-camino-los-diques-n285307"
+      },
+      "mapas_busqueda": "Buñuelódromo El Carmen, El Carmen, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Todo Jujuy · Buñuelódromo, camino a los diques (25/1/2026)",
+            "url": "https://www.todojujuy.com/jujuy/bunuelodromo-el-clasico-jujeno-que-endulza-el-camino-los-diques-n285307"
+          },
+          {
+            "titulo": "Todo Jujuy · Paseo de los Buñuelos en El Carmen",
+            "url": "https://www.todojujuy.com/jujuy/este-fin-semana-se-podra-disfrutar-del-paseo-los-bunuelos-n145542"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Todo Jujuy · Buñuelódromo, camino a los diques (25/1/2026)",
+            "url": "https://www.todojujuy.com/jujuy/bunuelodromo-el-clasico-jujeno-que-endulza-el-camino-los-diques-n285307"
+          },
+          {
+            "titulo": "Todo Jujuy · Paseo de los Buñuelos en El Carmen",
+            "url": "https://www.todojujuy.com/jujuy/este-fin-semana-se-podra-disfrutar-del-paseo-los-bunuelos-n145542"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Buñuelódromo El Carmen"
+    },
+    {
+      "id": "qu-o-hornaditas",
+      "nombre": "Hornaditas · comida casera y turismo rural",
+      "categoria": "restaurante",
+      "localidad": "Humahuaca",
+      "lat": -23.205,
+      "lng": -65.35,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "Comunidad al norte de Humahuaca. Las familias reciben con gastronomía local y alojamiento, y llevan a pie o a caballo a molinos hidráulicos, petroglifos y la serranía del Hornocal. Escribir antes: hornaditas@gmail.com.",
+        "en": "Community north of Humahuaca. Families offer local food and lodging, and guide walks or horse rides to water mills, petroglyphs and the Hornocal range. Write ahead: hornaditas@gmail.com.",
+        "pt": "Comunidade ao norte de Humahuaca. As famílias oferecem comida local e hospedagem, e guiam a pé ou a cavalo até moinhos d'água, petróglifos e a serra do Hornocal. Escreva antes: hornaditas@gmail.com."
+      },
+      "contacto": {
+        "email": "hornaditas@gmail.com",
+        "web": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+      },
+      "mapas_busqueda": "Hornaditas, Humahuaca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Hornaditas"
+    },
+    {
+      "id": "qu-o-ocumazo",
+      "nombre": "Ocumazo · el valle escondido",
+      "categoria": "oferta",
+      "localidad": "Humahuaca",
+      "lat": -23.205,
+      "lng": -65.35,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "Turismo comunitario a 18 km al este de Humahuaca: un valle tranquilo, con cultura milenaria y vida de campo. Escribir antes: ocumazo@yahoo.com.",
+        "en": "Community tourism 18 km east of Humahuaca: a quiet valley with ancient culture and rural life. Write ahead: ocumazo@yahoo.com.",
+        "pt": "Turismo comunitário a 18 km a leste de Humahuaca: um vale tranquilo, de cultura milenar e vida rural. Escreva antes: ocumazo@yahoo.com."
+      },
+      "contacto": {
+        "email": "ocumazo@yahoo.com",
+        "web": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+      },
+      "mapas_busqueda": "Ocumazo, Humahuaca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Ocumazo"
+    },
+    {
+      "id": "pu-o-marques",
+      "nombre": "Puesto del Marqués · queso artesanal y cocina local",
+      "categoria": "restaurante",
+      "localidad": "Puesto del Marqués",
+      "lat": -22.535,
+      "lng": -65.695,
+      "region": "puna",
+      "descripcion": {
+        "es": "Veinte kilómetros al norte de Abra Pampa por la RN 9. Las familias muestran cómo hacen el queso a mano y comparten platos de la cocina puneña. Avisar antes a la cabina pública: 03887-491088.",
+        "en": "Twenty kilometres north of Abra Pampa on RN 9. Families show how they make cheese by hand and share Puna home cooking. Call the public phone ahead: 03887-491088.",
+        "pt": "Vinte quilômetros ao norte de Abra Pampa pela RN 9. As famílias mostram como fazem queijo artesanal e compartilham a cozinha da Puna. Avise antes pelo telefone público: 03887-491088."
+      },
+      "contacto": {
+        "telefono": "+54 3887 491088",
+        "web": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+      },
+      "mapas_busqueda": "Puesto del Marqués · queso artesanal y cocina local, Puesto del Marqués, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "yu-o-caspala",
+      "nombre": "Caspalá · casas de familia en la montaña",
+      "categoria": "hostal",
+      "localidad": "Caspalá",
+      "lat": -23.367,
+      "lng": -65.092,
+      "region": "yungas",
+      "descripcion": {
+        "es": "Pueblo a 3.100 metros en Valle Grande, distinguido por la Organización Mundial del Turismo. Las familias alojan y cocinan locro, guiso de papa verde y charqui; desde acá salen senderos a Santa Ana y Valle Colorado. Se llega desde Humahuaca por la RP 73, de ripio y por el Abra de Zenta (4.500 m): consultar el estado del camino.",
+        "en": "Village at 3,100 metres in Valle Grande, recognised by UN Tourism. Families host visitors and cook locro, green-potato stew and charqui; trails lead to Santa Ana and Valle Colorado. Reached from Humahuaca on gravel road RP 73 over the Zenta pass (4,500 m): check road conditions.",
+        "pt": "Povoado a 3.100 metros em Valle Grande, reconhecido pela ONU Turismo. As famílias hospedam e cozinham locro, ensopado de batata e charqui; daqui saem trilhas para Santa Ana e Valle Colorado. Acesso por Humahuaca pela RP 73, de cascalho, pelo Abra de Zenta (4.500 m): consulte o estado da estrada."
+      },
+      "contacto": {
+        "telefono": "+54 3886 461001",
+        "web": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+      },
+      "mapas_busqueda": "Caspalá · casas de familia en la montaña, Caspalá, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          },
+          {
+            "titulo": "Minuto Uno · Caspalá y el Camino del Inca",
+            "url": "https://www.minutouno.com/lifestyle/descubri-jujuy-2026-el-destino-calles-empedradas-antiguas-tradiciones-y-el-camino-del-inca-n6282304"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          },
+          {
+            "titulo": "Minuto Uno · Caspalá y el Camino del Inca",
+            "url": "https://www.minutouno.com/lifestyle/descubri-jujuy-2026-el-destino-calles-empedradas-antiguas-tradiciones-y-el-camino-del-inca-n6282304"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "qu-o-pedropan",
+      "nombre": "Pedro Pan Restaurante",
+      "categoria": "restaurante",
+      "localidad": "Purmamarca",
+      "lat": -23.7455,
+      "lng": -65.4995,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "A pasos de la plaza. Cocina del norte: empanadas, locro, tamales y cazuelas.",
+        "en": "Steps from the square. Northern cooking: empanadas, locro, tamales and stews.",
+        "pt": "A poucos passos da praça. Cozinha do norte: empanadas, locro, tamales e ensopados."
+      },
+      "contacto": {
+        "web": "https://www.welcomeargentina.com/purmamarca/pedro-pan-restaurante.html"
+      },
+      "mapas_busqueda": "Pedro Pan Restaurante, Purmamarca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Welcome Argentina · Pedro Pan Restaurante",
+            "url": "https://www.welcomeargentina.com/purmamarca/pedro-pan-restaurante.html"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Welcome Argentina · Pedro Pan Restaurante",
+            "url": "https://www.welcomeargentina.com/purmamarca/pedro-pan-restaurante.html"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "qu-o-monumento",
+      "nombre": "Monumento a los Héroes de la Independencia",
+      "categoria": "punto",
+      "localidad": "Humahuaca",
+      "lat": -23.205,
+      "lng": -65.35,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "Bronce de Ernesto Soto Avendaño en lo alto del cerro Santa Bárbara, frente a la plaza. Se sube por una escalinata larga: a esta altura, despacio. Monumento Histórico Nacional desde 2019.",
+        "en": "Bronze by Ernesto Soto Avendaño atop Santa Bárbara hill, facing the square. Reached by a long stairway: go slowly at this altitude. National Historic Monument since 2019.",
+        "pt": "Bronze de Ernesto Soto Avendaño no alto do morro Santa Bárbara, diante da praça. Sobe-se por uma longa escadaria: devagar, nesta altitude. Monumento Histórico Nacional desde 2019."
+      },
+      "contacto": {
+        "web": "https://www.todojujuy.com/jujuy/el-monumento-los-heroes-la-independencia-ya-es-monumento-historico-nacional-n128883"
+      },
+      "mapas_busqueda": "Monumento a los Héroes de la Independencia, Humahuaca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Todo Jujuy · El Monumento a los Héroes de la Independencia es Monumento Histórico Nacional",
+            "url": "https://www.todojujuy.com/jujuy/el-monumento-los-heroes-la-independencia-ya-es-monumento-historico-nacional-n128883"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Todo Jujuy · El Monumento a los Héroes de la Independencia es Monumento Histórico Nacional",
+            "url": "https://www.todojujuy.com/jujuy/el-monumento-los-heroes-la-independencia-ya-es-monumento-historico-nacional-n128883"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "qu-o-santarosa",
+      "nombre": "Iglesia de Santa Rosa de Lima y Cabildo",
+      "categoria": "punto",
+      "localidad": "Purmamarca",
+      "lat": -23.7455,
+      "lng": -65.4995,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "Iglesia de 1648, de adobe y techo de cardón, con pinturas cusqueñas del siglo XVIII. Enfrente, el cabildo más chico del país. Monumento Histórico Nacional.",
+        "en": "Church from 1648, adobe with a cardón-wood roof and 18th-century Cusco School paintings. Across the square, the smallest cabildo in the country. National Historic Monument.",
+        "pt": "Igreja de 1648, de adobe e teto de cardón, com pinturas cusquenhas do século XVIII. Em frente, o menor cabildo do país. Monumento Histórico Nacional."
+      },
+      "contacto": {
+        "web": "https://www.argentina.gob.ar/capital-humano/cultura/monumentos/poblado-de-purmamarca"
+      },
+      "mapas_busqueda": "Iglesia Santa Rosa de Lima, Purmamarca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Cultura de la Nación · Poblado de Purmamarca",
+            "url": "https://www.argentina.gob.ar/capital-humano/cultura/monumentos/poblado-de-purmamarca"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Cultura de la Nación · Poblado de Purmamarca",
+            "url": "https://www.argentina.gob.ar/capital-humano/cultura/monumentos/poblado-de-purmamarca"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Iglesia Santa Rosa de Lima"
+    },
+    {
+      "id": "va-o-bandera",
+      "nombre": "Salón de la Bandera de la Libertad Civil",
+      "categoria": "punto",
+      "localidad": "San Salvador de Jujuy",
+      "lat": -24.1856,
+      "lng": -65.2995,
+      "region": "valles",
+      "descripcion": {
+        "es": "En la Casa de Gobierno, frente a la plaza Belgrano: la bandera que Belgrano le dejó a Jujuy en 1813, con su centro de interpretación. Visitas guiadas de lunes a viernes.",
+        "en": "In Government House, facing Plaza Belgrano: the flag Belgrano gave Jujuy in 1813, with its interpretation centre. Guided tours Monday to Friday.",
+        "pt": "Na Casa de Governo, diante da praça Belgrano: a bandeira que Belgrano deixou a Jujuy em 1813, com seu centro de interpretação. Visitas guiadas de segunda a sexta."
+      },
+      "contacto": {
+        "web": "https://www.todojujuy.com/jujuy/habilitaron-el-centro-la-bandera-la-libertad-civil-n204462"
+      },
+      "mapas_busqueda": "Casa de Gobierno de Jujuy, San Salvador de Jujuy, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Todo Jujuy · Centro de Interpretación de la Bandera de la Libertad Civil",
+            "url": "https://www.todojujuy.com/jujuy/habilitaron-el-centro-la-bandera-la-libertad-civil-n204462"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Todo Jujuy · Centro de Interpretación de la Bandera de la Libertad Civil",
+            "url": "https://www.todojujuy.com/jujuy/habilitaron-el-centro-la-bandera-la-libertad-civil-n204462"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Casa de Gobierno de Jujuy"
+    },
+    {
+      "id": "va-o-sanfrancisco",
+      "nombre": "Iglesia y Convento de San Francisco",
+      "categoria": "punto",
+      "localidad": "San Salvador de Jujuy",
+      "lat": -24.1856,
+      "lng": -65.2995,
+      "region": "valles",
+      "descripcion": {
+        "es": "Una de las iglesias más visitadas del centro. El templo actual es de 1927; adentro, el museo de arte religioso.",
+        "en": "One of the most visited churches downtown. The current building dates from 1927; inside, a religious art museum.",
+        "pt": "Uma das igrejas mais visitadas do centro. O templo atual é de 1927; dentro, o museu de arte sacra."
+      },
+      "contacto": {
+        "web": "https://www.todojujuy.com/jujuy/la-iglesia-san-francisco-se-suma-la-semana-los-museos-n271757"
+      },
+      "mapas_busqueda": "Iglesia San Francisco San Salvador de Jujuy, San Salvador de Jujuy, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Todo Jujuy · La iglesia San Francisco en la Semana de los Museos",
+            "url": "https://www.todojujuy.com/jujuy/la-iglesia-san-francisco-se-suma-la-semana-los-museos-n271757"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Todo Jujuy · La iglesia San Francisco en la Semana de los Museos",
+            "url": "https://www.todojujuy.com/jujuy/la-iglesia-san-francisco-se-suma-la-semana-los-museos-n271757"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Iglesia San Francisco San Salvador de Jujuy"
+    },
+    {
+      "id": "pu-o-catalina",
+      "nombre": "Iglesia de Santa Catalina",
+      "categoria": "punto",
+      "localidad": "Santa Catalina",
+      "lat": -21.945,
+      "lng": -66.052,
+      "region": "puna",
+      "descripcion": {
+        "es": "Pueblo sobre la Ruta 40, buen punto de partida para las seis comunidades de la zona, a 3.800 metros. La iglesia guarda obras de arte cusqueño. Comisión municipal: 03887-491140.",
+        "en": "Village on Route 40, a good base for the area's six communities at 3,800 metres. The church holds Cusco School artworks. Local council: 03887-491140.",
+        "pt": "Povoado na Rota 40, bom ponto de partida para as seis comunidades da região, a 3.800 metros. A igreja guarda arte cusquenha. Comissão municipal: 03887-491140."
+      },
+      "contacto": {
+        "telefono": "+54 3887 491140",
+        "web": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+      },
+      "mapas_busqueda": "Iglesia de Santa Catalina, Santa Catalina, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "pu-o-cochinoca",
+      "nombre": "Cochinoca y las Peñas de Ascalte",
+      "categoria": "punto",
+      "localidad": "Cochinoca",
+      "lat": -22.74,
+      "lng": -65.89,
+      "region": "puna",
+      "descripcion": {
+        "es": "Al este de Abra Pampa: el pueblo histórico de Cochinoca y el paisaje lunar de las peñas de Ascalte, cerca de Casabindo.",
+        "en": "East of Abra Pampa: the historic village of Cochinoca and the moon-like Ascalte rocks, near Casabindo.",
+        "pt": "A leste de Abra Pampa: o povoado histórico de Cochinoca e a paisagem lunar das penhas de Ascalte, perto de Casabindo."
+      },
+      "contacto": {
+        "telefono": "+54 3887 491435",
+        "web": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+      },
+      "mapas_busqueda": "Cochinoca y las Peñas de Ascalte, Cochinoca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "va-o-chani",
+      "nombre": "Nevado de Chañi · el cerro más alto de Jujuy",
+      "categoria": "punto",
+      "localidad": "Nevado de Chañi",
+      "lat": -24.06,
+      "lng": -65.74,
+      "region": "valles",
+      "descripcion": {
+        "es": "Casi seis mil metros (las fuentes dan entre 5.896 y 5.949). Para mirarlo de lejos o subirlo sólo con guía de montaña y aclimatación: es una expedición de varios días.",
+        "en": "Almost six thousand metres (sources give 5,896 to 5,949). Admire it from afar, or climb only with a mountain guide and acclimatisation: it is a multi-day expedition.",
+        "pt": "Quase seis mil metros (as fontes dão entre 5.896 e 5.949). Para admirar de longe ou subir só com guia de montanha e aclimatação: é uma expedição de vários dias."
+      },
+      "contacto": {
+        "web": "https://www.argentina.travel/actividades/nevado-de-chani"
+      },
+      "mapas_busqueda": "Nevado de Chañi, Nevado de Chañi, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Visit Argentina · Nevado de Chañi",
+            "url": "https://www.argentina.travel/actividades/nevado-de-chani"
+          },
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Visit Argentina · Nevado de Chañi",
+            "url": "https://www.argentina.travel/actividades/nevado-de-chani"
+          },
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Nevado de Chañi"
+    },
+    {
+      "id": "pu-o-tuzgle",
+      "nombre": "Volcán Tuzgle",
+      "categoria": "punto",
+      "localidad": "Volcán Tuzgle",
+      "lat": -24.05,
+      "lng": -66.48,
+      "region": "puna",
+      "descripcion": {
+        "es": "Volcán de más de cinco mil metros en la Puna de Susques, uno de los destinos de montañismo de la provincia. Con guía y aclimatación.",
+        "en": "Volcano over five thousand metres in the Susques Puna, one of the province's mountaineering destinations. With a guide and acclimatisation.",
+        "pt": "Vulcão de mais de cinco mil metros na Puna de Susques, um dos destinos de montanhismo da província. Com guia e aclimatação."
+      },
+      "contacto": {
+        "web": "https://www.argentina.travel/es/actividades/montanismo-en-jujuy"
+      },
+      "mapas_busqueda": "Volcán Tuzgle, Volcán Tuzgle, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Visit Argentina · Montañismo en Jujuy",
+            "url": "https://www.argentina.travel/es/actividades/montanismo-en-jujuy"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Visit Argentina · Montañismo en Jujuy",
+            "url": "https://www.argentina.travel/es/actividades/montanismo-en-jujuy"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Volcán Tuzgle"
+    },
+    {
+      "id": "qu-o-lipan",
+      "nombre": "Cuesta de Lipán y Abra de Potrerillos",
+      "categoria": "punto",
+      "localidad": "Purmamarca",
+      "lat": -23.7455,
+      "lng": -65.4995,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "Diecisiete kilómetros de curvas asfaltadas por la RN 52, de Purmamarca hasta el abra a 4.170 metros, camino a Salinas Grandes. Parar en el mirador sin apuro: la altura se siente.",
+        "en": "Seventeen kilometres of paved hairpins on RN 52, from Purmamarca up to the pass at 4,170 metres, on the way to Salinas Grandes. Stop at the lookout and take it easy: you will feel the altitude.",
+        "pt": "Dezessete quilômetros de curvas asfaltadas pela RN 52, de Purmamarca até o passo a 4.170 metros, a caminho das Salinas Grandes. Pare no mirante sem pressa: a altitude se faz sentir."
+      },
+      "contacto": {
+        "web": "https://billiken.lat/interesante/cuesta-de-lipan-un-sorprendente-camino-de-montana-que-atraviesa-jujuy/"
+      },
+      "mapas_busqueda": "Abra de Potrerillos, Purmamarca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Billiken · Cuesta de Lipán",
+            "url": "https://billiken.lat/interesante/cuesta-de-lipan-un-sorprendente-camino-de-montana-que-atraviesa-jujuy/"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Billiken · Cuesta de Lipán",
+            "url": "https://billiken.lat/interesante/cuesta-de-lipan-un-sorprendente-camino-de-montana-que-atraviesa-jujuy/"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Abra de Potrerillos"
+    },
+    {
+      "id": "pu-o-diablo",
+      "nombre": "Puente del Diablo",
+      "categoria": "punto",
+      "localidad": "Tres Cruces",
+      "lat": -22.918,
+      "lng": -65.587,
+      "region": "puna",
+      "descripcion": {
+        "es": "Formaciones de roca talladas por el viento, entre queñuas, cerca de Tres Cruces. Lo muestran guías de la comunidad: Sergio (388 517-0055) o Claudia (388 469-0944).",
+        "en": "Wind-carved rock formations among queñua trees near Tres Cruces. Shown by community guides: Sergio (+54 388 517-0055) or Claudia (+54 388 469-0944).",
+        "pt": "Formações rochosas esculpidas pelo vento, entre queñuas, perto de Tres Cruces. Guias da comunidade: Sergio (+54 388 517-0055) ou Claudia (+54 388 469-0944)."
+      },
+      "contacto": {
+        "whatsapp": "+5493885170055",
+        "email": "turismotrescrucesjujuy@gmail.com",
+        "web": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+      },
+      "mapas_busqueda": "Puente del Diablo, Tres Cruces, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "pu-o-huancar",
+      "nombre": "Huancar de Potrero de la Puna · sandboard",
+      "categoria": "oferta",
+      "localidad": "Abra Pampa",
+      "lat": -22.722,
+      "lng": -65.697,
+      "region": "puna",
+      "descripcion": {
+        "es": "Médano a veinte minutos al este de Abra Pampa por la RP 72, de tierra. Ideal para sandboard; en el circuito también hay ojos de agua y pesca de truchas con las comunidades de Tabladitas y Rumi Laco.",
+        "en": "Sand dune twenty minutes east of Abra Pampa on dirt road RP 72. Great for sandboarding; the circuit also has springs and trout fishing with the Tabladitas and Rumi Laco communities.",
+        "pt": "Duna a vinte minutos a leste de Abra Pampa pela RP 72, de terra. Ideal para sandboard; no circuito há olhos-d'água e pesca de trutas com as comunidades de Tabladitas e Rumi Laco."
+      },
+      "contacto": {
+        "telefono": "+54 3887 491435",
+        "web": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+      },
+      "mapas_busqueda": "Huancar Abra Pampa, Abra Pampa, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Huancar Abra Pampa"
+    },
+    {
+      "id": "qu-o-tren",
+      "nombre": "Tren Solar de la Quebrada",
+      "categoria": "oferta",
+      "localidad": "Volcán",
+      "lat": -23.917,
+      "lng": -65.466,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "Tren a energía solar de Volcán a Tilcara, con paradas en Tumbaya, Purmamarca, Posta de Hornillos y Maimará: 42 km. Con un mismo boleto se baja y se vuelve a subir. Tarifas distintas para jujeños, resto del país y extranjeros: consultar en el sitio oficial.",
+        "en": "Solar-powered train from Volcán to Tilcara, stopping at Tumbaya, Purmamarca, Posta de Hornillos and Maimará: 42 km. One ticket lets you hop off and on. Different fares for locals, Argentines and foreigners: check the official site.",
+        "pt": "Trem a energia solar de Volcán a Tilcara, com paradas em Tumbaya, Purmamarca, Posta de Hornillos e Maimará: 42 km. Com o mesmo bilhete se desce e se volta a subir. Tarifas diferentes para moradores, argentinos e estrangeiros: consulte o site oficial."
+      },
+      "contacto": {
+        "web": "https://trensolar.com.ar/"
+      },
+      "mapas_busqueda": "Estación Tren Solar Volcán, Volcán, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Tren Solar de la Quebrada · Sitio oficial",
+            "url": "https://trensolar.com.ar/"
+          },
+          {
+            "titulo": "La Capital · Un tren solar para descubrir la Quebrada",
+            "url": "https://www.lacapital.com.ar/turismo/un-tren-solar-descubrir-la-quebrada-humahuaca-apuro-n10256982.html"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Tren Solar de la Quebrada · Sitio oficial",
+            "url": "https://trensolar.com.ar/"
+          }
+        ],
+        "nota": {
+          "es": "Con costo; la tarifa depende de la residencia. Consultar en el sitio oficial.",
+          "en": "Paid; fare depends on residence. Check the official site.",
+          "pt": "Pago; a tarifa depende da residência. Consulte o site oficial."
+        }
+      },
+      "buscar": "Estación Tren Solar Volcán"
+    },
+    {
+      "id": "qu-o-bodegas",
+      "nombre": "Bodegas de altura de la Quebrada",
+      "categoria": "artesania",
+      "localidad": "Maimará",
+      "lat": -23.6245,
+      "lng": -65.4095,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "Diez bodegas registradas entre Maimará (Amanecer Andino, Dupont, La Selestina, El Bayeh), Tilcara (Viñas del Perchel, Toroyoc), Uquía (Viñas de Uquía) y Purmamarca (Don Milagro, Incahuasi). Preguntar a cada una si recibe visitas y degustaciones.",
+        "en": "Ten registered wineries in Maimará (Amanecer Andino, Dupont, La Selestina, El Bayeh), Tilcara (Viñas del Perchel, Toroyoc), Uquía (Viñas de Uquía) and Purmamarca (Don Milagro, Incahuasi). Ask each one about visits and tastings.",
+        "pt": "Dez vinícolas registradas em Maimará (Amanecer Andino, Dupont, La Selestina, El Bayeh), Tilcara (Viñas del Perchel, Toroyoc), Uquía (Viñas de Uquía) e Purmamarca (Don Milagro, Incahuasi). Pergunte a cada uma sobre visitas e degustações."
+      },
+      "contacto": {
+        "web": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+      },
+      "mapas_busqueda": "Bodega Maimará, Maimará, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Desarrollo Económico y Producción de Jujuy · Emprendimientos",
+            "url": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Desarrollo Económico y Producción de Jujuy · Emprendimientos",
+            "url": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      },
+      "buscar": "Bodega Maimará"
+    },
+    {
+      "id": "qu-o-telares",
+      "nombre": "Telares Bella Esperanza",
+      "categoria": "artesania",
+      "localidad": "Humahuaca",
+      "lat": -23.205,
+      "lng": -65.35,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "Tejidos en telar, en Humahuaca.",
+        "en": "Loom weaving in Humahuaca.",
+        "pt": "Tecidos em tear, em Humahuaca."
+      },
+      "contacto": {
+        "whatsapp": "+5493884178020",
+        "web": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+      },
+      "mapas_busqueda": "Telares Bella Esperanza, Humahuaca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Desarrollo Económico y Producción de Jujuy · Emprendimientos",
+            "url": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Desarrollo Económico y Producción de Jujuy · Emprendimientos",
+            "url": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "qu-o-tejedores",
+      "nombre": "Tejedores Andinos",
+      "categoria": "artesania",
+      "localidad": "Huacalera",
+      "lat": -23.437,
+      "lng": -65.351,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "Tejidos andinos en Huacalera, sobre el Trópico de Capricornio.",
+        "en": "Andean weaving in Huacalera, on the Tropic of Capricorn.",
+        "pt": "Tecidos andinos em Huacalera, sobre o Trópico de Capricórnio."
+      },
+      "contacto": {
+        "whatsapp": "+5493884405122",
+        "web": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+      },
+      "mapas_busqueda": "Tejedores Andinos, Huacalera, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Desarrollo Económico y Producción de Jujuy · Emprendimientos",
+            "url": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Desarrollo Económico y Producción de Jujuy · Emprendimientos",
+            "url": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "qu-o-llamanegra",
+      "nombre": "Tejidos Llama Negra",
+      "categoria": "artesania",
+      "localidad": "Purmamarca",
+      "lat": -23.7455,
+      "lng": -65.4995,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "Tejidos de fibra de llama, en Purmamarca.",
+        "en": "Llama-fibre textiles in Purmamarca.",
+        "pt": "Tecidos de fibra de lhama, em Purmamarca."
+      },
+      "contacto": {
+        "whatsapp": "+5493885047088",
+        "web": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+      },
+      "mapas_busqueda": "Tejidos Llama Negra, Purmamarca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Desarrollo Económico y Producción de Jujuy · Emprendimientos",
+            "url": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Desarrollo Económico y Producción de Jujuy · Emprendimientos",
+            "url": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "pu-o-redpuna",
+      "nombre": "Red Puna · productos de llama",
+      "categoria": "artesania",
+      "localidad": "La Quiaca",
+      "lat": -22.105,
+      "lng": -65.597,
+      "region": "puna",
+      "descripcion": {
+        "es": "Asociación de Pequeños Productores Aborígenes de la Puna: tejidos y productos de llama hechos por las comunidades.",
+        "en": "Association of Small Indigenous Producers of the Puna: llama textiles and products made by the communities.",
+        "pt": "Associação de Pequenos Produtores Indígenas da Puna: tecidos e produtos de lhama feitos pelas comunidades."
+      },
+      "contacto": {
+        "whatsapp": "+5493884037658",
+        "web": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+      },
+      "mapas_busqueda": "Red Puna · productos de llama, La Quiaca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Desarrollo Económico y Producción de Jujuy · Emprendimientos",
+            "url": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Ministerio de Desarrollo Económico y Producción de Jujuy · Emprendimientos",
+            "url": "https://www.produccion.jujuy.gob.ar/?page_id=717"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "pu-o-manka",
+      "nombre": "Manka Fiesta · la fiesta de las ollas",
+      "categoria": "oferta",
+      "localidad": "La Quiaca",
+      "lat": -22.105,
+      "lng": -65.597,
+      "region": "puna",
+      "descripcion": {
+        "es": "El tercer fin de semana de octubre. Feria de raíz precolombina donde comunidades de la Puna y del sur de Bolivia intercambian ollas de barro, sal, lana y alimentos por trueque. Confirmar las fechas de cada año con el municipio.",
+        "en": "Third weekend of October. A fair of pre-Columbian roots where communities from the Puna and southern Bolivia barter clay pots, salt, wool and food. Confirm each year's dates with the town.",
+        "pt": "Terceiro fim de semana de outubro. Feira de raiz pré-colombiana em que comunidades da Puna e do sul da Bolívia trocam panelas de barro, sal, lã e alimentos. Confirme as datas de cada ano com o município."
+      },
+      "contacto": {
+        "web": "https://www.todojujuy.com/jujuy/la-quiaca-comenzo-la-manka-fiesta-n241033"
+      },
+      "mapas_busqueda": "Manka Fiesta · la fiesta de las ollas, La Quiaca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Todo Jujuy · Manka Fiesta en La Quiaca",
+            "url": "https://www.todojujuy.com/jujuy/la-quiaca-comenzo-la-manka-fiesta-n241033"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "gratis",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Todo Jujuy · Manka Fiesta en La Quiaca",
+            "url": "https://www.todojujuy.com/jujuy/la-quiaca-comenzo-la-manka-fiesta-n241033"
+          }
+        ],
+        "nota": {
+          "es": "Feria abierta. Lo que se compra o intercambia, aparte.",
+          "en": "Open fair. Purchases and barter are separate.",
+          "pt": "Feira aberta. Compras e trocas à parte."
+        }
+      }
+    },
+    {
+      "id": "qu-o-carnaval",
+      "nombre": "Carnaval de la Quebrada",
+      "categoria": "oferta",
+      "localidad": "Humahuaca",
+      "lat": -23.205,
+      "lng": -65.35,
+      "region": "quebrada",
+      "descripcion": {
+        "es": "De enero a marzo, con el desentierro del diablo el sábado de carnaval: música, comparsas, harina y albahaca en Humahuaca, Tilcara, Maimará, Uquía y Purmamarca. Antes se le pide permiso a la Pachamama. Reservar alojamiento con mucha anticipación.",
+        "en": "January to March, with the devil's unearthing on carnival Saturday: music, troupes, flour and basil in Humahuaca, Tilcara, Maimará, Uquía and Purmamarca. Pachamama is asked for permission first. Book lodging well ahead.",
+        "pt": "De janeiro a março, com o desenterro do diabo no sábado de carnaval: música, comparsas, farinha e manjericão em Humahuaca, Tilcara, Maimará, Uquía e Purmamarca. Antes se pede licença à Pachamama. Reserve hospedagem com muita antecedência."
+      },
+      "contacto": {
+        "web": "https://www.argentina.travel/en/activities/carnaval-de-humahuaca"
+      },
+      "mapas_busqueda": "Carnaval de la Quebrada, Humahuaca, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Visit Argentina · Carnaval de Humahuaca",
+            "url": "https://www.argentina.travel/en/activities/carnaval-de-humahuaca"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Visit Argentina · Carnaval de Humahuaca",
+            "url": "https://www.argentina.travel/en/activities/carnaval-de-humahuaca"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
+    },
+    {
+      "id": "yu-o-fuerte",
+      "nombre": "Turismo rural comunitario Palma Sola – El Fuerte",
+      "categoria": "oferta",
+      "localidad": "El Fuerte",
+      "lat": -24.26,
+      "lng": -64.42,
+      "region": "yungas",
+      "descripcion": {
+        "es": "Red de familias de los municipios de Palma Sola y El Fuerte, en las sierras de Santa Bárbara. Consultar alojamiento, comidas y recorridos: 03888-470001 (cabina).",
+        "en": "Network of families in Palma Sola and El Fuerte, in the Santa Bárbara hills. Ask about lodging, meals and outings: +54 3888 470001 (public phone).",
+        "pt": "Rede de famílias de Palma Sola e El Fuerte, nas serras de Santa Bárbara. Consulte hospedagem, refeições e passeios: +54 3888 470001 (telefone público)."
+      },
+      "contacto": {
+        "telefono": "+54 3888 470001",
+        "web": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+      },
+      "mapas_busqueda": "Turismo rural comunitario Palma Sola – El Fuerte, El Fuerte, Jujuy, Argentina",
+      "relevamiento": {
+        "estado": "relevado",
+        "fecha": "2026-10-05",
+        "ubicacion": "referencia",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "referencia_coordenadas": "Referencia de localidad; pendiente de geolocalizar el acceso."
+      },
+      "precio": {
+        "estado": "consultar",
+        "fecha": "2026-10-05",
+        "fuentes": [
+          {
+            "titulo": "Turismo Jujuy · Catálogo de turismo rural comunitario",
+            "url": "https://www.turismo.jujuy.gob.ar/wp-content/uploads/catalogo-turismo-rural-comunitario-11-de-diciembre.pdf"
+          }
+        ],
+        "nota": {
+          "es": "Confirmar horarios, reservas y costos antes de ir.",
+          "en": "Confirm hours, bookings and prices before going.",
+          "pt": "Confirme horários, reservas e preços antes de ir."
+        }
+      }
     }
   ]
 }

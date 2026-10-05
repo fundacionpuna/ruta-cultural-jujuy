@@ -335,3 +335,23 @@ node tests/relevamiento.test.cjs
 
 La exportación local no implica que se haya escrito un Google Doc ni publicado
 el sitio de GitHub Pages.
+
+Segundo rastreo, 5 de octubre de 2026
+-------------------------------------
+
+`rastreo-octubre.js` suma 26 fichas más, con las mismas reglas (relevado no es verificado;
+el pin es la referencia de la localidad). Fuentes: el catálogo provincial de turismo rural
+comunitario, la página de emprendimientos del Ministerio de Producción, Visit Argentina,
+el Ministerio de Cultura de la Nación y notas de prensa con fecha.
+
+- **Comida casera en casas de familia:** Hornaditas, Puesto del Marqués (queso artesanal),
+  Caspalá; y el Buñuelódromo de El Carmen, camino a los diques.
+- **Monumentos:** Monumento a los Héroes de la Independencia (Humahuaca), iglesia y cabildo
+  de Purmamarca, Salón de la Bandera de la Libertad Civil, San Francisco, Santa Catalina.
+- **Altura:** Nevado de Chañi (el cerro más alto de Jujuy), volcán Tuzgle, Cuesta de Lipán
+  (4.170 m), Puente del Diablo, el huancar de Abra Pampa.
+- **Tren Solar de la Quebrada**, bodegas de altura, tejedoras y tejedores, Red Puna.
+- **Fiestas:** Manka Fiesta (tercer fin de semana de octubre) y Carnaval.
+
+A propósito **no** se cargaron comedores comunitarios de asistencia social: son espacios
+de ayuda alimentaria para vecinos, no de visita turística.
