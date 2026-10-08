@@ -70,12 +70,6 @@ if (location.protocol === 'http:' && /(^|\.)vamopue\.com$/.test(location.hostnam
 
   --curva: 999px;   /* todo redondeado: botones tipo píldora */
 }
-/* --c es el color de relleno de la región; --t, el mismo oscurecido
-   para líneas y textos, porque los pasteles sobre blanco no se leen. */
-.c-puna     { --c: var(--celeste);  --t: #1f6fa8; }
-.c-quebrada { --c: var(--amarillo); --t: #8a6a00; }
-.c-valles   { --c: var(--rosa);     --t: #d2306b; }
-.c-yungas   { --c: var(--lima);     --t: #69761e; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -93,7 +87,7 @@ body {
 
 /* franja con los cuatro colores de región */
 #hilos { height: 6px; display: flex; flex-shrink: 0; }
-#hilos div { flex: 1; transition: opacity .25s; }
+#hilos div { flex: 1; }
 
 /* ── Barra de arriba: una sola línea, para que el mapa se
       lleve todo el resto de la pantalla ──────────────────── */
@@ -145,20 +139,12 @@ header {
   z-index: 1200;
   display: none;
 }
-/* En el cajón del teléfono las filas van una debajo de la otra, en el
-   orden de siempre: regiones, qué busca, costo, búsqueda y aviso. Las
-   cajitas que agrupan los filtros para la barra de la computadora acá
-   no cuentan (display: contents). */
+/* En el cajón del teléfono va todo una cosa debajo de la otra: qué
+   busca, «Gratis», búsqueda y aviso. La cajita que agrupa la fila para
+   la barra de la computadora acá no cuenta (display: contents). */
 #cajon.abierto { display: flex; flex-direction: column; }
-#cajon .filtros-uno, #cajon .filtro { display: contents; }
-.f-region .paso { order: 1; }
-.f-region .fila-botones { order: 2; }
-.f-tipo .paso { order: 3; }
-.f-tipo .fila-botones { order: 4; }
-.f-precio .paso { display: none; }
-.f-precio .fila-botones { order: 5; margin-top: 12px; }
-#barra-buscar { order: 6; }
-#aviso { order: 7; }
+#cajon .filtro { display: contents; }
+#cajon #solo-gratis { align-self: center; margin-top: 12px; }
 .paso .corto { display: none; }
 .cajon-aviso {
   font-size: 13.5px;
@@ -286,21 +272,24 @@ h1 {
 }
 .pildora[aria-pressed="true"]:hover { filter: brightness(1.04); }
 
-/* fila 1 — regiones */
-.region { font-size: 17px; padding: 10px 21px; min-height: 48px; }
-.region .punto {
-  width: 11px; height: 11px; border-radius: 50%;
-  background: var(--c); flex-shrink: 0;
-  box-shadow: 0 0 0 1.5px var(--t);
-}
-/* Sobre la píldora coral, el punto coral de Yungas desaparecería. Un
-   aro blanco lo despega del fondo. */
-.region[aria-pressed="true"] .punto { box-shadow: 0 0 0 2px var(--blanco); }
-.region .pin-marca { width: 19px; height: 19px; flex-shrink: 0; }
-
-/* fila 2 — qué busca. Más chica que la de regiones. */
+/* la fila de qué busca */
 .tipo { font-size: 15px; padding: 8px 16px; min-height: 44px; }
 .tipo svg { width: 19px; height: 19px; flex-shrink: 0; }
+
+/* «Gratis»: lo único que quedó del costo, como pidió Luis. Se prende y
+   se apaga; la llavecita adentro avisa que no es una categoría más. */
+#solo-gratis { flex: none; }
+.llave {
+  width: 32px; height: 18px; border-radius: 9px; flex-shrink: 0;
+  background: var(--suave); position: relative; transition: background .15s;
+}
+.llave::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--blanco); transition: transform .15s;
+}
+#solo-gratis[aria-pressed="true"] .llave { background: var(--tinta); }
+#solo-gratis[aria-pressed="true"] .llave::after { transform: translateX(14px); }
 
 /* ── Búsqueda ────────────────────────────────────────────── */
 #barra-buscar {
@@ -582,23 +571,6 @@ a.llegar { display: inline-flex; align-items: center; }
 }
 .sumate .de-puna img { height: 24px; width: auto; }
 
-/* La cabecera de la lista: cuando se elige una región, su ilustración
-   y su lema, como en la presentación de la marca. */
-.portada {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 24px 4px;
-}
-.portada img {
-  width: 76px; height: 54px; object-fit: cover;
-  border-radius: 16px; flex-shrink: 0;
-}
-.portada .nombre {
-  font-family: 'Outfit', system-ui, sans-serif;
-  font-size: 21px; font-weight: 700; color: var(--t); line-height: 1.15;
-}
-.portada .lema { font-size: 14.5px; color: var(--suave); }
-.portada + .cuenta { padding-top: 8px; }
-
 /* Formas orgánicas de la página de recursos, en las esquinas del cajón.
    Son adorno: no se tocan y en el teléfono no van. */
 #cajon { overflow: hidden; }
@@ -655,17 +627,6 @@ a.llegar { display: inline-flex; align-items: center; }
   box-shadow: 0 0 0 2px var(--t), 0 0 0 6px rgba(255,91,77,.3), 0 3px 8px rgba(36,27,40,.35);
 }
 .pin.elegido svg { width: 24px; height: 24px; }
-
-.rotulo {
-  font-family: 'Outfit', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--t);
-  white-space: nowrap;
-  transform: translate(-50%, -50%);
-  text-shadow: 0 0 4px var(--papel), 0 0 8px var(--papel),
-               0 0 12px var(--papel), 0 0 16px var(--papel);
-}
 
 /* ── Pin en forma de gota ────────────────────────────────────
    La gota es «un lugar»; el círculo con número, «varios lugares».
@@ -799,8 +760,10 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
    Antes, en la computadora también había que abrir el cajón, que
    bajaba tapando medio mapa, y al cerrarlo no quedaba a la vista qué
    estaba elegido. Ahora la cabecera es una grilla: arriba el logo, la
-   búsqueda y los idiomas; abajo, dos filas de filtros. Cada fila sigue
-   en una sola línea, como pidió Luis, y se arrastra si no entra. */
+   búsqueda y los idiomas; abajo, una sola fila con qué busca y «Gratis».
+   Las filas de región y de costo se sacaron porque le quitaban alto al
+   mapa (Luis, 8/10). La fila sigue en una sola línea y se arrastra si
+   no entra; «Gratis» queda siempre a la vista, en la punta. */
 @media (min-width: 901px) {
   header {
     display: grid;
@@ -822,31 +785,28 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
     background: var(--blanco) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2375687a' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='7'/%3E%3Cline x1='15.8' y1='15.8' x2='21' y2='21'/%3E%3C/svg%3E") no-repeat 18px center / 19px;
   }
 
-  .filtros-uno, .f-tipo { position: relative; z-index: 1; }
-  #cajon .filtros-uno {
+  /* .f-tipo también es la etiqueta de la ficha, que es una píldora:
+     acá se le saca la curva para que la raya de arriba quede derecha. */
+  #cajon .f-tipo {
     grid-column: 1 / -1; grid-row: 2;
-    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px;
-    margin: 9px -18px 0; padding: 10px 18px 0;
-    border-top: 1px solid var(--borde);
+    position: relative; z-index: 1;
+    margin: 9px -18px 0; padding: 10px 18px 11px;
+    border-top: 1px solid var(--borde); border-radius: 0;
   }
-  .f-tipo { grid-column: 1 / -1; grid-row: 3; padding: 8px 0 11px; }
   #cajon .filtro { display: flex; align-items: center; gap: 12px; min-width: 0; }
-  /* si costo no entra al lado de las regiones, baja a su propia línea */
-  .f-region, .f-precio { flex: 0 0 auto; max-width: 100%; }
+  #cajon #solo-gratis { margin: 0; }
 
-  /* el rótulo corto a la izquierda de cada fila, en lugar del paso */
+  /* el rótulo corto a la izquierda de la fila, en lugar del paso */
   .filtro .paso {
     margin: 0; flex: none; text-align: left;
     font-weight: 600; font-size: 14.5px; color: var(--suave);
   }
-  .f-precio .paso { display: block; }
   .paso .largo { display: none; }
   .paso .corto { display: inline; }
   .filtro .fila-botones {
     padding: 0; justify-content: flex-start; margin: 0;
     flex: 0 1 auto; min-width: 0;   /* en el cajón no se achican; acá sí, y se arrastran */
   }
-  .region { font-size: 15.5px; padding: 8px 18px; min-height: 44px; }
   .tipo { font-size: 14.5px; padding: 8px 13px; min-height: 44px; }
   .f-tipo .fila-botones { gap: 8px; }
 
@@ -855,19 +815,19 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
 
   /* Las formas de la marca, en la punta derecha de la barra: ahí
      sobra lugar cuando la pantalla es ancha. */
-  .f-tipo { padding-right: 160px; }
+  #cajon .f-tipo { padding-right: 178px; }
   #cajon .forma { z-index: 0; }
   #cajon .forma.ola  { width: 74px; right: 74px; bottom: 28px; top: auto; }
   #cajon .forma.hoja { width: 46px; right: 26px; bottom: -8px; }
   #cajon .forma.mano { width: 46px; left: auto; right: 86px; bottom: -16px; transform: rotate(-18deg); }
   header { overflow: hidden; }
 
-  body.grande .filtros-uno, body.grande .f-tipo { zoom: 1.12; }
+  body.grande .f-tipo { zoom: 1.12; }
   /* la lista crece un cuarto (380 → 475 px): el botón de esconderla se corre con ella */
   body.grande #alternar-lista { left: 491px; }
 }
 @media (min-width: 901px) and (max-width: 1279px) {
-  .f-tipo { padding-right: 0; }
+  #cajon .f-tipo { padding-right: 18px; }
   #cajon .forma { display: none; }
 }
 
@@ -905,7 +865,6 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
   .paso { margin: 12px 13px 6px; }
   .fila-botones { padding: 0 13px; gap: 8px; }
   .cajon-aviso { font-size: 12.5px; padding: 0 13px; }
-  .region { font-size: 15.5px; padding: 9px 16px; }
   .tipo { font-size: 14px; padding: 7px 13px; }
   #barra-buscar { padding: 11px 14px 12px; }
   #buscar { width: 100%; }
@@ -940,7 +899,7 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
     order: 2; width: 100%; flex: none; overflow: visible;
     border-right: none; border-top: 1px solid var(--borde);
   }
-  .cuenta, .item, #volver, .f-cuerpo, .f-sub, .item.chico, .sumate, .portada {
+  .cuenta, .item, #volver, .f-cuerpo, .f-sub, .item.chico, .sumate {
     padding-left: 14px; padding-right: 14px;
   }
 }
@@ -972,25 +931,16 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
 
   <!-- Los filtros. En el teléfono son un cajón que baja sobre el mapa y
        se abre con «Buscar lugares». En la computadora quedan siempre a la
-       vista, en una barra de dos filas debajo del logo, y la búsqueda sube
+       vista, en una fila debajo del logo, y la búsqueda sube
        a la cabecera: nada tapa el mapa y siempre se ve qué está elegido. -->
   <div id="cajon">
     <img class="forma mano" src="marca/forma-mano.svg" alt="">
     <img class="forma ola" src="marca/forma-ola.svg" alt="">
     <img class="forma hoja" src="marca/forma-hoja.svg" alt="">
-    <div class="filtros-uno">
-      <div class="filtro f-region">
-        <p class="paso"><span class="largo" id="paso1"></span><span class="corto" id="paso1c"></span></p>
-        <div class="fila-botones" id="regiones"></div>
-      </div>
-      <div class="filtro f-precio">
-        <p class="paso"><span class="corto" id="paso3c"></span></p>
-        <div class="fila-botones" id="precios"></div>
-      </div>
-    </div>
     <div class="filtro f-tipo">
       <p class="paso"><span class="largo" id="paso2"></span><span class="corto" id="paso2c"></span></p>
       <div class="fila-botones" id="tipos"></div>
+      <button class="pildora tipo" id="solo-gratis" aria-pressed="false"><span class="llave" aria-hidden="true"></span><span class="et"></span></button>
     </div>
 
     <div id="barra-buscar">
@@ -1052,9 +1002,9 @@ const tinte = k => `--c:${TINTE[k]};--t:${TRAZO[k]}`;
 
 const LIMITES = L.latLngBounds([[-24.75, -67.35], [-21.70, -63.85]]);
 
-/* Una región y un tipo a la vez: siempre hay exactamente un botón
-   encendido y es el que se está viendo. */
-const estado = { idioma: 'es', zona: 'todas', tipo: 'todos', precio: 'todos', busqueda: '', elegido: null };
+/* Un tipo a la vez: siempre hay exactamente un botón encendido y es el
+   que se está viendo. «Gratis» va aparte: prendido o apagado. */
+const estado = { idioma: 'es', tipo: 'todos', precio: 'todos', busqueda: '', elegido: null };
 estado.idioma = idiomaInicial();
 
 /* ── Dibujos ─────────────────────────────────────────────── */
@@ -1081,7 +1031,7 @@ function svg(nombre, trazo) {
             ${ICONOS[nombre]}</svg>`;
 }
 /* El pin dentro del círculo, la «o» del logo «vamo pue». Va en el
-   botón de toda la provincia. */
+   botón de «Cerca mío». */
 function pinMarca(relleno, clase) {
   return `<svg class="${clase || ''}" viewBox="0 0 24 24" fill="${relleno}" aria-hidden="true">
             <path fill-rule="evenodd"
@@ -1118,7 +1068,6 @@ base.on('tileerror', () => {
   L.tileLayer(OSM, { maxZoom: 16, attribution: OSM_ATRIB }).addTo(map).bringToBack();
 });
 
-const capaZonas    = L.layerGroup().addTo(map);
 const capaSenderos = L.layerGroup().addTo(map);
 /* Los pines cercanos se juntan en un círculo con número; al tocarlo, el
    mapa se acerca y se separan. Desde zoom 13 se ven todos sueltos. */
@@ -1147,23 +1096,6 @@ new ResizeObserver(() => {
 }).observe(document.getElementById('mapa'));
 if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(() => map.invalidateSize({ animate: false }));
-}
-
-const poligonos = {};
-ORDEN.forEach(k => {
-  poligonos[k] = L.polygon(REG[k].poligono, {
-    color: TRAZO[k], weight: 2.5, opacity: .9,
-    dashArray: '7 6', fill: false, interactive: false
-  });
-});
-
-function rotulo(k) {
-  const b = poligonos[k].getBounds(), c = b.getCenter();
-  return L.marker([c.lat + (b.getNorth() - c.lat) * 0.62, c.lng], {
-    interactive: false,
-    icon: L.divIcon({ className: '', iconSize: [0, 0],
-      html: `<div class="rotulo" style="${tinte(k)}">${REG[k].nombre}</div>` })
-  });
 }
 
 /* El dibujo del pin va en tinta, no en blanco: sobre los pasteles de la
@@ -1231,7 +1163,6 @@ const sinTildes = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowe
 
 function pasa(l) {
   if (estado.precio && estado.precio !== 'todos' && (l.precio?.estado || 'consultar') !== estado.precio) return false;
-  if (estado.zona !== 'todas' && l.region !== estado.zona) return false;
   if (estado.tipo !== 'todos' && l.categoria !== estado.tipo) return false;
   if (estado.busqueda) {
     const h = sinTildes(`${l.nombre} ${l.localidad} ${tr(l.descripcion)}`);
@@ -1256,25 +1187,7 @@ function soltarElegido() {
   if (location.hash) history.replaceState(null, '', location.pathname + location.search);
 }
 
-/* ── Paso 1: regiones, todas en una línea ────────────────── */
-const elReg = document.getElementById('regiones');
-[['todas'], ...ORDEN.map(k => [k])].forEach(([k]) => {
-  const b = document.createElement('button');
-  b.className = 'pildora region' + (k === 'todas' ? '' : ' c-' + k);
-  b.dataset.region = k;
-  b.innerHTML = (k === 'todas' ? pinMarca('currentColor', 'pin-marca')
-                               : '<span class="punto"></span>') + '<span class="et"></span>';
-  b.addEventListener('click', () => {
-    estado.zona = k;
-    dejarCalendario();
-    if (estado.elegido && !pasa(porId(estado.elegido))) soltarElegido();
-    pintar();
-    encuadrar();
-  });
-  elReg.appendChild(b);
-});
-
-/* ── Paso 2: qué busca, en una línea y más chico ──────────── */
+/* ── Qué busca, en una línea ─────────────────────────────── */
 const elTipos = document.getElementById('tipos');
 [['todos', null], ...Object.entries(CAT).map(([k, c]) => [k, c.icono])]
 .forEach(([k, icono]) => {
@@ -1291,17 +1204,14 @@ const elTipos = document.getElementById('tipos');
   elTipos.appendChild(b);
 });
 
-const elPrecios = document.getElementById('precios');
-['todos', 'gratis', 'costo', 'consultar'].forEach(k => {
-  const b = document.createElement('button');
-  b.className = 'pildora tipo'; b.dataset.precio = k;
-  b.addEventListener('click', () => {
-    estado.precio = k;
-    dejarCalendario();
-    if (estado.elegido && !pasa(porId(estado.elegido))) soltarElegido();
-    pintar();
-  });
-  elPrecios.appendChild(b);
+/* «Gratis» se prende y se apaga: de los cuatro botones de costo, era
+   el único que hacía falta. */
+const btnGratis = document.getElementById('solo-gratis');
+btnGratis.addEventListener('click', () => {
+  estado.precio = estado.precio === 'gratis' ? 'todos' : 'gratis';
+  dejarCalendario();
+  if (estado.elegido && !pasa(porId(estado.elegido))) soltarElegido();
+  pintar();
 });
 
 /* ── Aviso de que la fila sigue para el costado ───────────── */
@@ -1388,27 +1298,18 @@ function traducir() {
   document.getElementById('proyecto').textContent = t('proyecto');
   document.getElementById('aviso').innerHTML =
     `${t('aviso')} <b>${t('avisoFuerte')}</b> ${t('avisoResto')}`;
-  document.getElementById('paso1').textContent = t('paso1');
   document.getElementById('paso2').textContent = t('paso2');
-  document.getElementById('paso1c').textContent = t('etiquetaRegion');
   document.getElementById('paso2c').textContent = t('etiquetaTipo');
-  document.getElementById('paso3c').textContent = t('precio');
 
   const buscar = document.getElementById('buscar');
   buscar.placeholder = t('buscar');
   buscar.setAttribute('aria-label', t('buscarAria'));
 
-  elReg.querySelector('[data-region="todas"] .et').textContent = t('todasRegiones');
-  ORDEN.forEach(k =>
-    elReg.querySelector(`[data-region="${k}"] .et`).textContent = REG[k].nombre);
   elTipos.querySelector('[data-tipo="todos"] .et').textContent = t('todo');
   Object.keys(CAT).forEach(k =>
     elTipos.querySelector(`[data-tipo="${k}"] .et`).textContent = tr(CAT[k].boton));
 
-  elPrecios.querySelectorAll('[data-precio]').forEach(b => {
-    b.textContent = t(b.dataset.precio === 'todos' ? 'precioTodos' : b.dataset.precio);
-    b.setAttribute('aria-label', t('precio') + ': ' + b.textContent);
-  });
+  btnGratis.querySelector('.et').textContent = t('gratis');
   elIdiomas.querySelectorAll('[data-idioma]').forEach(el =>
     el.setAttribute('aria-pressed', String(el.dataset.idioma === estado.idioma)));
 
@@ -1417,18 +1318,10 @@ function traducir() {
   pintarBotonLista();
 }
 
-function encuadrar() {
-  if (estado.zona === 'todas') { map.flyToBounds(LIMITES, { duration: .6 }); return; }
-  /* getBounds() devuelve el objeto interno del polígono: acá se lee
-     y nada más, no se le hace extend() encima. */
-  map.flyToBounds(poligonos[estado.zona].getBounds(), { padding: [26, 26], duration: .6 });
-}
-
 /* ── Franja de colores ───────────────────────────────────── */
 const elHilos = document.getElementById('hilos');
 ORDEN.forEach(k => {
   const d = document.createElement('div');
-  d.dataset.region = k;
   d.style.background = TINTE[k];
   elHilos.appendChild(d);
 });
@@ -1461,7 +1354,6 @@ function abrir(id) {
      entrar en los filtros de ahora: se aflojan lo justo para que aparezca. */
   if (!pasa(l) && estado.busqueda) { estado.busqueda = ''; elBuscar.value = ''; }
   if (!pasa(l)) estado.tipo = 'todos';
-  if (!pasa(l)) estado.zona = 'todas';
   if (!pasa(l)) estado.precio = 'todos';
   estado.elegido = id;
   estado.calendario = false;
@@ -1693,19 +1585,16 @@ function pintarFicha(l) {
 /* ¿Hay algún filtro puesto? Entonces, al lado de la cuenta, un botón
    para volver a ver todo de un toque. */
 function hayFiltros() {
-  return estado.zona !== 'todas' || estado.tipo !== 'todos' ||
-         estado.precio !== 'todos' || !!estado.busqueda;
+  return estado.tipo !== 'todos' || estado.precio !== 'todos' || !!estado.busqueda;
 }
 function activarQuitar() {
   const b = elLista.querySelector('[data-quitar]');
   if (!b) return;
   b.addEventListener('click', () => {
-    const habiaZona = estado.zona !== 'todas';
-    Object.assign(estado, { zona: 'todas', tipo: 'todos', precio: 'todos', busqueda: '' });
+    Object.assign(estado, { tipo: 'todos', precio: 'todos', busqueda: '' });
     dejarCalendario();
     elBuscar.value = '';
     pintar();
-    if (habiaZona) encuadrar();
   });
 }
 
@@ -1732,18 +1621,9 @@ function pintarLista(visibles) {
     return;
   }
 
-  /* la altura de la región se muestra acá, ya que salió de los botones */
   const cuenta = visibles.length === 1 ? t('unLugar') : t('nLugares')(visibles.length);
-  const cola = estado.zona === 'todas' ? '' : ` · ${tr(REG[estado.zona].altura)}`;
 
-  const portada = estado.zona === 'todas' ? '' : `
-    <div class="portada" style="${tinte(estado.zona)}">
-      <img src="marca/region-${estado.zona}.jpg" alt="">
-      <div><div class="nombre">${REG[estado.zona].nombre}</div>
-           <div class="lema">${tr(REG[estado.zona].lema)}</div></div>
-    </div>`;
-
-  elLista.innerHTML = tarjetaEsteMes() + portada + `<p class="cuenta"><span>${cuenta}${cola}</span>${quitar}</p>` +
+  elLista.innerHTML = tarjetaEsteMes() + `<p class="cuenta"><span>${cuenta}</span>${quitar}</p>` +
     visibles.map(l => `
       <button class="item" data-abre="${l.id}">
         <span class="pastilla" style="${tinte(l.region)}">${svg(CAT[l.categoria].icono, '#241b28')}</span>
@@ -1882,25 +1762,11 @@ function pintar() {
     dibujarSendero(l, l.id === estado.elegido || l.id === (elegido && elegido.sendero))
       .addTo(capaSenderos));
 
-  /* El contorno aparece sólo cuando se eligió una región. */
-  capaZonas.clearLayers();
-  if (estado.zona !== 'todas') {
-    poligonos[estado.zona].addTo(capaZonas);
-    rotulo(estado.zona).addTo(capaZonas);
-  }
-
   pintarLista(visibles);
 
-  elReg.querySelectorAll('[data-region]').forEach(el =>
-    el.setAttribute('aria-pressed', String(el.dataset.region === estado.zona)));
   elTipos.querySelectorAll('[data-tipo]').forEach(el =>
     el.setAttribute('aria-pressed', String(el.dataset.tipo === estado.tipo)));
-  elPrecios.querySelectorAll('[data-precio]').forEach(el =>
-    el.setAttribute('aria-pressed', String(el.dataset.precio === estado.precio)));
-  ORDEN.forEach(k => {
-    const on = estado.zona === 'todas' || estado.zona === k;
-    elHilos.querySelector(`[data-region="${k}"]`).style.opacity = on ? '1' : '.2';
-  });
+  btnGratis.setAttribute('aria-pressed', String(estado.precio === 'gratis'));
 }
 
 /* ── Búsqueda ────────────────────────────────────────────── */

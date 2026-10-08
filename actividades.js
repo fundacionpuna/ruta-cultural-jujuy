@@ -102,9 +102,9 @@
   window.CATEGORIAS.bici = { nombre: multi('Bicicleta', 'Cycling', 'Bicicleta'), boton: multi('En bici', 'Cycling', 'De bicicleta'), icono: 'bici' };
   window.CATEGORIAS.sendero.boton = multi('Trekking y caminatas', 'Hikes and walks', 'Trilhas e caminhadas');
   const textos = {
-    es: { precioTodos: 'Cualquier costo', gratis: 'Gratis', costo: 'Con costo', consultar: 'Consultar costo', precio: 'Costo', ida: 'ida', total: 'total', tramo: 'tramo publicado', sinTrack: 'Recorrido sin trazado GPS comprobado. Consultá el acceso en la fuente.', datoConsultar: 'Consultar', fotoOriginal: 'Foto original', sinCambios: 'Sin modificaciones' },
-    en: { precioTodos: 'Any price', gratis: 'Free', costo: 'Paid', consultar: 'Check cost', precio: 'Cost', ida: 'one way', total: 'total', tramo: 'published section', sinTrack: 'Route without a checked GPS track. Consult the source for access.', datoConsultar: 'Check', fotoOriginal: 'Original photo', sinCambios: 'Unmodified' },
-    pt: { precioTodos: 'Qualquer custo', gratis: 'Grátis', costo: 'Pago', consultar: 'Consultar custo', precio: 'Custo', ida: 'ida', total: 'total', tramo: 'trecho publicado', sinTrack: 'Percurso sem traçado GPS conferido. Consulte o acesso na fonte.', datoConsultar: 'Consultar', fotoOriginal: 'Foto original', sinCambios: 'Sem modificações' }
+    es: { gratis: 'Gratis', costo: 'Con costo', consultar: 'Consultar costo', precio: 'Costo', ida: 'ida', total: 'total', tramo: 'tramo publicado', sinTrack: 'Recorrido sin trazado GPS comprobado. Consultá el acceso en la fuente.', datoConsultar: 'Consultar', fotoOriginal: 'Foto original', sinCambios: 'Sin modificaciones' },
+    en: { gratis: 'Free', costo: 'Paid', consultar: 'Check cost', precio: 'Cost', ida: 'one way', total: 'total', tramo: 'published section', sinTrack: 'Route without a checked GPS track. Consult the source for access.', datoConsultar: 'Check', fotoOriginal: 'Original photo', sinCambios: 'Unmodified' },
+    pt: { gratis: 'Grátis', costo: 'Pago', consultar: 'Consultar custo', precio: 'Custo', ida: 'ida', total: 'total', tramo: 'trecho publicado', sinTrack: 'Percurso sem traçado GPS conferido. Consulte o acesso na fonte.', datoConsultar: 'Consultar', fotoOriginal: 'Foto original', sinCambios: 'Sem modificações' }
   };
   for (const idioma of ['es', 'en', 'pt']) Object.assign(window.TEXTOS[idioma], textos[idioma]);
 })();

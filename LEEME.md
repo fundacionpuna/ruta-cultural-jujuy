@@ -23,7 +23,7 @@ Doble clic en `index.html`. No necesita servidor ni instalación.
 | `herramientas/trazados.py` | Arma `senderos.js`. Sólo necesita Python 3. |
 | `marca/logo-vamo-pue.svg` | El logo completo, con la bajada «ruta cultural jujeña». Vectorial. |
 | `marca/logo-vamo-pue-corto.svg` | El logo sin la bajada, para el encabezado (a ese tamaño la bajada no se lee). |
-| `marca/region-*.jpg` | La ilustración de cada región. Va en la ficha mientras no haya foto, y arriba de la lista. |
+| `marca/region-*.jpg` | La ilustración de cada región. Va en la ficha mientras no haya foto. |
 | `marca/forma-*.svg` | Las formas orgánicas de la página de recursos de la marca: adorno del cajón y del pie de la lista. |
 | `logo-puna.png` | Logo de la fundación, al pie de la lista con «Un proyecto de Fundación Puna» (284×198). |
 | `favicon.png` | Icono de la pestaña: el pin del logo. Va cuadrado y aparte: el navegador estira cualquier imagen que no lo sea. |
@@ -49,30 +49,26 @@ en el teléfono, sin que nadie le explique nada.**
   propios (Salinas Grandes, Purmamarca) no se traducen.
 - **Fondo blanco**, que es lo que se lee más fácil. Un rosado muy claro queda como
   acento: el resaltado de la lista, las notas y el pie.
-- **Un solo botón pintado por fila, siempre.** El pintado es el que se está viendo, en
-  el coral de la marca. No es un sistema de tildes: se elige uno, como en un formulario
-  de papel.
+- **Un solo botón pintado en la fila de qué se busca, siempre.** El pintado es el que se
+  está viendo, en el coral de la marca. No es un sistema de tildes: se elige uno, como en
+  un formulario de papel. **Gratis** va aparte: se prende y se apaga.
 - **El mapa ocupa toda la pantalla.** Arriba queda una sola barra con el logo, los
   idiomas y un botón grande que abre el **cajón** con los filtros. En pantalla ancha
   el mapa se lleva el 92% del alto.
-- **Las dos filas van en una sola línea horizontal**, nunca se parten en dos. Si no
-  entran, se arrastran de costado y el borde se degrada para avisar que hay más.
+- **La fila de qué se busca va en una sola línea horizontal**, nunca se parte en dos. Si
+  no entra, se arrastra de costado y el borde se degrada para avisar que hay más.
 - **Se puede ocultar la lista** con el botón de abajo a la izquierda, y ahí el mapa
   ocupa también todo el ancho.
-- Sin alturas en los botones: la altura de la región aparece arriba de la lista
-  cuando se elige una. La fila de qué se busca va más chica.
 - **Un dibujo por tipo de lugar** (cama, cubiertos, cerro, brújula), el mismo en el
   botón, en la lista y en el mapa. No hay leyenda que aprender.
-- **El pin del logo** (la «o» de «vamo») va en el botón de «Todas las regiones» y en
-  el icono de la pestaña.
+- **El pin del logo** (la «o» de «vamo») va en el botón de «Cerca mío» y en el icono
+  de la pestaña.
 - **Un color de marca por región**, como en la paleta de la presentación: **Puna
   celeste**, **Quebrada amarilla**, **Valles rosa** y **Yungas lima**. Va de relleno
-  en el punto del botón, en el pin y en la lista. Para las líneas del mapa (contorno de
-  la región, senderos) y los rótulos se usa el mismo color oscurecido (`trazo` en
+  en el pin y en la lista. Para las líneas de los senderos se usa el mismo color oscurecido (`trazo` en
   `datos.js`), porque los pasteles sobre el mapa claro no se ven. Por lo mismo, cada
   pin lleva un aro fino en ese tono oscuro.
-- **Cada región tiene su ilustración y su lema** («Altura, horizonte y resistencia»…),
-  arriba de la lista cuando se la elige, y en la ficha mientras falta la foto.
+- **Cada región tiene su ilustración**, que va en la ficha mientras falta la foto.
 - **Todos los botones miden 44 px de alto como mínimo**, para el dedo.
 - **Contrastes medidos, no estimados.** El texto de las píldoras elegidas va en tinta
   y no en blanco, porque blanco sobre coral da 3.1:1 y no llega al mínimo; en tinta da
@@ -121,7 +117,7 @@ en el teléfono, sin que nadie le explique nada.**
 ### Los senderos
 
 Se eligen con **Dónde caminar**. El camino se dibuja lleno, en el color de la región y con
-borde blanco (el contorno de la región va punteado, así no se confunden). Al tocarlo, el mapa
+borde blanco. Al tocarlo, el mapa
 se acerca hasta que el sendero llena la pantalla. La ficha dice:
 
 - el **largo**, medido sobre el dibujo;
@@ -276,9 +272,10 @@ Se pueden sumar cuando alguien que los conoce diga que valen la pena.
    Es lo que más le falta al mapa: un visitante elige por la foto.
 3. **Contactos.** Las nuevas fichas usan datos de contacto comerciales publicados por
    los organismos o prestadores citados. Hay que confirmar que sigan vigentes.
-4. **Los límites de las regiones son esquemáticos**, dibujados a mano. Si se quiere
-   precisión, hay que reemplazar los `poligono` de `datos.js` por un GeoJSON de límites
-   departamentales.
+4. **Los límites de las regiones son esquemáticos**, dibujados a mano. Desde que se sacó
+   la fila de regiones (8/10/2026) la página no los usa; quedan en `datos.js`, junto con
+   los lemas, por si la fila vuelve. Si vuelve y se quiere precisión, hay que reemplazar
+   los `poligono` por un GeoJSON de límites departamentales.
 5. **Audio.** Los mapas culturales indígenas que funcionan bien (Terrastories, Mapeo) apoyan
    el relato en la voz: una copla, un topónimo dicho en su lengua, la explicación del
    anfitrión. Está previsto en el diseño de la ficha pero todavía no implementado, porque
@@ -313,7 +310,7 @@ Actualización del 5 de octubre de 2026: actividades y fotos
 `actividades.js` agrega 26 propuestas, 19 de ellas en Valles: museos, centros
 culturales, bici, mirador y diques. También suma caminatas en Pozuelos y Calilegua,
 y una excursión de mountain bike en Huacalera. Mejora fichas existentes sin
-crear duplicados. El filtro de costo distingue Gratis, Con costo y Consultar.
+crear duplicados. Cada ficha dice si es Gratis, Con costo o Consultar.
 Las entradas de Calilegua quedan en Consultar porque la aplicación del cobro
 previsto por la resolución de 2026 depende de su implementación en el parque.
 
@@ -376,3 +373,18 @@ Más fácil de usar, 5 de octubre de 2026
 - **Calendario de fiestas** (`calendario.js`): tarjeta «Este mes en Jujuy» arriba de la
   lista y calendario completo desde el mes actual, cada fiesta con su fuente y, si tiene,
   el enlace a su ficha.
+
+Más mapa, 8 de octubre de 2026
+------------------------------
+
+Pedido de Luis: en la computadora las filas de región y de costo le quitaban alto al
+mapa, y no hacían falta.
+
+- **Se sacaron la fila de regiones y la de costo.** La cabecera de la computadora queda
+  en dos líneas: logo, búsqueda e idiomas; abajo, qué se busca. A 1366 × 768 pasa de
+  225 px a unos 152 px, y más en pantallas angostas, donde el costo bajaba a su propia línea.
+- **Gratis** es lo único que quedó del costo: un botón que se prende y se apaga, al final
+  de la fila de qué se busca (en el teléfono, debajo, dentro del cajón). Cada ficha sigue
+  diciendo si es Gratis, Con costo o Consultar.
+- Con la región se fueron el contorno punteado en el mapa, la portada de la región arriba
+  de la lista y el acercamiento a la región. «Quitar filtros» apaga también Gratis.

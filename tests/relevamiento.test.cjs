@@ -77,36 +77,32 @@ assert(contexto.cercanos(antiguo, []).every(x => !x.o.relevamiento));
 assert.equal(contexto.escaparHtml('<script>'), '&lt;script&gt;');
 
 // Todos los lugares que coinciden deben poder elegirse en el grupo, también
-// después de cambiar de región, categoría o idioma.
+// después de cambiar de categoría, «Gratis» o idioma.
 let capas = [];
 const marcador = () => ({ setIcon() {}, setZIndexOffset() {},
   bindPopup(texto) { this.popup = texto; }, on() {} });
 Object.assign(contexto, {
   capaPins: { clearLayers() { capas = []; }, addLayer(m) { capas.push(m); } },
-  capaSenderos: { clearLayers() {} }, capaZonas: { clearLayers() {} },
+  capaSenderos: { clearLayers() {} },
   marcadores: Object.fromEntries(LUGARES.map(l => [l.id, marcador()])),
   L: { marker: marcador, divIcon: x => x }, pin() {}, pintarLista() {},
-  elPrecios: { querySelectorAll: () => [] }, elReg: { querySelectorAll: () => [] }, elTipos: { querySelectorAll: () => [] },
-  elHilos: { querySelector: () => ({ style: {} }) },
-  ORDEN: datos.window.ORDEN_REGIONES,
-  poligonos: Object.fromEntries(datos.window.ORDEN_REGIONES.map(r => [r, { addTo() {} }])),
-  rotulo: () => ({ addTo() {} })
+  elTipos: { querySelectorAll: () => [] }, btnGratis: { setAttribute() {} }
 });
 vm.runInContext(extraer('function pasa(', 'const porId ='), contexto);
 vm.runInContext(extraer('function pintar() {', '/* ── Búsqueda'), contexto);
 for (const idioma of ['es', 'en', 'pt']) {
   estado.idioma = idioma;
-  for (const zona of ['todas', ...datos.window.ORDEN_REGIONES]) {
+  for (const precio of ['todos', 'gratis']) {
     for (const tipo of ['todos', 'artesania', 'oferta', 'hostal']) {
-      Object.assign(estado, { zona, tipo, busqueda: '', elegido: null });
+      Object.assign(estado, { precio, tipo, busqueda: '', elegido: null });
       contexto.pintar();
       for (const l of LUGARES.filter(contexto.pasa)) {
-        assert(capas.includes(contexto.marcadores[l.id]) || capas.some(m => m.popup?.includes(`data-propuesta="${l.id}"`)), `${zona}/${tipo}: ${l.id} no es accesible`);
+        assert(capas.includes(contexto.marcadores[l.id]) || capas.some(m => m.popup?.includes(`data-propuesta="${l.id}"`)), `${precio}/${tipo}: ${l.id} no es accesible`);
       }
     }
   }
 }
-console.log('OK: 24 propuestas, cuatro regiones, 72 fichas y 60 combinaciones de filtros; fuentes, contactos, agrupación y distancias.');
+console.log('OK: 24 propuestas, cuatro regiones, 72 fichas y 24 combinaciones de filtros; fuentes, contactos, agrupación y distancias.');
 
 // Nuevas actividades, fotografías y filtros de costo.
 contexto.TRAZADOS = datos.window.TRAZADOS;
@@ -139,13 +135,13 @@ for (const l of LUGARES) {
     assert.equal(new URL(l.foto.url).hostname, 'upload.wikimedia.org');
   }
 }
-Object.assign(estado, { zona: 'todas', tipo: 'todos', precio: 'gratis', busqueda: '' });
+Object.assign(estado, { tipo: 'todos', precio: 'gratis', busqueda: '' });
 const gratis = LUGARES.filter(contexto.pasa);
 assert(gratis.length >= 15);
 assert(gratis.every(l => l.precio.estado === 'gratis'));
 assert(!gratis.some(l => l.id.startsWith('yu-'))); // tarifa de Calilegua por confirmar
-Object.assign(estado, { zona: 'valles', tipo: 'bici', precio: 'todos' });
-assert.equal(LUGARES.filter(contexto.pasa).length, 4);
+Object.assign(estado, { tipo: 'bici', precio: 'todos' });
+assert.equal(LUGARES.filter(contexto.pasa).length, 6);
 console.log(`OK: ${LUGARES.length} fichas en tres idiomas; 19 nuevas en Valles, 6 rutas de bici, ${gratis.length} gratuitas y 8 fichas con foto acreditada.`);
 
 // Segundo rastreo (rastreo-octubre.js): mismas reglas que el primero.
