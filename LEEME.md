@@ -258,6 +258,22 @@ Calilegua hay cuatro más: Guaraní, Tataupá, El Alejo y La Junta), caminatas d
 capital, y rutas de montaña técnicas o muy aisladas (el Cerro Sixilera, la Laguna de Molulo).
 Se pueden sumar cuando alguien que los conoce diga que valen la pena.
 
+## Estadísticas
+
+La página cuenta visitas y clics y los manda a `vamopue-stats.onrender.com`, que
+muestra un panel privado con clave en `/panel` (el código está en
+`fundacionpuna/vamopue-stats`). No usa cookies ni guarda IPs. Se cuentan las visitas
+(con de dónde vienen), las fichas abiertas, los botones de la ficha (WhatsApp, llamar,
+Instagram, web, correo, Cómo llegar, compartir, GPX), las búsquedas, los filtros, «Cerca
+mío», el cambio de idioma y el calendario.
+
+- **QR y posteos**: un enlace como `vamopue.com/?qr=purmamarca` aparece en el panel
+  como `qr-purmamarca`, y `?utm_source=instagram-bio` como `instagram-bio`.
+- **En la compu** no se cuenta nada. Para probar, se pone en la consola
+  `localStorage.setItem('vp-estadisticas', 'http://localhost:8765/e')`.
+- Si se agrega un botón nuevo a la ficha, con `data-accion="…"` ya se cuenta (y hay que
+  sumar esa acción en el servidor).
+
 ## Qué falta antes de publicar
 
 1. **Verificar las propuestas relevadas.** Se incorporaron 24 propuestas públicas,

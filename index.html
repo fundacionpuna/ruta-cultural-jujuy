@@ -1007,6 +1007,47 @@ const LIMITES = L.latLngBounds([[-24.75, -67.35], [-21.70, -63.85]]);
 const estado = { idioma: 'es', tipo: 'todos', precio: 'todos', busqueda: '', elegido: null };
 estado.idioma = idiomaInicial();
 
+/* ── Estadísticas ────────────────────────────────────────────
+   Cuenta visitas y clics para el panel privado de la Fundación
+   (fundacionpuna/vamopue-stats). Sin cookies ni datos personales: la
+   sesión es un número al azar que dura lo que la pestaña, y el servidor
+   no guarda la IP. Si falla, el mapa sigue igual. Fuera de vamopue.com
+   no cuenta nada, salvo que localStorage «vp-estadisticas» diga a dónde
+   mandar (para probar en la compu). */
+const ESTADISTICAS = (() => {
+  let prueba = null;
+  try { prueba = localStorage.getItem('vp-estadisticas'); } catch (e) {}
+  if (prueba) return prueba;
+  return /(^|\.)vamopue\.com$/.test(location.hostname) ? 'https://vamopue-stats.onrender.com/e' : null;
+})();
+const sesion = (() => {
+  const nueva = () => Math.random().toString(36).slice(2, 12);
+  try {
+    let s = sessionStorage.getItem('vp-sesion');
+    if (!s) { s = nueva(); sessionStorage.setItem('vp-sesion', s); }
+    return s;
+  } catch (e) { return nueva(); }
+})();
+function contar(t, datos) {
+  if (!ESTADISTICAS) return;
+  const cuerpo = JSON.stringify({ t, s: sesion, i: estado.idioma, ...datos });
+  try {
+    if (navigator.sendBeacon && navigator.sendBeacon(ESTADISTICAS, cuerpo)) return;
+    fetch(ESTADISTICAS, { method: 'POST', body: cuerpo, keepalive: true, mode: 'no-cors' }).catch(() => {});
+  } catch (e) {}
+}
+const contarLugar = (t, l, extra) => contar(t, { l: l.id, nom: l.nombre, cat: l.categoria, ...extra });
+
+/* Un QR se marca con ?qr=purmamarca; un posteo, con ?utm_source=… */
+{
+  const p = new URLSearchParams(location.search);
+  contar('visita', {
+    ref: document.referrer, nav: navigator.language, w: screen.width,
+    camp: p.get('qr') ? 'qr-' + p.get('qr') : (p.get('utm_source') || p.get('src') || ''),
+    l: decodeURIComponent(location.hash.slice(1))
+  });
+}
+
 /* ── Dibujos ─────────────────────────────────────────────── */
 const ICONOS = {
   bolsa:     '<path d="M5 7h14l1 14H4zM8 8V6a4 4 0 0 1 8 0v2"/>',
@@ -1197,6 +1238,7 @@ const elTipos = document.getElementById('tipos');
   b.innerHTML = (icono ? svg(icono, 'currentColor') : '') + '<span class="et"></span>';
   b.addEventListener('click', () => {
     estado.tipo = k;
+    contar('filtro', { a: k });
     dejarCalendario();
     if (estado.elegido && !pasa(porId(estado.elegido))) soltarElegido();
     pintar();
@@ -1209,6 +1251,7 @@ const elTipos = document.getElementById('tipos');
 const btnGratis = document.getElementById('solo-gratis');
 btnGratis.addEventListener('click', () => {
   estado.precio = estado.precio === 'gratis' ? 'todos' : 'gratis';
+  contar('filtro', { a: estado.precio === 'gratis' ? 'gratis' : 'gratis-off' });
   dejarCalendario();
   if (estado.elegido && !pasa(porId(estado.elegido))) soltarElegido();
   pintar();
@@ -1281,6 +1324,7 @@ Object.entries(IDIOMAS).forEach(([codigo, i]) => {
   b.setAttribute('aria-label', i.nombre);
   b.addEventListener('click', () => {
     estado.idioma = codigo;
+    contar('idioma', { a: codigo });
     try { localStorage.setItem('rcj-idioma', codigo); } catch (e) {}
     traducir();
     traducirExtras();
@@ -1350,6 +1394,7 @@ function cerrarFicha() { soltarElegido(); pintar(); }
 const telefono = matchMedia('(max-width: 900px)');
 function abrir(id) {
   const l = porId(id);
+  contarLugar('ficha', l);
   /* Si se llega desde «Cerca de acá» o desde un enlace, el lugar puede no
      entrar en los filtros de ahora: se aflojan lo justo para que aparezca. */
   if (!pasa(l) && estado.busqueda) { estado.busqueda = ''; elBuscar.value = ''; }
@@ -1424,17 +1469,17 @@ function botonesContacto(l) {
   if (!c) return '';
   const lista = [];
   if (c.whatsapp) lista.push(['wa', 'chat', t('whatsapp'),
-    `https://wa.me/${c.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(t('mensajeWhatsapp')(l.nombre))}`]);
-  if (c.telefono) lista.push(['', 'telefono', t('llamar'), `tel:${c.telefono.replace(/[^\d+]/g, '')}`]);
-  if (c.instagram) lista.push(['', 'camara', t('instagram'), `https://www.instagram.com/${c.instagram.replace(/^@/, '')}`]);
-  if (c.web) lista.push(['', 'globo', t('web'), c.web]);
+    `https://wa.me/${c.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(t('mensajeWhatsapp')(l.nombre))}`, 'wa']);
+  if (c.telefono) lista.push(['', 'telefono', t('llamar'), `tel:${c.telefono.replace(/[^\d+]/g, '')}`, 'tel']);
+  if (c.instagram) lista.push(['', 'camara', t('instagram'), `https://www.instagram.com/${c.instagram.replace(/^@/, '')}`, 'ig']);
+  if (c.web) lista.push(['', 'globo', t('web'), c.web, 'web']);
   if (c.email) lista.push(['', 'sobre', t('correo'),
-    `mailto:${c.email}?subject=${encodeURIComponent(t('asuntoCorreo')(l.nombre))}`]);
+    `mailto:${c.email}?subject=${encodeURIComponent(t('asuntoCorreo')(l.nombre))}`, 'mail']);
 
   if (!lista.length) return '';   // contacto: {} no deja un recuadro vacío
-  const botones = lista.map(([clase, icono, texto, href]) => l.muestra
+  const botones = lista.map(([clase, icono, texto, href, accion]) => l.muestra
     ? `<button class="boton ${clase}" data-ejemplo>${svg(icono, 'currentColor')}${texto}</button>`
-    : `<a class="boton ${clase}" href="${href}" target="_blank" rel="noopener">${svg(icono, 'currentColor')}${texto}</a>`
+    : `<a class="boton ${clase}" href="${href}" target="_blank" rel="noopener" data-accion="${accion}">${svg(icono, 'currentColor')}${texto}</a>`
   ).join('');
   return `<div class="f-contacto" role="group" aria-label="${t('contacto')}">${botones}</div>
           <p class="f-nota" id="nota-ejemplo" hidden>${t('contactoEjemplo')}</p>`;
@@ -1557,9 +1602,9 @@ function pintarFicha(l) {
       ${datosRelevamiento(l)}
       ${botonesContacto(l)}
       <div class="f-acciones">
-        <a class="llegar" href="${gm}" target="_blank" rel="noopener">${t(l.relevamiento?.ubicacion === 'referencia' ? 'buscarMaps' : 'comoLlegar')}</a>
-        <button class="boton" id="compartir">${svg('compartir', 'currentColor')}${t('compartir')}</button>
-        ${tieneTrack ? `<button class="boton" id="gpx" title="${t('gpxAyuda')}">${svg('bajar', 'currentColor')}${t('gpx')}</button>` : ''}
+        <a class="llegar" href="${gm}" target="_blank" rel="noopener" data-accion="llegar">${t(l.relevamiento?.ubicacion === 'referencia' ? 'buscarMaps' : 'comoLlegar')}</a>
+        <button class="boton" id="compartir" data-accion="compartir">${svg('compartir', 'currentColor')}${t('compartir')}</button>
+        ${tieneTrack ? `<button class="boton" id="gpx" data-accion="gpx" title="${t('gpxAyuda')}">${svg('bajar', 'currentColor')}${t('gpx')}</button>` : ''}
       </div>
       ${l.muestra ? `<p class="f-muestra">${t('ejemplo')}</p>` : ''}
       ${tieneTrack ? `<p class="f-muestra">${t('avisoSendero')}</p>` : ''}
@@ -1696,6 +1741,7 @@ function pintarCalendario() {
 }
 function abrirCalendario() {
   estado.calendario = true;
+  contar('calendario', {});
   document.body.classList.add('con-ficha');   // en el teléfono sube como la ficha
   pintarCalendario();
   elLista.scrollTop = 0;
@@ -1771,11 +1817,22 @@ function pintar() {
 
 /* ── Búsqueda ────────────────────────────────────────────── */
 const elBuscar = document.getElementById('buscar');
+/* la búsqueda se cuenta cuando se deja de escribir, no letra por letra */
+let esperaBusqueda;
 elBuscar.addEventListener('input', e => {
   estado.busqueda = sinTildes(e.target.value.trim());
   dejarCalendario();
   soltarElegido();
   pintar();
+  clearTimeout(esperaBusqueda);
+  const q = e.target.value.trim();
+  if (q.length >= 3) esperaBusqueda = setTimeout(() => contar('busqueda', { q, r: LUGARES.filter(pasa).length }), 1500);
+});
+
+/* WhatsApp, llamar, Cómo llegar, compartir…: un solo oyente para toda la ficha */
+elLista.addEventListener('click', e => {
+  const b = e.target.closest('[data-accion]');
+  if (b && estado.elegido) contarLugar('contacto', porId(estado.elegido), { a: b.dataset.accion });
 });
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
@@ -1827,6 +1884,7 @@ function enPosicion(p) {
       icon: L.divIcon({ className: '', iconSize: [22, 22], html: `<div class="yo" role="img" aria-label="${t('aquiEstas')}"></div>` }) }).addTo(map);
   } else marcaYo.setLatLng(yo);
   if (primera) {
+    contar('cerca', { a: 'ok' });
     if (LIMITES.contains(yo)) map.flyTo(yo, 12, { duration: .8 });
     else { mostrarAviso(t('cercaFuera')); map.flyToBounds(LIMITES, { duration: .6 }); }
     pintar();
@@ -1866,7 +1924,7 @@ btnCerca.addEventListener('click', () => {
   mostrarAviso(t('cercaBuscando'));
   seguimiento = navigator.geolocation.watchPosition(
     p => { if (elAviso.textContent.includes(t('cercaBuscando'))) elAviso.hidden = true; enPosicion(p); },
-    () => { apagarCerca(); mostrarAviso(t('cercaError')); },
+    () => { contar('cerca', { a: 'error' }); apagarCerca(); mostrarAviso(t('cercaError')); },
     { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 });
 });
 function traducirExtras() {
