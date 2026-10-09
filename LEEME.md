@@ -34,7 +34,8 @@ Doble clic en `index.html`. No necesita servidor ni instalación.
 
 Identidad **«vamo pue»** (octubre de 2026): coral, rosa, celeste y amarillo, formas
 orgánicas y colores planos. El logo —«vamo» con el pin en la «o», «pue» con el camino—
-va arriba; el de la fundación, al pie de la lista. Los archivos salen de la presentación
+va arriba y se turna despacio con el de la Fundación (con «reducir movimiento» queda
+quieto el de Vamo pue); el de la fundación también va al pie de la lista. Los archivos salen de la presentación
 de la marca (Canva) y están en `marca/`.
 
 Tipografía: **Open Sans** para el cuerpo, igual que en la presentación. El logo usa
@@ -44,7 +45,9 @@ la geométrica libre más parecida. Todo redondeado: botones tipo píldora, sin 
 La regla de uso es una sola: **tiene que poder usarlo alguien de ochenta años, al sol,
 en el teléfono, sin que nadie le explique nada.**
 
-- **Tres idiomas.** Botones ES / EN / PT arriba a la derecha. El mapa arranca en el
+- **Tres idiomas.** Un solo menú arriba a la derecha, «🌐 Español ▾», con cada idioma
+  escrito en el suyo: Español, English, Português (antes eran tres botones ES / EN / PT,
+  y quien no sabe las siglas no los entendía). El mapa arranca en el
   idioma del navegador si es uno de los tres, y recuerda el que se elige. Los nombres
   propios (Salinas Grandes, Purmamarca) no se traducen.
 - **Fondo blanco**, que es lo que se lee más fácil. Un rosado muy claro queda como
@@ -52,34 +55,48 @@ en el teléfono, sin que nadie le explique nada.**
 - **Un solo botón pintado en la fila de qué se busca, siempre.** El pintado es el que se
   está viendo, en el coral de la marca. No es un sistema de tildes: se elige uno, como en
   un formulario de papel. **Gratis** va aparte: se prende y se apaga.
-- **El mapa ocupa toda la pantalla.** Arriba queda una sola barra con el logo, los
-  idiomas y un botón grande que abre el **cajón** con los filtros. En pantalla ancha
-  el mapa se lleva el 92% del alto.
+- **El mapa ocupa toda la pantalla.** En el teléfono, arriba queda una sola fila con
+  el logo y el idioma. **Buscar lugares** (que abre el **cajón** con los filtros) y
+  **Cerca mío** arrancan grandes en el medio del mapa; apenas se usa uno o se toca el
+  mapa, bajan a una barra finita al pie. **A+** va debajo del + y el −. Abajo del mapa
+  asoma el comienzo de la lista. En pantalla ancha el mapa se lleva el 92% del alto.
+- **La ficha, en el teléfono, sube a media altura** desde abajo, para que se siga viendo
+  el mapa. Se agranda arrastrando o tocando el asa, o bajando para leer; arrastrada
+  hacia abajo se cierra. La foto, si hay, va después del nombre.
 - **La fila de qué se busca va en una sola línea horizontal**, nunca se parte en dos. Si
   no entra, se arrastra de costado y el borde se degrada para avisar que hay más.
 - **Se puede ocultar la lista** con el botón de abajo a la izquierda, y ahí el mapa
   ocupa también todo el ancho.
-- **Un dibujo por tipo de lugar** (cama, cubiertos, cerro, brújula), el mismo en el
-  botón, en la lista y en el mapa. No hay leyenda que aprender.
+- **Un dibujo y un color por tipo de lugar** (cama, cubiertos, cerro, brújula), los
+  mismos en el botón, en la lista, en la ficha y en el mapa: qué ver **celeste**,
+  caminar y bici **lima**, dormir **rosa**, comer **coral**, qué hacer y guías
+  **amarillo**, comprar **lila**. La fila de qué se busca muestra cada dibujo en su
+  circulito de color, así que hace de leyenda.
+- **Varios lugares juntos se ven como un abanico** de dos o tres pines chicos, de los
+  tipos que hay en el grupo. Sin número: al tocarlo, el mapa se acerca y se separan.
 - **El pin del logo** (la «o» de «vamo») va en el botón de «Cerca mío» y en el icono
   de la pestaña.
 - **Un color de marca por región**, como en la paleta de la presentación: **Puna
-  celeste**, **Quebrada amarilla**, **Valles rosa** y **Yungas lima**. Va de relleno
-  en el pin y en la lista. Para las líneas de los senderos se usa el mismo color oscurecido (`trazo` en
-  `datos.js`), porque los pasteles sobre el mapa claro no se ven. Por lo mismo, cada
-  pin lleva un aro fino en ese tono oscuro.
-- **Cada región tiene su ilustración**, que va en la ficha mientras falta la foto.
+  celeste**, **Quebrada amarilla**, **Valles rosa** y **Yungas lima**, en la franja de
+  arriba. Los pines dejaron de ir por región (Luis, 8/10: mejor que digan qué es).
+  Cada pin lleva un aro fino en el tono oscuro de su color, y las líneas de los
+  senderos van en ese tono (`COLOR_TIPO` en `index.html`), porque los pasteles sobre el
+  mapa claro no se ven.
+- **Sin foto no va nada en su lugar.** Antes iba la ilustración de la región con
+  «Todavía sin foto», que ocupaba media hoja en el teléfono.
 - **Todos los botones miden 44 px de alto como mínimo**, para el dedo.
 - **Contrastes medidos, no estimados.** El texto de las píldoras elegidas va en tinta
   y no en blanco, porque blanco sobre coral da 3.1:1 y no llega al mínimo; en tinta da
   5.4:1. El dibujo de los pines también va en tinta (sobre el celeste da 12.9:1, sobre
-  el rosa 10.5, sobre el amarillo 10.0, sobre el lima 9.7). Los colores oscurecidos de
+  el rosa 10.5, sobre el amarillo 10.0, sobre el lima 9.7, sobre el lila 10.3 y sobre
+  el coral 5.4). Los colores oscurecidos de
   cada región dan entre 4.8 y 5.4:1 sobre blanco, y el gris de los textos secundarios 5.2:1.
 - **Los colores salen de los códigos de la paleta**, no de los cuadros pintados de la
   presentación, que no coinciden: Puna `#cae7f2`, Quebrada `#ffbe00`, Valles `#ffbbcc`,
   Yungas `#bcd047` y el coral `#ff5b4d` sólo para la marca (botones, lo elegido).
-  El recuadro del calendario usa el amarillo aclarado, `#ffefbf`: el `#ffbe00` lleno
-  pesaba demasiado para un fondo.
+  El calendario se abre con **Fiestas**, al final de la fila de qué se busca; su
+  circulito usa el amarillo aclarado, `#ffefbf`. La tarjeta de «Este mes en Jujuy» de
+  arriba de la lista se sacó (Luis, 9/10): ahí va a ir la publicidad de lo cercano.
 
 
 ## Cómo se usa
@@ -154,7 +171,12 @@ así que se puede cargar primero en castellano y traducir después. El **nombre*
 Los textos de los botones y carteles están todos juntos en `window.TEXTOS`, al principio
 de `datos.js`, uno por idioma.
 
-- `categoria`: `hostal` · `restaurante` · `oferta` · `punto` · `sendero`
+- `categoria`: `hostal` · `restaurante` · `oferta` · `punto` · `sendero` · `bici` ·
+  `artesania` · `guia`. El botón de un tipo aparece en la fila cuando hay por lo menos
+  un lugar de ese tipo (hoy no hay ningún `guia`, y el botón «Guías» no se ve).
+- `credencial`: en un guía, obligatorio. Guiar está reglado, así que sólo se carga
+  quien tenga registro provincial o credencial de su comunidad, y la ficha lo muestra:
+  `credencial: 'Registro Provincial de Guías N.º 123'`.
 - `region`: `puna` · `quebrada` · `valles` · `yungas`
 - `muestra: true` marca un ejemplo inventado; `relevados.js` lo oculta de la vista pública.
   Cuando el dato está confirmado, se borra el campo.
