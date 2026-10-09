@@ -340,8 +340,10 @@ se muestran completas, sin recorte; requieren conexión y no se incluyen en un
 paquete sin conexión. Si fallan, aparece la ilustración regional. No se copian
 fotos de prestadores o de Google Maps sin permiso.
 
-`base-de-datos.json` es la exportación de todas las fichas visibles, con fuentes,
-costos y créditos de fotos. Regenerar después de editar los datos:
+`privado/base-de-datos.json` es la exportación de todas las fichas visibles, con fuentes,
+costos y créditos de fotos. No se sube al repositorio: todo lo que está ahí lo publica
+GitHub Pages, y así cualquiera podía bajarse el relevamiento entero de un clic.
+Regenerar después de editar los datos:
 
 ```
 node herramientas/exportar-base.cjs

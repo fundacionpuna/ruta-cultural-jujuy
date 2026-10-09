@@ -16,5 +16,8 @@ const base = { proyecto: 'Vamo Pue · Fundación Puna', version: 1,
     costo: 'Sin dato explícito se muestra Consultar. Gratis corresponde al alcance de la nota.',
     fotos: 'La licencia corresponde a cada fotografía. Créditos y enlaces deben conservarse.' },
   categorias: contexto.window.CATEGORIAS, lugares: contexto.window.LUGARES };
-fs.writeFileSync(path.join(raiz, 'base-de-datos.json'), JSON.stringify(base, null, 2) + '\n');
+/* Va a privado/, que no se sube: todo lo que está en el repositorio lo
+   publica GitHub Pages, y esta base no la usa el mapa. */
+fs.mkdirSync(path.join(raiz, 'privado'), { recursive: true });
+fs.writeFileSync(path.join(raiz, 'privado', 'base-de-datos.json'), JSON.stringify(base, null, 2) + '\n');
 console.log(`Base exportada: ${base.lugares.length} fichas.`);
