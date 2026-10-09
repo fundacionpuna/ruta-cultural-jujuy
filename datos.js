@@ -60,6 +60,9 @@ window.TEXTOS = {
     cercaAviso: (n, d) => `Estás a ${d} de ${n}`,
     verLugar: 'Ver',
     cerrar: 'Cerrar',
+    volverMapa: '← Volver al mapa',
+    sinVerificar: 'Sin verificar',
+    confirmarDatos: '¿Es tu emprendimiento? Confirmá tus datos',
     aquiEstas: 'Acá estás',
     letraGrande: 'Letra grande',
     calendario: 'Calendario de fiestas',
@@ -131,6 +134,9 @@ window.TEXTOS = {
     cercaAviso: (n, d) => `You are ${d} from ${n}`,
     verLugar: 'See',
     cerrar: 'Close',
+    volverMapa: '← Back to the map',
+    sinVerificar: 'Unverified',
+    confirmarDatos: 'Is this your business? Confirm your details',
     aquiEstas: 'You are here',
     letraGrande: 'Large text',
     calendario: 'Festival calendar',
@@ -202,6 +208,9 @@ window.TEXTOS = {
     cercaAviso: (n, d) => `Você está a ${d} de ${n}`,
     verLugar: 'Ver',
     cerrar: 'Fechar',
+    volverMapa: '← Voltar para o mapa',
+    sinVerificar: 'Não verificado',
+    confirmarDatos: 'É o seu negócio? Confirme seus dados',
     aquiEstas: 'Você está aqui',
     letraGrande: 'Letra grande',
     calendario: 'Calendário de festas',
@@ -340,8 +349,9 @@ window.CATEGORIAS = {
   }
 };
 
-/* A dónde escribe un emprendimiento que quiere sumarse al mapa. */
-window.FUNDACION = { email: 'info@punafoundation.org' };
+/* A dónde va un emprendimiento que quiere sumarse al mapa o confirmar sus
+   datos: el formulario de Google de la Fundación (lo atiende Vic). */
+window.FUNDACION = { email: 'info@punafoundation.org', formulario: 'https://forms.gle/wPdjHj8tFxgEYgqw9' };
 
 window.LUGARES = [
 

@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const raiz = path.join(__dirname, '..');
 const datos = { window: {} };
 vm.createContext(datos);
-for (const archivo of ['datos.js', 'relevados.js', 'actividades.js', 'fotos.js', 'rastreo-octubre.js', 'calendario.js', 'senderos.js']) {
+for (const archivo of ['datos.js', 'relevados.js', 'actividades.js', 'fotos.js', 'rastreo-octubre.js', 'sin-verificar.js', 'calendario.js', 'senderos.js']) {
   vm.runInContext(fs.readFileSync(path.join(raiz, archivo), 'utf8'), datos);
 }
 const { LUGARES, LUGARES_MUESTRA, CATEGORIAS, TEXTOS, REGIONES } = datos.window;
@@ -43,7 +43,7 @@ const extraer = (inicio, fin) => script.slice(script.indexOf(inicio), script.ind
 const lista = { innerHTML: '', querySelectorAll: () => [], querySelector: () => null };
 const estado = { idioma: 'es' };
 const contexto = {
-  estado, LUGARES, REG: REGIONES, CAT: CATEGORIAS, TRAZADOS: {}, elLista: lista,
+  estado, LUGARES, REG: REGIONES, CAT: CATEGORIAS, TRAZADOS: {}, elLista: lista, FUNDACION: datos.window.FUNDACION,
   document: { getElementById: () => ({ addEventListener() {} }) },
   t: clave => TEXTOS[estado.idioma][clave],
   tr: campo => typeof campo === 'string' ? campo : campo[estado.idioma],
@@ -170,3 +170,26 @@ for (const x of FIESTAS) {
 }
 for (const idioma of ['es', 'en', 'pt']) assert.equal(TEXTOS[idioma].meses.length, 12);
 console.log(`OK: ${FIESTAS.length} fiestas en el calendario, con fuente y enlace al mapa.`);
+
+// Emprendimientos sin verificar: sin teléfono, WhatsApp ni correo, con el
+// enlace al formulario; los demás conservan sus contactos.
+const sinVerificar = LUGARES.filter(l => l.verificado === false);
+assert.equal(sinVerificar.length, 21);
+assert.match(datos.window.FUNDACION.formulario, /^https:\/\/forms\.gle\//);
+for (const idioma of ['es', 'en', 'pt']) {
+  estado.idioma = idioma;
+  for (const l of sinVerificar) {
+    contexto.pintarFicha(l);
+    for (const prohibido of ['wa.me/', 'href="tel:', 'href="mailto:']) {
+      assert(!lista.innerHTML.includes(prohibido), `${idioma}: ${l.id} muestra ${prohibido}`);
+    }
+    assert(lista.innerHTML.includes(TEXTOS[idioma].sinVerificar), l.id);
+    assert(lista.innerHTML.includes(datos.window.FUNDACION.formulario), l.id);
+    if (l.contacto.web) assert(lista.innerHTML.includes(`href="${l.contacto.web}"`), `${l.id}: su web queda`);
+  }
+  const verificado = LUGARES.find(l => l.verificado !== false && l.contacto?.whatsapp);
+  contexto.pintarFicha(verificado);
+  assert(lista.innerHTML.includes('wa.me/'), verificado.id);
+  assert(!lista.innerHTML.includes(TEXTOS[idioma].sinVerificar));
+}
+console.log(`OK: ${sinVerificar.length} emprendimientos sin verificar, sin teléfono ni WhatsApp y con el enlace para confirmar.`);

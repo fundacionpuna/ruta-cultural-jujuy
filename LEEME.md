@@ -56,28 +56,32 @@ en el teléfono, sin que nadie le explique nada.**
   está viendo, en el coral de la marca. No es un sistema de tildes: se elige uno, como en
   un formulario de papel. **Gratis** va aparte: se prende y se apaga.
 - **El mapa ocupa toda la pantalla.** En el teléfono, arriba queda una sola fila con
-  el logo y el idioma, y la página no se corre: es el mapa, de borde a borde. **Buscar
-  lugares** (que abre el **cajón** con los filtros) y **Cerca mío** arrancan grandes en
-  el medio del mapa; apenas se usa uno o se toca el mapa, bajan a una barra finita justo
-  encima de la hoja de abajo (y de los créditos del mapa, que tienen que verse). **A+**
-  va debajo del + y el −. En pantalla ancha el mapa se lleva el 92% del alto.
+  el logo y el idioma, y la página no se corre: es el mapa, de borde a borde, y al abrir
+  no hay nada más (Luis tachó la lista que asomaba abajo: «no sé si es un mapa o una
+  lista»). **Buscar lugares** y **Cerca mío** arrancan grandes en el medio del mapa;
+  apenas se usa uno o se toca el mapa, bajan a una barra finita al pie, encima de los
+  créditos del mapa (que tienen que verse). **A+** va debajo del + y el −. En pantalla
+  ancha el mapa se lleva el 92% del alto.
 - **En el teléfono la lista va en una hoja que sube desde abajo**, como en las
-  aplicaciones de mapas. Tiene tres alturas: **asoma** (el asa, «129 lugares» y el
-  comienzo del primero), **media pantalla** y **casi toda**. Se cambia arrastrando o
-  tocando el asa; tocar la hoja asomada la sube, bajar leyendo en media altura la
-  agranda, y mover el mapa baja la lista. La **ficha** y el **calendario** se abren en
-  la misma hoja, a media altura; «Volver a la lista» (o arrastrarla hasta abajo) vuelve
-  a la lista a la altura que tenía. La foto de la ficha, si hay, va después del nombre.
+  aplicaciones de mapas, y sólo con **Buscar lugares**: sube casi entera con los
+  filtros (en varias filas, sin deslizar de costado), «Gratis», la búsqueda y la lista.
+  **Ver el mapa** o **✕** la cierran. Tocar un pin abre la **ficha** en la misma hoja, a
+  media altura, y lo mismo **Fiestas** con el **calendario**. Tocando el asa pasa de
+  media altura a casi toda y vuelve; arrastrándola se deja donde se quiera, y hasta
+  abajo se cierra. «Volver» vuelve a como estaba: a la lista, o al mapa («Volver al
+  mapa») si la ficha se abrió tocando un pin. La foto de la ficha, si hay, va después
+  del nombre. El párrafo del relevamiento va al final de la lista, junto al pie.
 - **El iPhone tapa el borde de abajo** (la barra de Safari, la rayita de inicio). Por
-  eso la página mide el alto que se ve de verdad (`100dvh`, nunca `vh`), la hoja asomada
-  suma `env(safe-area-inset-bottom)` (con `viewport-fit=cover`) y no hay rebote de
-  página. Para probarlo en la compu: 390 × 664, más o menos lo que queda en un iPhone
-  con las barras de Safari.
+  eso la página mide el alto que se ve de verdad (`100dvh`, nunca `vh`), la barra de los
+  botones y la hoja suman `env(safe-area-inset-bottom)` (con `viewport-fit=cover`) y no
+  hay rebote de página. Para probarlo en la compu: 390 × 664, más o menos lo que queda
+  en un iPhone con las barras de Safari.
 - **Al pie de la lista**, una tarjeta para que un emprendimiento se sume, con las formas
   de la marca enteras adentro (antes iban cortadas contra el borde) y el logo de la
   Fundación con «Un proyecto de / Fundación Puna» en dos renglones, parejos con el logo.
-- **La fila de qué se busca va en una sola línea horizontal**, nunca se parte en dos. Si
-  no entra, se arrastra de costado y el borde se degrada para avisar que hay más.
+- **La fila de qué se busca**: en la computadora va en una sola línea horizontal y, si
+  no entra, se arrastra de costado (el borde se degrada para avisar que hay más). En el
+  teléfono se parte en las filas que hagan falta, para verla toda sin deslizar.
 - **Se puede ocultar la lista** con el botón de abajo a la izquierda, y ahí el mapa
   ocupa también todo el ancho.
 - **Un dibujo y un color por tipo de lugar** (cama, cubiertos, cerro, brújula), los
@@ -158,10 +162,16 @@ se acerca hasta que el sendero llena la pantalla. La ficha dice:
   de mapas (OsmAnd, Organic Maps, Wikiloc…);
 - al pie, que los tiempos son aproximados y que conviene preguntar en el pueblo antes de salir.
 
-El mapa base es el topográfico de Esri, que muestra el relieve: se leen los cerros y las
-quebradas por donde van los senderos. Si Esri deja de responder, el mapa se pasa solo a
-OpenStreetMap. (Hasta septiembre de 2026 era CARTO, que empezó a pedir clave y dejó el mapa
-gris con un cartel de «API KEY REQUIRED».)
+El mapa base es el estilo humanitario de OpenStreetMap (HOT, que sirve OpenStreetMap
+Francia), con letras sin serifa y tranquilo debajo de los pines, y encima el relieve
+sombreado de Esri (*World Hillshade*), multiplicado: se leen los cerros y las quebradas
+por donde van los senderos. Ninguno de los dos pide clave. Si el estilo HOT deja de
+responder, el mapa se pasa solo al OpenStreetMap común. (Antes era el topográfico de
+Esri, con rótulos en mayúsculas espaciadas y cursiva que a Luis no le parecían «nada
+amigables»; y hasta septiembre de 2026, CARTO, que empezó a pedir clave.) Se probaron
+también el gris claro de Esri (sin relieve y con los bordes casi invisibles),
+OpenTopoMap (muy cargado), el OpenStreetMap común y el relieve de Esri sin rótulos
+(sin datos de cerca).
 
 
 ## Cómo cargar un lugar
@@ -208,8 +218,14 @@ de `datos.js`, uno por idioma.
 - `sendero`: en un paseo con guía, el `id` del sendero que recorre (por ejemplo `'qu-s1'`).
 
 A dónde llega el botón **Sumalo al mapa** del pie de la lista está en `window.FUNDACION`,
-en `datos.js`. Hoy abre un correo a `info@punafoundation.org` con los datos que hay que pedir
-ya escritos (nombre, localidad, qué ofrece, WhatsApp, Instagram).
+en `datos.js`: abre el formulario de Google de la Fundación
+(`https://forms.gle/wPdjHj8tFxgEYgqw9`) en otra pestaña.
+
+**Emprendimientos sin verificar** (`sin-verificar.js`): los privados que salieron de
+fuentes públicas y nadie confirmó por el formulario. La ficha y la lista dicen **Sin
+verificar**, no muestran el teléfono, el WhatsApp ni el correo (su web y su Instagram
+sí) y ofrecen «¿Es tu emprendimiento? Confirmá tus datos», que lleva al mismo
+formulario. Cuando uno confirma, se borra su `id` de esa lista.
 
 ## Cómo cargar un sendero
 
@@ -419,13 +435,15 @@ Más fácil de usar, 5 de octubre de 2026
   se abre al acercarse (Leaflet.markercluster, desde unpkg). El nombre y la región van en
   el título de cada pin, así el color no es la única pista.
 - **Aa · Letra grande**: agranda un cuarto la lista, la ficha, el cajón y los pines. Se recuerda.
-- **Cerca mío**: con permiso de ubicación, ordena la lista por distancia, muestra
-  «a X km» y avisa una vez por lugar al pasar a menos de 2 km, mientras la página está
+- **Cerca mío**: con permiso de ubicación, muestra en el mapa tu posición y los tres
+  lugares más cercanos (sin acercar más que el zoom 15), ordena la lista por distancia,
+  muestra «a X km» y avisa una vez por lugar al pasar a menos de 2 km, mientras la página está
   abierta (con el teléfono bloqueado no puede: eso pediría una aplicación instalada).
   La ubicación no sale del teléfono.
-- **Calendario de fiestas** (`calendario.js`): tarjeta «Este mes en Jujuy» arriba de la
-  lista y calendario completo desde el mes actual, cada fiesta con su fuente y, si tiene,
-  el enlace a su ficha.
+- **Calendario de fiestas** (`calendario.js`): se abre con «Fiestas», desde el mes
+  actual. Cada fiesta muestra sólo el nombre, la fecha y el pueblo (Luis: «con el
+  título y fecha está»); tocándola se abre el resto: la descripción, la fuente y, si
+  tiene, el enlace a su ficha.
 
 Más mapa, 8 de octubre de 2026
 ------------------------------
