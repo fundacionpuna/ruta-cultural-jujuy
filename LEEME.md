@@ -260,19 +260,19 @@ Se pueden sumar cuando alguien que los conoce diga que valen la pena.
 
 ## Estadísticas
 
-La página cuenta visitas y clics y los manda a `vamopue-stats.onrender.com`, que
-muestra un panel privado con clave en `/panel` (el código está en
-`fundacionpuna/vamopue-stats`). No usa cookies ni guarda IPs. Se cuentan las visitas
-(con de dónde vienen), las fichas abiertas, los botones de la ficha (WhatsApp, llamar,
-Instagram, web, correo, Cómo llegar, compartir, GPX), las búsquedas, los filtros, «Cerca
-mío», el cambio de idioma y el calendario.
+La página cuenta visitas y clics en las estadísticas de la Fundación: se ven en
+`punafoundation.org/admin/analytics`, pestaña **Vamo Pue** (el código que recibe y
+muestra está en `fundacionpuna/punafoundation`, `server/analytics.ts`). No usa cookies
+ni guarda IPs. Se cuentan las visitas (con de dónde vienen), las fichas abiertas, los
+botones de la ficha (WhatsApp, llamar, Instagram, web, correo, Cómo llegar, compartir,
+GPX), las búsquedas, los filtros, «Cerca mío», el cambio de idioma y el calendario.
 
 - **QR y posteos**: un enlace como `vamopue.com/?qr=purmamarca` aparece en el panel
   como `qr-purmamarca`, y `?utm_source=instagram-bio` como `instagram-bio`.
 - **En la compu** no se cuenta nada. Para probar, se pone en la consola
-  `localStorage.setItem('vp-estadisticas', 'http://localhost:8765/e')`.
-- Si se agrega un botón nuevo a la ficha, con `data-accion="…"` ya se cuenta (y hay que
-  sumar esa acción en el servidor).
+  `localStorage.setItem('vp-estadisticas', 'http://localhost:5000/api/collect')`.
+- Si se agrega un botón nuevo a la ficha, con `data-accion="…"` ya se cuenta como
+  `contacto`; para que tenga su columna en el panel hay que sumarlo en `server/analytics.ts`.
 
 ## Qué falta antes de publicar
 
