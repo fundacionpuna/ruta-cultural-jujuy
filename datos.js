@@ -24,7 +24,7 @@
    ============================================================ */
 
 window.IDIOMAS = {
-  es: { etiqueta: 'ES', nombre: 'Castellano' },
+  es: { etiqueta: 'ES', nombre: 'Español' },
   en: { etiqueta: 'EN', nombre: 'English' },
   pt: { etiqueta: 'PT', nombre: 'Português' }
 };
@@ -67,6 +67,9 @@ window.TEXTOS = {
     proximamente: 'Lo que viene',
     verCalendario: 'Ver el calendario completo',
     verEnMapa: 'Ver en el mapa',
+    fiestas: 'Fiestas',
+    idioma: 'Idioma',
+    credencial: 'Credencial o registro',
     fuenteFecha: 'Fuente',
     meses: ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],
     todaProvincia: 'Toda la provincia',
@@ -135,6 +138,9 @@ window.TEXTOS = {
     proximamente: 'Coming up',
     verCalendario: 'See the full calendar',
     verEnMapa: 'See on the map',
+    fiestas: 'Festivals',
+    idioma: 'Language',
+    credencial: 'Credential or registration',
     fuenteFecha: 'Source',
     meses: ['January','February','March','April','May','June','July','August','September','October','November','December'],
     todaProvincia: 'Whole province',
@@ -203,6 +209,9 @@ window.TEXTOS = {
     proximamente: 'O que vem',
     verCalendario: 'Ver o calendário completo',
     verEnMapa: 'Ver no mapa',
+    fiestas: 'Festas',
+    idioma: 'Idioma',
+    credencial: 'Credencial ou registro',
     fuenteFecha: 'Fonte',
     meses: ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'],
     todaProvincia: 'Toda a província',
@@ -319,6 +328,15 @@ window.CATEGORIAS = {
     boton:  { es: 'Qué hacer', en: 'What to do', pt: 'O que fazer' },
     nombre: { es: 'Paseo o taller', en: 'Tour or workshop', pt: 'Passeio ou oficina' },
     icono: 'brujula'
+  },
+  /* Guías de la zona. Guiar está reglado: sólo se carga quien tenga
+     credencial provincial o de su comunidad, en el campo `credencial`
+     (por ejemplo: 'Registro Provincial de Guías N.º 123'). Mientras no
+     haya ninguno cargado, el botón del filtro no aparece. */
+  guia: {
+    boton:  { es: 'Guías', en: 'Guides', pt: 'Guias' },
+    nombre: { es: 'Guía de la zona', en: 'Local guide', pt: 'Guia local' },
+    icono: 'guia'
   }
 };
 

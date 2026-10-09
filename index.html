@@ -156,27 +156,26 @@ header {
   line-height: 1.5;
 }
 .cajon-aviso b { color: var(--tinta); }
-#idiomas { display: flex; gap: 5px; }
-.idioma {
+/* El idioma es un solo menú: «🌐 Español ▾». Luis: «ES EN PT debería
+   decir completo, cada uno en su idioma». Es un <select> de verdad: en el
+   teléfono abre la lista del sistema, que se lee y se toca bien. */
+#idioma {
   font-family: 'Outfit', system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: .03em;
-  min-width: 48px;
+  font-size: 15px;
+  font-weight: 600;
   min-height: 44px;   /* mismo mínimo que el resto, para el dedo */
-  padding: 8px 13px;
+  padding: 8px 34px 8px 38px;
   border: 2px solid var(--borde);
   border-radius: var(--curva);
-  background: var(--blanco);
-  color: var(--suave);
+  color: var(--tinta);
   cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23241b28' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.5 2.6 3.7 5.6 3.7 9s-1.2 6.4-3.7 9c-2.5-2.6-3.7-5.6-3.7-9S9.5 5.6 12 3z'/%3E%3C/svg%3E") no-repeat 12px center / 18px,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23241b28' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 11px center / 15px,
+    var(--blanco);
 }
-.idioma:hover { border-color: var(--coral); color: var(--tinta); }
-.idioma[aria-pressed="true"] {
-  background: var(--tinta);
-  border-color: var(--tinta);
-  color: var(--blanco);
-}
+#idioma:hover { border-color: var(--coral); }
 
 .marca {
   display: flex;
@@ -185,6 +184,18 @@ header {
   gap: 13px;
 }
 .marca img { height: 46px; width: auto; display: block; }
+/* Los dos logos en el mismo lugar, turnándose despacio (Luis, 9/10:
+   «que se transicione con el de vamopue»). Así la Fundación queda
+   nombrada sin la línea de texto. Con «reducir movimiento» queda quieto
+   el de Vamo pue. */
+.logos { position: relative; flex-shrink: 0; }
+.logos .logo-fp {
+  position: absolute; inset: 0; margin: auto; opacity: 0;
+  animation: logo-fp 14s ease-in-out infinite;
+}
+.logos .logo-vp { animation: logo-vp 14s ease-in-out infinite; }
+@keyframes logo-vp { 0%, 42% { opacity: 1; } 50%, 92% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes logo-fp { 0%, 42% { opacity: 0; } 50%, 92% { opacity: 1; } 100% { opacity: 0; } }
 .marca .textos { border-left: 2px solid var(--borde); padding-left: 13px; }
 .marca .textos { text-align: left; min-width: 0; }
 h1 {
@@ -275,6 +286,15 @@ h1 {
 /* la fila de qué busca */
 .tipo { font-size: 15px; padding: 8px 16px; min-height: 44px; }
 .tipo svg { width: 19px; height: 19px; flex-shrink: 0; }
+/* El ícono va en un circulito del color de los pines de ese tipo: la fila
+   sirve de leyenda del mapa. */
+.tipo .cc {
+  width: 27px; height: 27px; margin-left: -6px; border-radius: 50%; flex-shrink: 0;
+  background: var(--c); box-shadow: inset 0 0 0 1.5px var(--t);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.tipo .cc svg { width: 16px; height: 16px; }
+.asa { display: none; }
 
 /* «Gratis»: lo único que quedó del costo, como pidió Luis. Se prende y
    se apaga; la llavecita adentro avisa que no es una categoría más. */
@@ -416,19 +436,7 @@ body.sin-lista #alternar-lista { left: 16px; }
   min-height: 50px;
 }
 #volver:hover { color: var(--tinta); }
-/* Mientras no haya foto, va la ilustración de la región */
-.f-foto {
-  height: 170px;
-  background: #f9f0ee center / contain no-repeat;
-  border-top: 1px solid var(--borde);
-  border-bottom: 1px solid var(--borde);
-  display: flex;
-  align-items: flex-end; justify-content: center;
-  padding-bottom: 8px;
-  color: var(--suave);
-  font-size: 13px;
-}
-.foto-libre { margin:0; background:#f9f0ee; }
+.foto-libre { margin: 0 0 18px; background: #f9f0ee; border-radius: 16px; overflow: hidden; }
 .foto-libre img { display:block; width:100%; height:210px; object-fit:contain; }
 .foto-libre figcaption { padding:8px 16px; font-size:12px; line-height:1.5; }
 .foto-libre a { color:inherit; }
@@ -453,6 +461,11 @@ body.sin-lista #alternar-lista { left: 16px; }
   margin-bottom: 5px;
 }
 .f-donde { font-size: 16px; color: var(--suave); margin-bottom: 15px; }
+.f-credencial {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 600; margin: -6px 0 15px;
+}
+.f-credencial svg { width: 18px; height: 18px; flex-shrink: 0; }
 .f-texto { font-size: 17.5px; line-height: 1.68; margin-bottom: 20px; }
 a.llegar {
   display: inline-block;
@@ -474,7 +487,6 @@ a.llegar:hover { background: #3b2d42; }
 .f-relevamiento a { color: var(--tinta); text-decoration: underline; overflow-wrap: anywhere; }
 .relevado-etiqueta { display: block; margin-top: 4px; font-size: 12px; color: var(--suave); }
 .pin.orientativo { border-style: dashed; }
-.pin.grupo { font-weight: 700; font-size: 16px; color: var(--tinta); }  /* tinta: en blanco, sobre el coral no llega al contraste */
 .grupo-propuestas { min-width: 220px; max-width: 280px; }
 .grupo-propuestas p { font-size: 13px; line-height: 1.5; }
 .grupo-propuestas button { display: block; width: 100%; min-height: 44px; margin-top: 6px; padding: 8px; border: 1px solid var(--borde); border-radius: 12px; background: white; color: var(--tinta); text-align: left; cursor: pointer; font: inherit; }
@@ -652,18 +664,25 @@ a.llegar { display: inline-flex; align-items: center; }
 .pin.gota.elegido { transform: scale(1.35); width: 36px; height: 46px; box-shadow: none; }
 .pin.gota.elegido .relleno { stroke-width: 3.5; }
 
-/* Varios lugares juntos: círculo oscuro con el número en blanco (16:1) */
-.racimo {
-  width: 46px; height: 46px; border-radius: 50%;
-  background: var(--tinta); color: var(--blanco);
-  border: 3px solid var(--blanco);
-  box-shadow: 0 0 0 2px var(--coral), 0 2px 6px rgba(36,27,40,.35);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Outfit', system-ui, sans-serif; font-weight: 700; font-size: 17px;
+/* Varios lugares juntos: un abanico de dos o tres pines chicos, cada uno
+   del color de su tipo. Antes era un círculo con el número, y Luis: «los
+   números no sirven de nada, debería ser sólo pin». La cantidad queda
+   para el lector de pantalla y en el título. */
+.abanico {
+  position: relative; width: 54px; height: 48px; cursor: pointer;
+  filter: drop-shadow(0 2px 3px rgba(36,27,40,.35));
+  transform-origin: 50% 100%; transition: transform .15s;
 }
-
-/* el grupo que contiene el lugar abierto: aro coral ancho */
-.racimo.elegido { transform: scale(1.18); box-shadow: 0 0 0 5px var(--coral), 0 3px 8px rgba(36,27,40,.4); }
+.abanico .mini {
+  position: absolute; left: 13px; bottom: 0; width: 28px; height: 36px;
+  transform-origin: 50% 100%; transform: rotate(var(--g));
+}
+.abanico .mini svg { width: 28px; height: 36px; overflow: visible; display: block; }
+.abanico .fondo { fill: none; stroke: #fff; stroke-width: 6; }
+.abanico .relleno { fill: var(--c); stroke: var(--t); stroke-width: 2.5; }
+/* el grupo que contiene el lugar abierto, más grande */
+.abanico.elegido { transform: scale(1.3); }
+.abanico.elegido .relleno { stroke-width: 3.5; }
 
 /* Tu posición, con «Cerca mío» */
 .yo {
@@ -684,6 +703,14 @@ a.llegar { display: inline-flex; align-items: center; }
 }
 #cerca svg { width: 20px; height: 20px; }
 #cerca[aria-pressed="true"] { background: var(--coral); }
+
+/* Los botones que en el teléfono van en el medio del mapa (abajo, en
+   @media). En la computadora «Buscar lugares» no hace falta y «Cerca
+   mío» queda en su rincón. */
+#arranque { display: none; }
+/* «A+» en el teléfono va en el mapa, debajo del + y el − */
+.letra-control:empty { display: none; }
+.cerca-control:empty { display: none; }
 
 /* Aviso de «estás cerca», arriba del mapa */
 #aviso-cerca {
@@ -710,18 +737,13 @@ body.grande #aviso-cerca { width: min(73vw, 352px); }
 .distancia { color: var(--tinta); font-weight: 600; }
 
 /* ── Calendario de fiestas ───────────────────────────────── */
-.este-mes {
-  margin: 14px 18px 4px; padding: 14px 16px;
-  background: var(--amarillo-claro); border-radius: 20px;
-  border: 2px solid #ffde80;
-}
-.este-mes .titulo, .cal-mes {
+/* Se abre con «Fiestas», en la fila de qué busca. La tarjeta de «Este mes
+   en Jujuy» de arriba de la lista se sacó: Luis la tachó (9/10) y en su
+   lugar va a ir la publicidad de lo cercano. */
+.cal-mes {
   font-family: 'Outfit', system-ui, sans-serif; font-weight: 700; font-size: 15px;
   color: var(--tinta); text-transform: uppercase; letter-spacing: .04em;
 }
-.este-mes .fiesta { margin-top: 6px; font-size: 16px; line-height: 1.4; }
-.este-mes .fiesta b { font-family: 'Outfit', system-ui, sans-serif; font-size: 18px; }
-.este-mes .boton { margin-top: 10px; min-height: 44px; padding: 8px 16px; font-size: 15px; }
 .calendario { padding: 4px 24px 30px; }
 .cal-mes { padding: 18px 0 6px; border-bottom: 2px solid var(--borde); }
 .cal-mes.ahora { color: var(--coral); border-color: var(--coral); }
@@ -738,7 +760,7 @@ body.grande #aviso-cerca { width: min(73vw, 352px); }
 body.grande #lista, body.grande #cajon, body.grande #aviso-cerca { zoom: 1.25; }
 body.grande .pin.gota { transform: scale(1.3); }
 body.grande .pin.gota.elegido { transform: scale(1.65); }
-body.grande .racimo { transform: scale(1.2); }
+body.grande .abanico { transform: scale(1.25); }
 body.grande #cerca { font-size: 19px; min-height: 56px; }
 /* El botón dice lo que hace: «A+ Letra grande». Antes decía «Aa», que
    se confundía con los idiomas y no se entendía para qué era. Prendido
@@ -853,45 +875,86 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
 /* ── Teléfono ────────────────────────────────────────────── */
 @media (max-width: 900px) {
   html, body { height: auto; overflow: visible; }
-  /* la barra se parte en dos filas: marca arriba, controles abajo */
-  header { padding: 9px 13px; flex-wrap: wrap; gap: 9px; }
-  .izq { width: 100%; }
-  .der { width: 100%; justify-content: space-between; }
+  /* Una sola fila: el logo y el idioma (Luis, 9/10: «quitar todo eso de
+     Fundación Puna y ahí poner los idiomas», para que la barra no le robe
+     pantalla al mapa). El título queda para el lector de pantalla;
+     «Buscar lugares» baja al mapa y «A+» va debajo del + y el −. */
+  header { padding: 8px 13px; flex-wrap: nowrap; gap: 9px; }
   .marca img { height: 40px; }
-  h1 { font-size: 16px; }
+  .marca .textos {
+    position: absolute; width: 1px; height: 1px; padding: 0; border: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
   #cajon .forma { display: none; }
-  .proyecto { font-size: 11.5px; }
-  #abrir-cajon { font-size: 15px; padding: 9px 16px; }
   .paso { margin: 12px 13px 6px; }
   .fila-botones { padding: 0 13px; gap: 8px; }
   .cajon-aviso { font-size: 12.5px; padding: 0 13px; }
   .tipo { font-size: 14px; padding: 7px 13px; }
   #barra-buscar { padding: 11px 14px 12px; }
   #buscar { width: 100%; }
-  .idioma { min-width: 44px; padding: 8px 10px; }
-  #letra { padding: 8px 11px; margin-right: 0; }
+  /* «A+» como los botones de acercar: redondo, blanco, debajo de ellos */
+  #letra {
+    width: 40px; height: 40px; min-height: 40px; padding: 0; margin: 0;
+    justify-content: center; border: none; border-radius: 22px;
+    box-shadow: 0 1px 4px rgba(36,27,40,.2);
+  }
   #letra .letra-texto { display: none; }
+
+  /* «Buscar lugares» y «Cerca mío», grandes y en el medio del mapa al
+     abrir la página (Luis: «ambas en el centro, una debajo de la otra»).
+     Apenas se usa una o se toca el mapa, bajan a una barra finita al pie
+     del mapa para no taparlo. */
+  #arranque {
+    display: flex; position: absolute; z-index: 1000; left: 12px; right: 12px;
+    flex-direction: column; align-items: center; gap: 12px;
+    pointer-events: none;
+  }
+  #arranque > * { pointer-events: auto; }
+  #arranque.inicio { top: 50%; transform: translateY(-50%); }
+  #arranque #abrir-cajon, #arranque #cerca {
+    min-width: 250px; min-height: 58px; justify-content: center;
+    font-size: 18px; padding: 12px 26px;
+    box-shadow: 0 6px 18px rgba(36,27,40,.3);
+  }
+  /* encima del renglón de créditos del mapa, que tiene que verse */
+  #arranque.plegado { bottom: 42px; flex-direction: row; justify-content: center; gap: 8px; }
+  #arranque.plegado #abrir-cajon, #arranque.plegado #cerca {
+    min-width: 0; min-height: 46px; font-size: 15px; padding: 9px 16px;
+    box-shadow: 0 2px 8px rgba(36,27,40,.25);
+  }
 
   /* La ficha sube desde abajo sobre el mapa, como en las aplicaciones de
      mapas: antes se abría debajo del mapa, fuera de la pantalla, y al
-     tocar un pin parecía que no pasaba nada. */
+     tocar un pin parecía que no pasaba nada. Abre a media altura: con el
+     60 % tapaba casi todo el mapa (Luis: «reducir a la mitad y ampliar el
+     mapa»). Para leer el resto se arrastra el asa hacia arriba, o se la
+     toca, o se baja leyendo: entonces crece hasta casi toda la pantalla. */
   body.con-ficha #lista {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 1300;
-    max-height: 60vh; overflow-y: auto; overscroll-behavior: contain;
+    max-height: 34vh; overflow-y: auto; overscroll-behavior: contain;
     background: var(--papel);
     border-radius: 24px 24px 0 0; border-top: none;
     box-shadow: 0 -8px 28px rgba(36,27,40,.28);
+    transition: max-height .25s ease;
   }
-  body.con-ficha #lista::before {
+  body.con-ficha.hoja-alta #lista { max-height: 88vh; }
+  /* con zoom 1.25, 27vh se ve como el 34% de la pantalla, igual que sin letra grande */
+  body.grande.con-ficha #lista { max-height: 27vh; }
+  body.grande.con-ficha.hoja-alta #lista { max-height: 70vh; }
+  /* el asa: se arrastra (touch-action: none) y queda pegada arriba al leer */
+  .asa {
+    display: block; position: sticky; top: 0; z-index: 2; height: 26px;
+    background: var(--papel); touch-action: none; cursor: grab;
+  }
+  .asa::before {
     content: ''; display: block; width: 48px; height: 5px; border-radius: 3px;
-    background: var(--borde); margin: 10px auto 0;
+    background: var(--borde); margin: 11px auto 0;
   }
-  /* con zoom 1.25, 48vh se ve como el 60% de la pantalla, igual que sin letra grande */
-  body.grande.con-ficha #lista { max-height: 48vh; }
   #aviso-cerca { top: 12px; }
 
   #cuerpo { flex-direction: column; min-height: 0; }
-  #mapa { order: 1; height: 62vh; flex: none; }   /* el mapa, grande */
+  /* el mapa ocupa casi toda la pantalla; abajo asoma el comienzo de la lista */
+  #mapa { order: 1; height: 74vh; height: calc(100svh - 150px); min-height: 340px; flex: none; }
   /* en el teléfono la lista va debajo del mapa, no le quita ancho:
      no hace falta el botón de esconderla */
   #alternar-lista { display: none; }
@@ -916,7 +979,10 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
 <header>
   <div class="izq">
     <div class="marca">
-      <img src="marca/logo-vamo-pue-corto.svg" alt="Vamo pue">
+      <span class="logos">
+        <img class="logo-vp" src="marca/logo-vamo-pue-corto.svg" alt="Vamo pue">
+        <img class="logo-fp" src="logo-puna.png" alt="Fundación Puna">
+      </span>
       <div class="textos">
         <h1 id="titulo">Ruta Cultural de Jujuy</h1>
         <p class="proyecto" id="proyecto">Un proyecto de Fundación Puna</p>
@@ -925,12 +991,11 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
   </div>
   <div class="der">
     <button id="letra" aria-pressed="false"><span class="a-mas" aria-hidden="true">A<span>+</span></span><span class="letra-texto"></span></button>
-    <div id="idiomas"></div>
-    <button id="abrir-cajon" aria-expanded="false" aria-controls="cajon"></button>
+    <select id="idioma"></select>
   </div>
 
   <!-- Los filtros. En el teléfono son un cajón que baja sobre el mapa y
-       se abre con «Buscar lugares». En la computadora quedan siempre a la
+       se abre con «Buscar lugares», que está en el mapa. En la computadora quedan siempre a la
        vista, en una fila debajo del logo, y la búsqueda sube
        a la cabecera: nada tapa el mapa y siempre se ve qué está elegido. -->
   <div id="cajon">
@@ -955,6 +1020,11 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
   <div id="lista" aria-live="polite"></div>
   <div id="mapa"></div>
   <button id="alternar-lista"></button>
+  <!-- En el teléfono: «Buscar lugares» y «Cerca mío» en el medio del mapa.
+       El script los mete adentro del mapa. -->
+  <div id="arranque" class="inicio">
+    <button id="abrir-cajon" aria-expanded="false" aria-controls="cajon"></button>
+  </div>
 </div>
 
 <script src="datos.js"></script>
@@ -994,11 +1064,28 @@ const tr = campo => typeof campo === 'string'
   ? campo
   : (campo[estado.idioma] || campo.es);
 
-/* TINTE es el relleno de cada región; TRAZO, el mismo color oscurecido
-   para las líneas del mapa y los rótulos (los pasteles no se leen solos). */
-const TINTE = {}, TRAZO = {};
-ORDEN.forEach(k => { TINTE[k] = REG[k].color; TRAZO[k] = REG[k].trazo; });
-const tinte = k => `--c:${TINTE[k]};--t:${TRAZO[k]}`;
+/* TINTE es el color de cada región, el de la franja de arriba. */
+const TINTE = {};
+ORDEN.forEach(k => { TINTE[k] = REG[k].color; });
+
+/* Los pines, la lista y la ficha van del color de su tipo, no de su
+   región (Luis, 8/10: «cambiar la coloración del pin según si es guía,
+   comida o alojamiento»). Relleno con los pasteles de la marca y un trazo
+   oscuro del mismo color, que es el que despega el pin del mapa claro. La
+   bici va con caminar y los guías con qué hacer. */
+const COLOR_TIPO = {
+  punto:       ['#cae7f2', '#1f6fa8'],   // celeste: qué ver
+  sendero:     ['#bcd047', '#69761e'],   // lima: caminar
+  bici:        ['#bcd047', '#69761e'],
+  hostal:      ['#ffbbcc', '#d2306b'],   // rosa: dormir
+  restaurante: ['#ff5b4d', '#a8281d'],   // coral: comer
+  oferta:      ['#ffbe00', '#8a6a00'],   // amarillo: qué hacer
+  guia:        ['#ffbe00', '#8a6a00'],
+  artesania:   ['#d9c3f0', '#6b3fa0']    // lila: comprar
+};
+const colorTipo = k => COLOR_TIPO[k] || ['#f0d9df', '#75687a'];
+const tinteTipo = k => `--c:${colorTipo(k)[0]};--t:${colorTipo(k)[1]}`;
+const tinte = l => tinteTipo(l.categoria);
 
 const LIMITES = L.latLngBounds([[-24.75, -67.35], [-21.70, -63.85]]);
 
@@ -1072,7 +1159,9 @@ const ICONOS = {
   globo:     '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.7 5.6 3.7 9s-1.2 6.4-3.7 9c-2.5-2.6-3.7-5.6-3.7-9S9.5 5.6 12 3z"/>',
   sobre:     '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/>',
   compartir: '<circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 13.2l7.6 4.1M15.8 6.7l-7.6 4.1"/>',
-  bajar:     '<path d="M12 3.5v11M7.5 10l4.5 4.5 4.5-4.5M5 20h14"/>'
+  bajar:     '<path d="M12 3.5v11M7.5 10l4.5 4.5 4.5-4.5M5 20h14"/>',
+  guia:      '<circle cx="9" cy="5" r="2.3"/><path d="M5.5 21l1.2-7.5L5 12.5V10a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2.5l-1.7 1L12.5 21M9 14v7M17 21V3.5l3.5 2.2L17 8"/>',
+  fiesta:    '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01"/>'
 };
 function svg(nombre, trazo) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="${trazo}" stroke-width="2"
@@ -1118,20 +1207,19 @@ base.on('tileerror', () => {
 });
 
 const capaSenderos = L.layerGroup().addTo(map);
-/* Los pines cercanos se juntan en un círculo con número; al tocarlo, el
+/* Los pines cercanos se juntan en un abanico de pines; al tocarlo, el
    mapa se acerca y se separan. Desde zoom 13 se ven todos sueltos. */
 const capaPins = L.markerClusterGroup({
   maxClusterRadius: 44, disableClusteringAtZoom: 13,
   showCoverageOnHover: false, spiderfyOnMaxZoom: true,
-  iconCreateFunction: racimo => L.divIcon({
-    className: '', iconSize: [46, 46],
-    html: (() => {
-      /* Un marcador puede ser un grupo de la misma localidad (cuantos > 1):
-         getChildCount() lo contaba como uno y el número quedaba corto. */
-      const n = racimo.getAllChildMarkers().reduce((s, m) => s + (m.options.cuantos || 1), 0);
-      return `<div class="racimo" role="img" aria-label="${n}">${n}</div>`;
-    })()
-  })
+  iconCreateFunction: racimo => {
+    const hijos = racimo.getAllChildMarkers();
+    /* Un marcador puede ser un grupo de la misma localidad (cuantos > 1):
+       getChildCount() lo contaba como uno y la cuenta quedaba corta. */
+    const n = hijos.reduce((s, m) => s + (m.options.cuantos || 1), 0);
+    return L.divIcon({ className: '', iconSize: [54, 48], iconAnchor: [27, 46],
+      html: abanico(hijos.flatMap(m => m.options.categorias || [m.options.categoria]), n, false) });
+  }
 }).addTo(map);
 
 /* Leaflet guarda el tamaño del contenedor y sólo lo recalcula con el
@@ -1151,25 +1239,47 @@ if (document.fonts && document.fonts.ready) {
    marca el blanco casi no se ve. */
 /* La gota apunta con la punta al lugar: el ancla va abajo al centro. */
 const GOTA = 'M18 44C18 44 3.5 27 3.5 17.5a14.5 14.5 0 0 1 29 0C32.5 27 18 44 18 44z';
-function pin(l, elegido) {
+/* Con `grupo` (varios lugares en el mismo punto) el pin es un abanico. */
+function pin(l, elegido, grupo) {
+  if (grupo) {
+    return L.divIcon({ className: '', iconSize: [54, 48], iconAnchor: [27, 46], popupAnchor: [0, -44],
+      html: abanico(grupo.map(o => o.categoria), grupo.length, elegido) });
+  }
   return L.divIcon({
     className: '', iconSize: [36, 46], iconAnchor: [18, 44],
-    html: `<div class="pin gota${elegido ? ' elegido' : ''}${l.relevamiento?.ubicacion === 'referencia' ? ' orientativo' : ''}" style="${tinte(l.region)}">
+    html: `<div class="pin gota${elegido ? ' elegido' : ''}${l.relevamiento?.ubicacion === 'referencia' ? ' orientativo' : ''}" style="${tinte(l)}">
              <svg class="forma" viewBox="0 0 36 46" aria-hidden="true"><path class="fondo" d="${GOTA}"/><path class="relleno" d="${GOTA}"/></svg>
              <span class="icono">${svg(CAT[l.categoria].icono, '#241b28')}</span></div>`
   });
+}
+
+/* Varios lugares juntos: hasta tres pines chicos en abanico, de los tipos
+   que más hay en el grupo, el más común adelante. Sin número (Luis: «los
+   números no sirven de nada»); la cantidad va en la etiqueta. */
+function abanico(categorias, n, elegido) {
+  const cuenta = {};
+  categorias.forEach(c => { cuenta[c] = (cuenta[c] || 0) + 1; });
+  const tipos = Object.keys(cuenta).sort((a, b) => cuenta[b] - cuenta[a]).slice(0, 3);
+  while (tipos.length < Math.min(3, n)) tipos.push(tipos[0]);
+  /* los de los costados primero: el del medio queda arriba */
+  const capas = tipos.length === 3 ? [[tipos[1], -22], [tipos[2], 22], [tipos[0], 0]]
+    : tipos.length === 2 ? [[tipos[1], -13], [tipos[0], 13]] : [[tipos[0], 0]];
+  const etiqueta = t('nLugares')(n);
+  return `<div class="abanico${elegido ? ' elegido' : ''}" role="img" aria-label="${etiqueta}" title="${etiqueta}">` +
+    capas.map(([k, g]) => `<span class="mini" style="--g:${g}deg;${tinteTipo(k)}"><svg viewBox="0 0 36 46" aria-hidden="true"><path class="fondo" d="${GOTA}"/><path class="relleno" d="${GOTA}"/></svg></span>`).join('') +
+    '</div>';
 }
 
 const marcadores = {};
 LUGARES.forEach(l => {
   /* El nombre y la región van en el título: el color no es la única pista */
   const etiqueta = `${l.nombre} · ${REG[l.region].nombre}`;
-  const m = L.marker([l.lat, l.lng], { title: etiqueta, alt: etiqueta, icon: pin(l, false) });
+  const m = L.marker([l.lat, l.lng], { title: etiqueta, alt: etiqueta, icon: pin(l, false), categoria: l.categoria });
   m.on('click', () => irA(l.id));
   marcadores[l.id] = m;
 });
 
-/* El sendero se dibuja en el color de su región, lleno (el contorno de
+/* El sendero se dibuja en el color de su tipo, lleno (el contorno de
    la región va punteado, así no se confunden) y con un borde blanco para
    que se despegue del relieve. Encima va una línea ancha invisible, que
    es la que se toca: el camino de 4 px es muy finito para el dedo. */
@@ -1182,7 +1292,7 @@ function dibujarSendero(l, elegido) {
   }
   L.polyline(tramos, { color: '#ffffff', weight: elegido ? 9 : 7, opacity: .95,
     lineCap: 'round', lineJoin: 'round', interactive: false }).addTo(g);
-  L.polyline(tramos, { color: TRAZO[l.region], weight: elegido ? 5 : 4, opacity: 1,
+  L.polyline(tramos, { color: colorTipo(l.categoria)[1], weight: elegido ? 5 : 4, opacity: 1,
     lineCap: 'round', lineJoin: 'round', interactive: false }).addTo(g);
   L.polyline(tramos, { color: '#000', weight: 22, opacity: 0 })
     .bindTooltip(l.nombre, { sticky: true, direction: 'top', offset: [0, -8] })
@@ -1228,22 +1338,25 @@ const porId = id => LUGARES.find(l => l.id === id);
 function dejarCalendario() {
   if (!estado.calendario) return;
   estado.calendario = false;
-  if (!estado.elegido) document.body.classList.remove('con-ficha');
+  if (!estado.elegido) document.body.classList.remove('con-ficha', 'hoja-alta');
 }
 function soltarElegido() {
   estado.elegido = null;
-  document.body.classList.remove('con-ficha');
+  document.body.classList.remove('con-ficha', 'hoja-alta');
   if (location.hash) history.replaceState(null, '', location.pathname + location.search);
 }
 
 /* ── Qué busca, en una línea ─────────────────────────────── */
 const elTipos = document.getElementById('tipos');
 [['todos', null], ...Object.entries(CAT).map(([k, c]) => [k, c.icono])]
+/* un tipo sin lugares no lleva botón: «Guías» aparece con el primero */
+.filter(([k]) => k === 'todos' || LUGARES.some(l => l.categoria === k))
 .forEach(([k, icono]) => {
   const b = document.createElement('button');
   b.className = 'pildora tipo';
   b.dataset.tipo = k;
-  b.innerHTML = (icono ? svg(icono, 'currentColor') : '') + '<span class="et"></span>';
+  b.innerHTML = (icono ? `<span class="cc" style="${tinteTipo(k)}">${svg(icono, '#241b28')}</span>` : '') +
+    '<span class="et"></span>';
   b.addEventListener('click', () => {
     estado.tipo = k;
     contar('filtro', { a: k });
@@ -1253,6 +1366,22 @@ const elTipos = document.getElementById('tipos');
   });
   elTipos.appendChild(b);
 });
+
+/* «Fiestas», al final de la fila, abre el calendario. Antes se llegaba
+   por la tarjeta de «Este mes en Jujuy», que se sacó. */
+const btnFiestas = document.createElement('button');
+btnFiestas.className = 'pildora tipo';
+btnFiestas.id = 'ver-fiestas';
+btnFiestas.setAttribute('aria-pressed', 'false');
+btnFiestas.innerHTML = `<span class="cc" style="--c:var(--amarillo-claro);--t:#8a6a00">${svg('fiesta', '#241b28')}</span><span class="et"></span>`;
+btnFiestas.hidden = !(window.FIESTAS || []).length;
+btnFiestas.addEventListener('click', () => {
+  if (cajonAbierto()) alternarCajon(false);
+  if (estado.calendario) { dejarCalendario(); pintar(); return; }
+  if (estado.elegido) soltarElegido();
+  abrirCalendario();
+});
+elTipos.appendChild(btnFiestas);
 
 /* «Gratis» se prende y se apaga: de los cuatro botones de costo, era
    el único que hacía falta. */
@@ -1281,6 +1410,19 @@ const revisarBordes = () => filasBotones.forEach(marcarBordes);
 /* ── El cajón de filtros ─────────────────────────────────── */
 const elCajon = document.getElementById('cajon');
 const btnCajon = document.getElementById('abrir-cajon');
+
+/* «Buscar lugares» y «Cerca mío» van adentro del mapa, en #arranque: en
+   el teléfono arrancan grandes en el medio y, apenas se usa uno o se toca
+   el mapa, bajan a una barra finita al pie (plegarArranque). En la
+   computadora #arranque no se ve: la búsqueda está arriba y «Cerca mío»
+   en su rincón. */
+const elArranque = document.getElementById('arranque');
+map.getContainer().appendChild(elArranque);
+L.DomEvent.disableClickPropagation(elArranque);
+L.DomEvent.disableScrollPropagation(elArranque);
+function plegarArranque() {
+  elArranque.classList.replace('inicio', 'plegado');
+}
 const lupa = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
                  stroke-linecap="round" aria-hidden="true">
                  <circle cx="10.5" cy="10.5" r="7"/><line x1="15.8" y1="15.8" x2="21" y2="21"/></svg>`;
@@ -1296,15 +1438,20 @@ function alternarCajon(abrir) {
     document.body.classList.remove('con-ficha');
     pintar();
   }
+  if (v) plegarArranque();
   elCajon.classList.toggle('abierto', v);
   btnCajon.setAttribute('aria-expanded', String(v));
   btnCajon.innerHTML = lupa + `<span>${v ? t('cerrarCajon') : t('abrirCajon')}</span>`;
   setTimeout(() => { map.invalidateSize({ animate: false }); revisarBordes(); }, 60);
 }
 btnCajon.addEventListener('click', () => alternarCajon());
-/* clic en el mapa o Escape lo cierran */
-document.getElementById('cuerpo').addEventListener('pointerdown', () => {
+/* clic en el mapa o Escape lo cierran; tocar el mapa también pliega los
+   botones del medio. Los propios botones no cuentan: si no, «Ver el
+   mapa» cerraba el cajón al apoyar el dedo y lo volvía a abrir al soltar. */
+document.getElementById('cuerpo').addEventListener('pointerdown', e => {
+  if (elArranque.contains(e.target)) return;
   if (cajonAbierto()) alternarCajon(false);
+  plegarArranque();
 }, true);
 
 /* ── Mostrar u ocultar la lista, para que el mapa ocupe todo ── */
@@ -1320,25 +1467,23 @@ btnLista.addEventListener('click', () => {
   setTimeout(() => map.invalidateSize({ animate: false }), 60);
 });
 
-/* ── Botones de idioma ───────────────────────────────────── */
-const elIdiomas = document.getElementById('idiomas');
+/* ── Idioma: un solo menú, cada idioma escrito en el suyo ── */
+const elIdioma = document.getElementById('idioma');
 Object.entries(IDIOMAS).forEach(([codigo, i]) => {
-  const b = document.createElement('button');
-  b.className = 'idioma';
-  b.dataset.idioma = codigo;
-  b.textContent = i.etiqueta;
-  b.lang = codigo;
-  b.title = i.nombre;
-  b.setAttribute('aria-label', i.nombre);
-  b.addEventListener('click', () => {
-    estado.idioma = codigo;
-    contar('idioma', { a: codigo });
-    try { localStorage.setItem('rcj-idioma', codigo); } catch (e) {}
-    traducir();
-    traducirExtras();
-    pintar();
-  });
-  elIdiomas.appendChild(b);
+  const o = document.createElement('option');
+  o.value = codigo;
+  o.textContent = i.nombre;
+  o.lang = codigo;
+  elIdioma.appendChild(o);
+});
+elIdioma.addEventListener('change', () => {
+  const codigo = elIdioma.value;
+  estado.idioma = codigo;
+  contar('idioma', { a: codigo });
+  try { localStorage.setItem('rcj-idioma', codigo); } catch (e) {}
+  traducir();
+  traducirExtras();
+  pintar();
 });
 
 /* Cambia todo el texto fijo de la página al idioma elegido. Lo que
@@ -1358,12 +1503,15 @@ function traducir() {
   buscar.setAttribute('aria-label', t('buscarAria'));
 
   elTipos.querySelector('[data-tipo="todos"] .et').textContent = t('todo');
-  Object.keys(CAT).forEach(k =>
-    elTipos.querySelector(`[data-tipo="${k}"] .et`).textContent = tr(CAT[k].boton));
+  Object.keys(CAT).forEach(k => {
+    const et = elTipos.querySelector(`[data-tipo="${k}"] .et`);
+    if (et) et.textContent = tr(CAT[k].boton);
+  });
+  btnFiestas.querySelector('.et').textContent = t('fiestas');
 
   btnGratis.querySelector('.et').textContent = t('gratis');
-  elIdiomas.querySelectorAll('[data-idioma]').forEach(el =>
-    el.setAttribute('aria-pressed', String(el.dataset.idioma === estado.idioma)));
+  elIdioma.value = estado.idioma;
+  elIdioma.setAttribute('aria-label', t('idioma'));
 
   btnCajon.innerHTML = lupa +
     `<span>${cajonAbierto() ? t('cerrarCajon') : t('abrirCajon')}</span>`;
@@ -1410,6 +1558,8 @@ function abrir(id) {
   if (!pasa(l)) estado.precio = 'todos';
   estado.elegido = id;
   estado.calendario = false;
+  plegarArranque();
+  document.body.classList.remove('hoja-alta');
   document.body.classList.add('con-ficha');
   /* la ficha va en la lista: si estaba escondida, se muestra */
   if (document.body.classList.contains('sin-lista')) {
@@ -1448,7 +1598,7 @@ function abrir(id) {
 function filaChica(l, detalle) {
   return `
     <button class="item chico" data-abre="${l.id}">
-      <span class="pastilla" style="${tinte(l.region)}">${svg(CAT[l.categoria].icono, '#241b28')}</span>
+      <span class="pastilla" style="${tinte(l)}">${svg(CAT[l.categoria].icono, '#241b28')}</span>
       <span class="t">
         <span class="n">${l.nombre}</span>
         <span class="d">${tr(CAT[l.categoria].nombre)} · ${detalle}</span>
@@ -1567,15 +1717,17 @@ function precioFicha(l) {
   return `<aside class="f-relevamiento"><strong>${t('precio')}: ${t(p?.estado || 'consultar')}</strong>
     ${p ? `<p>${escaparHtml(tr(p.nota))}</p><ul>${p.fuentes.map(f => `<li><a href="${escaparHtml(f.url)}" target="_blank" rel="noopener noreferrer">${escaparHtml(f.titulo)}</a></li>`).join('')}</ul>` : ''}</aside>`;
 }
+/* Sin foto no va nada: el dibujo de la región con «Todavía sin foto»
+   ocupaba media hoja en el teléfono y no decía nada del lugar. */
 function fotoFicha(l) {
   const f = l.foto;
-  if (!f) return `<div class="f-foto" style="background-image:url('marca/region-${l.region}.jpg')"><span>${t('sinFoto')}</span></div>`;
+  if (!f) return '';
   return `<figure class="foto-libre"><img data-foto src="${escaparHtml(f.url)}" alt="${escaparHtml(f.alt)}" loading="lazy" referrerpolicy="no-referrer">
     <figcaption>${escaparHtml(f.autor)} · <a href="${escaparHtml(f.licencia_url)}" target="_blank" rel="noopener noreferrer">${escaparHtml(f.licencia)}</a> · <a href="${escaparHtml(f.fuente)}" target="_blank" rel="noopener noreferrer">${t('fotoOriginal')}</a> · ${t('sinCambios')}</figcaption></figure>`;
 }
 
 function pintarFicha(l) {
-  const c = tinte(l.region);
+  const c = tinte(l);
   const gm = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.mapas_busqueda || `${l.lat},${l.lng}`)}`;
   const esSendero = ['sendero', 'bici'].includes(l.categoria);
   const tieneTrack = Boolean(TRAZADOS[l.id]);
@@ -1593,9 +1745,11 @@ function pintarFicha(l) {
   }
   const cerca = cercanos(l, [...guias.map(o => o.id), ...(sendero ? [sendero.id] : [])]);
 
+  /* La foto va después del nombre: en la hoja a media altura del teléfono,
+     si iba arriba, no se veía de qué lugar era. */
   elLista.innerHTML = `
+    <div class="asa" aria-hidden="true"></div>
     <button id="volver">${t('volver')}</button>
-    ${fotoFicha(l)}
     <div class="f-cuerpo">
       <span class="f-tipo" style="${c}">${svg(CAT[l.categoria].icono, '#241b28')}
         ${tr(CAT[l.categoria].nombre)}</span>
@@ -1604,6 +1758,8 @@ function pintarFicha(l) {
         /* la altura es la de la región: en un sendero confunde, porque
            muchos suben bastante más (el Hornocal está a 4.350 m) */
         : ` · ${tr(REG[l.region].altura)}`}</div>
+      ${l.credencial ? `<p class="f-credencial">${svg('guia', 'currentColor')}${t('credencial')}: ${escaparHtml(l.credencial)}</p>` : ''}
+      ${fotoFicha(l)}
       ${esSendero ? datosSendero(l) : ''}
       <p class="f-texto">${tr(l.descripcion)}</p>
       ${precioFicha(l)}
@@ -1622,9 +1778,7 @@ function pintarFicha(l) {
       ${cerca.map(x => filaChica(x.o, t('aKm')(cifra(x.km)))).join('')}</div>` : ''}`;
 
   const imagen = elLista.querySelector('[data-foto]');
-  if (imagen) imagen.addEventListener('error', () => {
-    imagen.closest('figure').outerHTML = `<div class="f-foto" style="background-image:url('marca/region-${l.region}.jpg')"><span>${t('sinFoto')}</span></div>`;
-  }, { once: true });
+  if (imagen) imagen.addEventListener('error', () => imagen.closest('figure').remove(), { once: true });
   document.getElementById('volver').addEventListener('click', cerrarFicha);
   document.getElementById('compartir').addEventListener('click', e => compartir(l, e.currentTarget));
   if (tieneTrack) document.getElementById('gpx').addEventListener('click', () => descargarGpx(l));
@@ -1652,6 +1806,7 @@ function activarQuitar() {
 }
 
 function pintarLista(visibles) {
+  btnFiestas.setAttribute('aria-pressed', String(!!estado.calendario));
   if (estado.elegido) { pintarFicha(porId(estado.elegido)); return; }
   if (estado.calendario) { pintarCalendario(); return; }
   const yo = estado.cerca && [estado.cerca.lat, estado.cerca.lng];
@@ -1676,10 +1831,10 @@ function pintarLista(visibles) {
 
   const cuenta = visibles.length === 1 ? t('unLugar') : t('nLugares')(visibles.length);
 
-  elLista.innerHTML = tarjetaEsteMes() + `<p class="cuenta"><span>${cuenta}</span>${quitar}</p>` +
+  elLista.innerHTML = `<p class="cuenta"><span>${cuenta}</span>${quitar}</p>` +
     visibles.map(l => `
       <button class="item" data-abre="${l.id}">
-        <span class="pastilla" style="${tinte(l.region)}">${svg(CAT[l.categoria].icono, '#241b28')}</span>
+        <span class="pastilla" style="${tinte(l)}">${svg(CAT[l.categoria].icono, '#241b28')}</span>
         <span class="t">
           <span class="n">${l.nombre}</span>
           ${yo ? `<span class="d distancia">${t('aKm')(cifra(distanciaKm(yo, [l.lat, l.lng])))}</span>` : ''}
@@ -1694,37 +1849,16 @@ function pintarLista(visibles) {
   elLista.querySelectorAll('[data-abre]').forEach(b =>
     b.addEventListener('click', () => irA(b.dataset.abre)));
   activarQuitar();
-  const vc = document.getElementById('ver-calendario');
-  if (vc) vc.addEventListener('click', abrirCalendario);
 }
 
 /* ── Calendario de fiestas ───────────────────────────────── */
 const FIESTAS = window.FIESTAS || [];
 const mesActual = new Date().getMonth() + 1;
-function fiestasDelMes() {
-  /* este mes; si no hay ninguna, la próxima que viene */
-  const ahora = FIESTAS.filter(x => x.meses.includes(mesActual));
-  if (ahora.length) return { titulo: t('esteMes'), lista: ahora };
-  for (let i = 1; i < 12; i++) {
-    const m = (mesActual - 1 + i) % 12 + 1;
-    const prox = FIESTAS.filter(x => x.meses.includes(m));
-    if (prox.length) return { titulo: `${t('proximamente')} · ${t('meses')[m - 1]}`, lista: prox };
-  }
-  return { titulo: '', lista: [] };
-}
-function tarjetaEsteMes() {
-  const { titulo, lista } = fiestasDelMes();
-  if (!lista.length) return '';
-  return `<section class="este-mes" aria-label="${titulo}">
-    <div class="titulo">${titulo}</div>
-    ${lista.map(x => `<div class="fiesta"><b>${escaparHtml(x.nombre)}</b> · ${escaparHtml(tr(x.cuando))} · ${escaparHtml(x.lugar)}</div>`).join('')}
-    <button class="boton" id="ver-calendario">${t('verCalendario')}</button>
-  </section>`;
-}
 function pintarCalendario() {
   const meses = [];
   for (let i = 0; i < 12; i++) meses.push((mesActual - 1 + i) % 12 + 1);   // desde este mes
-  elLista.innerHTML = `<button id="volver">${t('volver')}</button>
+  elLista.innerHTML = `<div class="asa" aria-hidden="true"></div>
+    <button id="volver">${t('volver')}</button>
     <div class="calendario"><h2 class="f-nombre">${t('calendario')}</h2>
     ${meses.map(m => {
       const del = FIESTAS.filter(x => x.meses[0] === m);
@@ -1750,6 +1884,9 @@ function pintarCalendario() {
 function abrirCalendario() {
   estado.calendario = true;
   contar('calendario', {});
+  btnFiestas.setAttribute('aria-pressed', 'true');
+  plegarArranque();
+  document.body.classList.remove('hoja-alta');
   document.body.classList.add('con-ficha');   // en el teléfono sube como la ficha
   pintarCalendario();
   elLista.scrollTop = 0;
@@ -1766,8 +1903,8 @@ function pintar() {
   }
 
   capaPins.clearLayers();
-  // Varias fichas tienen la misma referencia de localidad: un marcador
-  // numerado permite elegir cualquiera sin desplazar artificialmente los pines.
+  // Varias fichas tienen la misma referencia de localidad: un abanico que
+  // abre la lista permite elegir cualquiera sin desplazar los pines.
   const grupos = new Map();
   visibles.forEach(l => {
     const clave = `${l.lat},${l.lng}`;
@@ -1779,10 +1916,8 @@ function pintar() {
     const m = marcadores[l.id];
     const elegido = l.id === estado.elegido;
     if (grupo.length > 1) {
-      const icono = L.divIcon({ className: '', iconSize: [46, 46], iconAnchor: [23, 23],
-        html: `<div class="racimo${elegido ? ' elegido' : ''}">${grupo.length}</div>` });
-      const conjunto = L.marker([l.lat, l.lng], { icon: icono, cuantos: grupo.length,
-        title: `${t('propuestasLocalidad')}: ${grupo.length}` });
+      const conjunto = L.marker([l.lat, l.lng], { icon: pin(l, elegido, grupo), cuantos: grupo.length,
+        categorias: grupo.map(o => o.categoria), title: `${t('propuestasLocalidad')}: ${grupo.length}` });
       conjunto.bindPopup(`<div class="grupo-propuestas"><strong>${t('propuestasLocalidad')}</strong>
         ${grupo.some(o => o.relevamiento?.ubicacion === 'referencia') ? `<p>${t('ubicacionOrientativa')}</p>` : ''}
         ${grupo.map(o => `<button data-propuesta="${escaparHtml(o.id)}">${escaparHtml(o.nombre)}</button>`).join('')}</div>`);
@@ -1842,6 +1977,44 @@ elLista.addEventListener('click', e => {
   const b = e.target.closest('[data-accion]');
   if (b && estado.elegido) contarLugar('contacto', porId(estado.elegido), { a: b.dataset.accion });
 });
+/* ── La hoja de la ficha, en el teléfono ─────────────────────
+   Abre a media altura. Se agranda si se arrastra el asa hacia arriba, si
+   se la toca o si se baja leyendo; arrastrada hacia abajo hasta casi el
+   borde, se cierra. */
+const hojaAbierta = () => telefono.matches && document.body.classList.contains('con-ficha');
+const hojaAlta = v => document.body.classList.toggle('hoja-alta', v);
+function cerrarHoja() {
+  if (estado.elegido) cerrarFicha();
+  else if (estado.calendario) { dejarCalendario(); pintar(); }
+}
+elLista.addEventListener('scroll', () => {
+  if (hojaAbierta() && elLista.scrollTop > 12) hojaAlta(true);
+}, { passive: true });
+let arrastre = null;
+elLista.addEventListener('pointerdown', e => {
+  if (!hojaAbierta() || !e.target.closest('.asa')) return;
+  arrastre = { y: e.clientY, alto: elLista.getBoundingClientRect().height };
+  elLista.setPointerCapture(e.pointerId);
+  elLista.style.transition = 'none';
+});
+elLista.addEventListener('pointermove', e => {
+  if (!arrastre) return;
+  const alto = Math.max(60, Math.min(innerHeight * .9, arrastre.alto + arrastre.y - e.clientY));
+  elLista.style.maxHeight = alto + 'px';
+});
+function soltarHoja(e) {
+  if (!arrastre) return;
+  const subio = arrastre.y - e.clientY;
+  const alto = elLista.getBoundingClientRect().height;
+  arrastre = null;
+  elLista.style.maxHeight = elLista.style.transition = '';
+  if (Math.abs(subio) < 6) hojaAlta(!document.body.classList.contains('hoja-alta'));   // un toque
+  else if (alto < innerHeight * .18) { hojaAlta(false); cerrarHoja(); }
+  else hojaAlta(alto > innerHeight * .5);
+}
+elLista.addEventListener('pointerup', soltarHoja);
+elLista.addEventListener('pointercancel', soltarHoja);
+
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
   if (cajonAbierto()) { alternarCajon(false); return; }
@@ -1851,6 +2024,15 @@ document.addEventListener('keydown', e => {
 
 /* ── Letra grande ────────────────────────────────────────── */
 const btnLetra = document.getElementById('letra');
+/* en el teléfono, «A+» va en el mapa debajo del + y el − (acomodarBotones) */
+const ControlLetra = L.Control.extend({
+  onAdd() {
+    const c = L.DomUtil.create('div', 'letra-control');
+    L.DomEvent.disableClickPropagation(c);
+    return c;
+  }
+});
+const controlLetra = new ControlLetra({ position: 'topleft' }).addTo(map);
 function ponerLetra(grande) {
   document.body.classList.toggle('grande', grande);
   btnLetra.setAttribute('aria-pressed', String(grande));
@@ -1926,6 +2108,7 @@ const ControlCerca = L.Control.extend({
 new ControlCerca({ position: 'bottomright' }).addTo(map);
 const btnCerca = document.getElementById('cerca');
 btnCerca.addEventListener('click', () => {
+  plegarArranque();
   if (seguimiento !== null) { apagarCerca(); return; }
   if (!navigator.geolocation) { mostrarAviso(t('cercaError')); return; }
   btnCerca.setAttribute('aria-pressed', 'true');
@@ -1935,6 +2118,24 @@ btnCerca.addEventListener('click', () => {
     () => { contar('cerca', { a: 'error' }); apagarCerca(); mostrarAviso(t('cercaError')); },
     { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 });
 });
+
+/* En el teléfono «Cerca mío» va con «Buscar lugares» en el medio del mapa
+   y «A+» debajo del + y el −; en la computadora, en su rincón y en la
+   barra de arriba. Se reacomodan si cambia el ancho (girar el teléfono). */
+const rinconCerca = btnCerca.parentElement;
+const elDer = document.querySelector('header .der');
+function acomodarBotones() {
+  if (telefono.matches) {
+    elArranque.appendChild(btnCerca);
+    controlLetra.getContainer().appendChild(btnLetra);
+  } else {
+    rinconCerca.appendChild(btnCerca);
+    elDer.prepend(btnLetra);
+  }
+}
+acomodarBotones();
+telefono.addEventListener('change', acomodarBotones);
+
 function traducirExtras() {
   btnLetra.querySelector('.letra-texto').textContent = t('letraGrande');
   btnLetra.setAttribute('aria-label', t('letraGrande'));
