@@ -9,7 +9,8 @@ if (location.protocol === 'http:' && /(^|\.)vamopue\.com$/.test(location.hostnam
   location.replace('https://' + location.host + location.pathname + location.search + location.hash);
 }
 </script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- viewport-fit=cover: así env(safe-area-inset-bottom) dice cuánto tapa abajo el teléfono -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Vamo pue · Ruta cultural jujeña — Fundación Puna</title>
 <!-- Para buscadores y para la vista previa del enlace en WhatsApp y redes.
      La imagen tiene que ir con la dirección completa. -->
@@ -561,27 +562,36 @@ a.llegar { display: inline-flex; align-items: center; }
 .item.chico .pastilla svg { width: 18px; height: 18px; }
 .item.chico .n { font-size: 17px; }
 
-/* al pie de la lista: para que un emprendimiento pida sumarse */
+/* Al pie de la lista: para que un emprendimiento pida sumarse. Es una
+   tarjeta con margen y las dos formas enteras adentro, arriba a la
+   derecha: antes iban cortadas contra los bordes y parecía un error. El
+   texto deja lugar para las formas, así no se pisan. */
 .sumate {
-  border-top: 1px solid var(--borde);
-  background: var(--rosado);
-  padding: 20px 24px 26px;
+  position: relative; overflow: hidden;
+  margin: 14px 14px 18px; padding: 20px 20px 16px;
+  background: var(--rosado); border-radius: 22px;
   font-size: 16px;
-  position: relative;
-  overflow: hidden;
 }
 .sumate > * { position: relative; }
-.sumate p { margin-bottom: 10px; max-width: 30ch; }
+.sumate .pregunta {
+  font-family: 'Outfit', system-ui, sans-serif; font-weight: 600;
+  font-size: 18px; line-height: 1.3;
+  max-width: calc(100% - 96px); margin-bottom: 14px;
+}
 .sumate .boton { border-color: var(--coral); background: var(--blanco); }
 .sumate .forma { position: absolute; pointer-events: none; }
-.sumate .forma.flor { width: 92px; right: -16px; top: -18px; }
-.sumate .forma.piedra { width: 70px; right: 52px; bottom: -34px; }
+.sumate .forma.flor { width: 58px; top: 14px; right: 16px; }
+.sumate .forma.piedra { width: 40px; top: 60px; right: 60px; }
+/* El logo de la Fundación es sólo la marca, pesada abajo: al lado de un
+   renglón chico parecía caído. Con dos renglones del mismo alto que el
+   logo («Un proyecto de» / «Fundación Puna») quedan parejos. */
 .sumate .de-puna {
-  max-width: none;
-  display: flex; align-items: center; gap: 9px;
-  margin-top: 18px; font-size: 13px; color: var(--suave);
+  display: flex; align-items: center; gap: 11px;
+  margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--borde);
+  font-size: 13px; line-height: 1.3; color: var(--suave);
 }
-.sumate .de-puna img { height: 24px; width: auto; }
+.sumate .de-puna img { height: 32px; width: auto; flex-shrink: 0; }
+.sumate .de-puna b { display: block; font-size: 14.5px; font-weight: 600; color: var(--tinta); }
 
 /* Formas orgánicas de la página de recursos, en las esquinas del cajón.
    Son adorno: no se tocan y en el teléfono no van. */
@@ -874,7 +884,23 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
 
 /* ── Teléfono ────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  html, body { height: auto; overflow: visible; }
+  /* Como en las aplicaciones de mapas: la página no se corre, el mapa
+     ocupa toda la pantalla debajo de la barra y la lista vive en una hoja
+     que sube desde abajo (ver «La hoja de abajo» en el script). */
+  /* El cuerpo fijo y del alto que se ve de verdad (dvh, nunca vh): en el
+     iPhone la barra de Safari de abajo tapaba «129 places» y el primer
+     lugar. Sin rebote: la página no se corre, sólo la hoja. */
+  html { overscroll-behavior: none; }
+  body {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 100%; height: 100dvh;
+    overscroll-behavior: none;
+    /* lo que asoma la hoja: el asa, «129 lugares» y el comienzo del
+       primero, más lo que tape el borde de abajo del teléfono */
+    --asomo: calc(104px + env(safe-area-inset-bottom, 0px));
+  }
+  body.grande { --asomo: calc(130px + env(safe-area-inset-bottom, 0px)); }
+  header { padding-left: max(13px, env(safe-area-inset-left, 0px)); padding-right: max(13px, env(safe-area-inset-right, 0px)); }
   /* Una sola fila: el logo y el idioma (Luis, 9/10: «quitar todo eso de
      Fundación Puna y ahí poner los idiomas», para que la barra no le robe
      pantalla al mapa). El título queda para el lector de pantalla;
@@ -910,40 +936,60 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
     pointer-events: none;
   }
   #arranque > * { pointer-events: auto; }
-  #arranque.inicio { top: 50%; transform: translateY(-50%); }
+  /* centrados en lo que se ve del mapa, arriba de la hoja que asoma */
+  #arranque.inicio { top: calc((100% - var(--asomo)) / 2); transform: translateY(-50%); }
   #arranque #abrir-cajon, #arranque #cerca {
     min-width: 250px; min-height: 58px; justify-content: center;
     font-size: 18px; padding: 12px 26px;
     box-shadow: 0 6px 18px rgba(36,27,40,.3);
   }
-  /* encima del renglón de créditos del mapa, que tiene que verse */
-  #arranque.plegado { bottom: 42px; flex-direction: row; justify-content: center; gap: 8px; }
+  /* plegados, justo encima de la hoja: suben y bajan con ella, y con la
+     hoja arriba del todo se esconden */
+  #arranque.plegado {
+    bottom: calc(var(--asomo) + 40px); flex-direction: row; justify-content: center; gap: 8px;
+    transition: bottom .25s ease, opacity .2s;
+  }
+  body.hoja-medio #arranque.plegado { bottom: calc(44% + 40px); }
+  /* los créditos del mapa tienen que verse: van justo encima de la hoja,
+     y la barra de los botones encima de ellos */
+  #mapa .leaflet-bottom { bottom: var(--asomo); transition: bottom .25s ease; }
+  body.hoja-medio #mapa .leaflet-bottom { bottom: 44%; }
+  body.arrastrando #mapa .leaflet-bottom { transition: none; }
+  body.hoja-alta #arranque.plegado { opacity: 0; }
+  body.hoja-alta #arranque.plegado > * { pointer-events: none; }
+  body.arrastrando #arranque.plegado { opacity: 0; transition: none; }
   #arranque.plegado #abrir-cajon, #arranque.plegado #cerca {
     min-width: 0; min-height: 46px; font-size: 15px; padding: 9px 16px;
     box-shadow: 0 2px 8px rgba(36,27,40,.25);
   }
 
-  /* La ficha sube desde abajo sobre el mapa, como en las aplicaciones de
-     mapas: antes se abría debajo del mapa, fuera de la pantalla, y al
-     tocar un pin parecía que no pasaba nada. Abre a media altura: con el
-     60 % tapaba casi todo el mapa (Luis: «reducir a la mitad y ampliar el
-     mapa»). Para leer el resto se arrastra el asa hacia arriba, o se la
-     toca, o se baja leyendo: entonces crece hasta casi toda la pantalla. */
-  body.con-ficha #lista {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 1300;
-    max-height: 34vh; overflow-y: auto; overscroll-behavior: contain;
+  /* La hoja de abajo: la lista, la ficha y el calendario. Tiene tres
+     alturas: asoma (el asa y «129 lugares»), media pantalla y casi toda.
+     La ficha y el calendario abren a media altura (Luis: «reducir a la
+     mitad y ampliar el mapa»). Se cambia arrastrando o tocando el asa;
+     en media altura, bajar leyendo la agranda. */
+  #lista {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 1100;
+    width: auto; height: var(--asomo);
+    overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
     background: var(--papel);
-    border-radius: 24px 24px 0 0; border-top: none;
-    box-shadow: 0 -8px 28px rgba(36,27,40,.28);
-    transition: max-height .25s ease;
+    border-right: none; border-radius: 22px 22px 0 0;
+    box-shadow: 0 -6px 24px rgba(36,27,40,.22);
+    transition: height .25s ease;
+    padding-bottom: env(safe-area-inset-bottom);
   }
-  body.con-ficha.hoja-alta #lista { max-height: 88vh; }
-  /* con zoom 1.25, 27vh se ve como el 34% de la pantalla, igual que sin letra grande */
-  body.grande.con-ficha #lista { max-height: 27vh; }
-  body.grande.con-ficha.hoja-alta #lista { max-height: 70vh; }
+  body.hoja-asomo #lista { overflow-y: hidden; }
+  body.hoja-medio #lista { height: 44%; }
+  body.hoja-alta #lista { height: calc(100% - 40px); }
+  /* con letra grande la hoja va con zoom 1.25: estas medidas, agrandadas
+     un cuarto, dan lo mismo que las de arriba */
+  body.grande #lista { height: calc(var(--asomo) / 1.25); }
+  body.grande.hoja-medio #lista { height: calc(44% / 1.25); }
+  body.grande.hoja-alta #lista { height: calc((100% - 40px) / 1.25); }
+  body.arrastrando #lista { transition: none; }
   /* el asa: se arrastra (touch-action: none) y queda pegada arriba al leer */
   .asa {
-    display: block; position: sticky; top: 0; z-index: 2; height: 26px;
+    display: block; position: sticky; top: 0; z-index: 2; height: 28px;
     background: var(--papel); touch-action: none; cursor: grab;
   }
   .asa::before {
@@ -952,18 +998,18 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
   }
   #aviso-cerca { top: 12px; }
 
-  #cuerpo { flex-direction: column; min-height: 0; }
-  /* el mapa ocupa casi toda la pantalla; abajo asoma el comienzo de la lista */
-  #mapa { order: 1; height: 74vh; height: calc(100svh - 150px); min-height: 340px; flex: none; }
-  /* en el teléfono la lista va debajo del mapa, no le quita ancho:
-     no hace falta el botón de esconderla */
+  #cuerpo { display: block; }
+  #mapa { position: absolute; inset: 0; }
+  /* la lista va en la hoja: no hace falta el botón de esconderla */
   #alternar-lista { display: none; }
-  #lista {
-    order: 2; width: 100%; flex: none; overflow: visible;
-    border-right: none; border-top: 1px solid var(--borde);
-  }
-  .cuenta, .item, #volver, .f-cuerpo, .f-sub, .item.chico, .sumate {
+  .cuenta, .item, #volver, .f-cuerpo, .f-sub, .item.chico {
     padding-left: 14px; padding-right: 14px;
+  }
+  /* lo que se ve con la hoja asomada: el título de la lista */
+  .cuenta { padding-top: 4px; }
+  .cuenta > span:first-child {
+    font-family: 'Outfit', system-ui, sans-serif; font-weight: 600;
+    font-size: 17px; color: var(--tinta);
   }
 }
 
@@ -972,7 +1018,7 @@ body.grande #cerca { font-size: 19px; min-height: 56px; }
 }
 </style>
 </head>
-<body>
+<body class="hoja-asomo">
 
 <div id="hilos"></div>
 
@@ -1335,14 +1381,26 @@ const porId = id => LUGARES.find(l => l.id === id);
    puede mandar por WhatsApp y el botón de volver del teléfono la cierra. */
 /* Cualquier filtro o búsqueda vuelve a la lista: con el calendario
    abierto, la lista no cambiaba y parecía que el filtro no andaba. */
+/* La hoja de abajo del teléfono está en 'asomo', 'medio' o 'alta' (una
+   clase en el body; ver «La hoja de abajo»). hojaLista guarda a qué
+   altura estaba la lista, para volver ahí al cerrar una ficha. */
+let hoja = 'asomo', hojaLista = 'asomo';
+function ponerHoja(h) {
+  hoja = h;
+  document.body.classList.remove('hoja-asomo', 'hoja-medio', 'hoja-alta');
+  document.body.classList.add('hoja-' + h);
+  if (h === 'asomo') document.getElementById('lista').scrollTop = 0;
+}
 function dejarCalendario() {
   if (!estado.calendario) return;
   estado.calendario = false;
-  if (!estado.elegido) document.body.classList.remove('con-ficha', 'hoja-alta');
+  if (!estado.elegido) { document.body.classList.remove('con-ficha'); ponerHoja(hojaLista); }
 }
 function soltarElegido() {
+  const habia = estado.elegido;
   estado.elegido = null;
-  document.body.classList.remove('con-ficha', 'hoja-alta');
+  document.body.classList.remove('con-ficha');
+  if (habia) ponerHoja(hojaLista);
   if (location.hash) history.replaceState(null, '', location.pathname + location.search);
 }
 
@@ -1556,10 +1614,11 @@ function abrir(id) {
   if (!pasa(l) && estado.busqueda) { estado.busqueda = ''; elBuscar.value = ''; }
   if (!pasa(l)) estado.tipo = 'todos';
   if (!pasa(l)) estado.precio = 'todos';
+  if (!estado.elegido && !estado.calendario) hojaLista = hoja;
   estado.elegido = id;
   estado.calendario = false;
   plegarArranque();
-  document.body.classList.remove('hoja-alta');
+  ponerHoja('medio');
   document.body.classList.add('con-ficha');
   /* la ficha va en la lista: si estaba escondida, se muestra */
   if (document.body.classList.contains('sin-lista')) {
@@ -1574,8 +1633,8 @@ function abrir(id) {
   if (telefono.matches) {
     const r = document.getElementById('mapa').getBoundingClientRect();
     const libreArriba = Math.max(r.top, 0);
-    /* donde empieza la hoja de verdad: con letra grande es más alta */
-    const libreAbajo = Math.min(r.bottom, elLista.getBoundingClientRect().top);
+    /* donde va a quedar el borde de la hoja (todavía está subiendo) */
+    const libreAbajo = r.bottom - altoDe('medio');
     tapado = Math.max(0, r.bottom - libreAbajo);
     corrimiento = (r.top + r.height / 2) - (libreArriba + libreAbajo) / 2;
   }
@@ -1815,23 +1874,23 @@ function pintarLista(visibles) {
     <div class="sumate">
       <img class="forma flor" src="marca/forma-flor.svg" alt="">
       <img class="forma piedra" src="marca/forma-piedra.svg" alt="">
-      <p>${t('sumate')}</p>
+      <p class="pregunta">${t('sumate')}</p>
       <a class="boton" href="mailto:${FUNDACION.email}?subject=${encodeURIComponent(t('sumateAsunto'))}&body=${encodeURIComponent(t('sumateCuerpo'))}">${t('sumateBoton')}</a>
-      <p class="de-puna"><img src="logo-puna.png" alt="">${t('proyecto')}</p>
+      <p class="de-puna"><img src="logo-puna.png" alt=""><span>${t('proyecto').replace('Fundación Puna', '').trim()} <b>Fundación Puna</b></span></p>
     </div>`;
   /* en la computadora el aviso del relevamiento va acá, al pie */
   const aviso = `<p class="aviso-lista">${t('aviso')} <b>${t('avisoFuerte')}</b> ${t('avisoResto')}</p>`;
   const quitar = hayFiltros() ? `<button class="quitar" data-quitar>${t('quitarFiltros')}</button>` : '';
 
   if (!visibles.length) {
-    elLista.innerHTML = `<p class="vacio">${t('vacio')}</p><p class="cuenta">${quitar}</p>` + aviso + sumate;
+    elLista.innerHTML = `<div class="asa" aria-hidden="true"></div><p class="vacio">${t('vacio')}</p><p class="cuenta">${quitar}</p>` + aviso + sumate;
     activarQuitar();
     return;
   }
 
   const cuenta = visibles.length === 1 ? t('unLugar') : t('nLugares')(visibles.length);
 
-  elLista.innerHTML = `<p class="cuenta"><span>${cuenta}</span>${quitar}</p>` +
+  elLista.innerHTML = `<div class="asa" aria-hidden="true"></div><p class="cuenta"><span>${cuenta}</span>${quitar}</p>` +
     visibles.map(l => `
       <button class="item" data-abre="${l.id}">
         <span class="pastilla" style="${tinte(l)}">${svg(CAT[l.categoria].icono, '#241b28')}</span>
@@ -1876,18 +1935,19 @@ function pintarCalendario() {
         </div>`).join('');
     }).join('')}</div>`;
   document.getElementById('volver').addEventListener('click', () => {
-    estado.calendario = false; document.body.classList.remove('con-ficha'); pintar();
+    estado.calendario = false; document.body.classList.remove('con-ficha'); ponerHoja(hojaLista); pintar();
   });
   elLista.querySelectorAll('[data-abre]').forEach(b =>
     b.addEventListener('click', () => irA(b.dataset.abre)));
 }
 function abrirCalendario() {
+  if (!estado.elegido && !estado.calendario) hojaLista = hoja;
   estado.calendario = true;
   contar('calendario', {});
   btnFiestas.setAttribute('aria-pressed', 'true');
   plegarArranque();
-  document.body.classList.remove('hoja-alta');
-  document.body.classList.add('con-ficha');   // en el teléfono sube como la ficha
+  ponerHoja('medio');   // en el teléfono sube como la ficha
+  document.body.classList.add('con-ficha');
   pintarCalendario();
   elLista.scrollTop = 0;
   document.getElementById('volver').focus({ preventScroll: true });
@@ -1969,6 +2029,7 @@ elBuscar.addEventListener('input', e => {
   pintar();
   clearTimeout(esperaBusqueda);
   const q = e.target.value.trim();
+  if (telefono.matches && q && hoja === 'asomo') ponerHoja('medio');
   if (q.length >= 3) esperaBusqueda = setTimeout(() => contar('busqueda', { q, r: LUGARES.filter(pasa).length }), 1500);
 });
 
@@ -1977,43 +2038,91 @@ elLista.addEventListener('click', e => {
   const b = e.target.closest('[data-accion]');
   if (b && estado.elegido) contarLugar('contacto', porId(estado.elegido), { a: b.dataset.accion });
 });
-/* ── La hoja de la ficha, en el teléfono ─────────────────────
-   Abre a media altura. Se agranda si se arrastra el asa hacia arriba, si
-   se la toca o si se baja leyendo; arrastrada hacia abajo hasta casi el
-   borde, se cierra. */
-const hojaAbierta = () => telefono.matches && document.body.classList.contains('con-ficha');
-const hojaAlta = v => document.body.classList.toggle('hoja-alta', v);
+/* ── La hoja de abajo, en el teléfono ────────────────────────
+   Como en las aplicaciones de mapas: la hoja asoma con el asa y «129
+   lugares»; tocando o arrastrando el asa sube a media pantalla o a casi
+   toda. En media altura, bajar leyendo la agranda; arriba de todo,
+   deslizar hacia abajo la achica. La ficha y el calendario abren a media
+   altura y, arrastrados hasta abajo, se cierran y vuelve la lista. Mover
+   el mapa baja la lista para que se vea. */
+const enLista = () => !estado.elegido && !estado.calendario;
+/* una sonda invisible del alto de --asomo, que depende del teléfono */
+const sondaAsomo = document.createElement('div');
+sondaAsomo.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;width:0;height:var(--asomo)';
+document.body.appendChild(sondaAsomo);
+function altoDe(h) {
+  if (h === 'asomo') return sondaAsomo.getBoundingClientRect().height;
+  const c = document.getElementById('cuerpo').getBoundingClientRect().height;
+  return h === 'medio' ? c * .44 : c - 40;
+}
 function cerrarHoja() {
   if (estado.elegido) cerrarFicha();
   else if (estado.calendario) { dejarCalendario(); pintar(); }
 }
-elLista.addEventListener('scroll', () => {
-  if (hojaAbierta() && elLista.scrollTop > 12) hojaAlta(true);
-}, { passive: true });
+/* un toque en el asa: un escalón más arriba; desde arriba de todo, vuelve */
+function siguienteHoja() {
+  if (hoja === 'asomo') return 'medio';
+  if (hoja === 'medio') return 'alta';
+  return enLista() ? 'asomo' : 'medio';
+}
 let arrastre = null;
 elLista.addEventListener('pointerdown', e => {
-  if (!hojaAbierta() || !e.target.closest('.asa')) return;
-  arrastre = { y: e.clientY, alto: elLista.getBoundingClientRect().height };
+  if (!telefono.matches || !e.target.closest('.asa')) return;
+  arrastre = { y: e.clientY, alto: elLista.getBoundingClientRect().height, movio: false };
   elLista.setPointerCapture(e.pointerId);
-  elLista.style.transition = 'none';
+  document.body.classList.add('arrastrando');
 });
 elLista.addEventListener('pointermove', e => {
   if (!arrastre) return;
-  const alto = Math.max(60, Math.min(innerHeight * .9, arrastre.alto + arrastre.y - e.clientY));
-  elLista.style.maxHeight = alto + 'px';
+  const dy = arrastre.y - e.clientY;
+  if (Math.abs(dy) > 6) arrastre.movio = true;
+  const alto = Math.max(60, Math.min(altoDe('alta'), arrastre.alto + dy));
+  /* con letra grande la hoja tiene zoom: la medida va en sus unidades */
+  elLista.style.height = alto / (document.body.classList.contains('grande') ? 1.25 : 1) + 'px';
 });
-function soltarHoja(e) {
+let soltoEn = 0;
+function soltarHoja() {
   if (!arrastre) return;
-  const subio = arrastre.y - e.clientY;
+  const { movio } = arrastre;
   const alto = elLista.getBoundingClientRect().height;
   arrastre = null;
-  elLista.style.maxHeight = elLista.style.transition = '';
-  if (Math.abs(subio) < 6) hojaAlta(!document.body.classList.contains('hoja-alta'));   // un toque
-  else if (alto < innerHeight * .18) { hojaAlta(false); cerrarHoja(); }
-  else hojaAlta(alto > innerHeight * .5);
+  soltoEn = Date.now();
+  document.body.classList.remove('arrastrando');
+  elLista.style.height = '';
+  if (!movio) { ponerHoja(siguienteHoja()); return; }
+  if (!enLista() && alto < altoDe('asomo') * .75) { cerrarHoja(); return; }
+  /* queda en la altura más cercana a donde se soltó */
+  ponerHoja(['asomo', 'medio', 'alta'].reduce((a, b) =>
+    Math.abs(altoDe(b) - alto) < Math.abs(altoDe(a) - alto) ? b : a));
 }
 elLista.addEventListener('pointerup', soltarHoja);
 elLista.addEventListener('pointercancel', soltarHoja);
+/* asomada, tocarla fuera de un botón o llegar con el teclado la sube. El
+   clic que el navegador manda al soltar el asa no cuenta: si no, al
+   bajarla hasta abajo volvía a subir. */
+elLista.addEventListener('click', e => {
+  if (Date.now() - soltoEn < 400) return;
+  if (telefono.matches && hoja === 'asomo' && !e.target.closest('button, a, .asa')) ponerHoja('medio');
+});
+elLista.addEventListener('focusin', () => {
+  if (telefono.matches && hoja === 'asomo') ponerHoja('medio');
+});
+elLista.addEventListener('scroll', () => {
+  if (telefono.matches && hoja === 'medio' && elLista.scrollTop > 12) ponerHoja('alta');
+}, { passive: true });
+let toque = null;
+elLista.addEventListener('touchstart', e => {
+  toque = telefono.matches && hoja !== 'asomo' && elLista.scrollTop <= 0 && !e.target.closest('.asa')
+    ? e.touches[0].clientY : null;
+}, { passive: true });
+elLista.addEventListener('touchmove', e => {
+  if (toque === null || e.touches[0].clientY - toque < 70) return;
+  toque = null;
+  ponerHoja(hoja === 'alta' ? 'medio' : 'asomo');
+}, { passive: true });
+map.on('dragstart', () => {
+  if (telefono.matches && enLista() && hoja !== 'asomo') ponerHoja('asomo');
+});
 
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;

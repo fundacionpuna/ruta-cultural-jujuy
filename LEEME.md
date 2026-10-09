@@ -56,13 +56,26 @@ en el teléfono, sin que nadie le explique nada.**
   está viendo, en el coral de la marca. No es un sistema de tildes: se elige uno, como en
   un formulario de papel. **Gratis** va aparte: se prende y se apaga.
 - **El mapa ocupa toda la pantalla.** En el teléfono, arriba queda una sola fila con
-  el logo y el idioma. **Buscar lugares** (que abre el **cajón** con los filtros) y
-  **Cerca mío** arrancan grandes en el medio del mapa; apenas se usa uno o se toca el
-  mapa, bajan a una barra finita al pie. **A+** va debajo del + y el −. Abajo del mapa
-  asoma el comienzo de la lista. En pantalla ancha el mapa se lleva el 92% del alto.
-- **La ficha, en el teléfono, sube a media altura** desde abajo, para que se siga viendo
-  el mapa. Se agranda arrastrando o tocando el asa, o bajando para leer; arrastrada
-  hacia abajo se cierra. La foto, si hay, va después del nombre.
+  el logo y el idioma, y la página no se corre: es el mapa, de borde a borde. **Buscar
+  lugares** (que abre el **cajón** con los filtros) y **Cerca mío** arrancan grandes en
+  el medio del mapa; apenas se usa uno o se toca el mapa, bajan a una barra finita justo
+  encima de la hoja de abajo (y de los créditos del mapa, que tienen que verse). **A+**
+  va debajo del + y el −. En pantalla ancha el mapa se lleva el 92% del alto.
+- **En el teléfono la lista va en una hoja que sube desde abajo**, como en las
+  aplicaciones de mapas. Tiene tres alturas: **asoma** (el asa, «129 lugares» y el
+  comienzo del primero), **media pantalla** y **casi toda**. Se cambia arrastrando o
+  tocando el asa; tocar la hoja asomada la sube, bajar leyendo en media altura la
+  agranda, y mover el mapa baja la lista. La **ficha** y el **calendario** se abren en
+  la misma hoja, a media altura; «Volver a la lista» (o arrastrarla hasta abajo) vuelve
+  a la lista a la altura que tenía. La foto de la ficha, si hay, va después del nombre.
+- **El iPhone tapa el borde de abajo** (la barra de Safari, la rayita de inicio). Por
+  eso la página mide el alto que se ve de verdad (`100dvh`, nunca `vh`), la hoja asomada
+  suma `env(safe-area-inset-bottom)` (con `viewport-fit=cover`) y no hay rebote de
+  página. Para probarlo en la compu: 390 × 664, más o menos lo que queda en un iPhone
+  con las barras de Safari.
+- **Al pie de la lista**, una tarjeta para que un emprendimiento se sume, con las formas
+  de la marca enteras adentro (antes iban cortadas contra el borde) y el logo de la
+  Fundación con «Un proyecto de / Fundación Puna» en dos renglones, parejos con el logo.
 - **La fila de qué se busca va en una sola línea horizontal**, nunca se parte en dos. Si
   no entra, se arrastra de costado y el borde se degrada para avisar que hay más.
 - **Se puede ocultar la lista** con el botón de abajo a la izquierda, y ahí el mapa
